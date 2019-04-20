@@ -30,4 +30,5 @@ dependencies {
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_material
     implementation libraries.androidx_constraintlayout
+    implementation libraries.ah_bottom_navigation
 }
