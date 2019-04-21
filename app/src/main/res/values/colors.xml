@@ -15,4 +15,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorNotification">#F63D2B</color>
     <color name="colorNotificationText">#FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorSecondaryText">#C6C6C6</color>
 </resources>
