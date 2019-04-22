@@ -137,7 +137,7 @@ public class Constant {
             "        \"app_setting_distance_unit\" : \"Distance unit:\",\n" +
             "        \"app_setting_touch_id\" : \"Touch ID\",\n" +
             "        \"app_setting_about_the_app\" : \"ABOUT THE APP\",\n" +
-            "        \"app_setting_licences\" : \"Licences\",\n" +
+            "        \"app_setting_licences\" : \"Licences\"\n" +
             "    }\n" +
             "    \n" +
             "}\n";
