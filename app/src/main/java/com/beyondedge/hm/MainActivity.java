@@ -2,20 +2,17 @@ package com.beyondedge.hm;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.beyondedge.hm.base.BaseSearchActivity;
+import com.beyondedge.hm.base.BaseSearchLibActivity;
 
-public class MainActivity extends BaseSearchActivity {
+public class MainActivity extends BaseSearchLibActivity {
     private TextView mTextMessage;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +22,7 @@ public class MainActivity extends BaseSearchActivity {
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         settingBottomNavigation();
+        initSearchView();
     }
 
 
@@ -100,30 +98,31 @@ public class MainActivity extends BaseSearchActivity {
         });
     }
 
-    @Override
-    protected SearchView.OnCloseListener getSearchOnCloseListener() {
-        return new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Toast.makeText(MainActivity.this, "SearchCLOSE!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        };
-    }
+//    @Override
+//    protected SearchView.OnCloseListener getSearchOnCloseListener() {
+//        return new SearchView.OnCloseListener() {
+//            @Override
+//            public boolean onClose() {
+//                Toast.makeText(MainActivity.this, "SearchCLOSE!", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        };
+//    }
+//
+//    @Override
+//    protected SearchView.OnQueryTextListener getSearchOnQueryTextListener() {
+//        return new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(MainActivity.this, "Search: " + query, Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        };
+//    }
 
-    @Override
-    protected SearchView.OnQueryTextListener getSearchOnQueryTextListener() {
-        return new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "Search: " + query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        };
-    }
 }

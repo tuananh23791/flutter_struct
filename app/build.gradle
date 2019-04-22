@@ -18,9 +18,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+    api project(path: ':materialsearchview')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
@@ -30,5 +35,9 @@ dependencies {
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_material
     implementation libraries.androidx_constraintlayout
+    implementation libraries.androidx_viewmodel
+    implementation libraries.androidx_room
+    annotationProcessor libraries.androidx_room_compiler
     implementation libraries.ah_bottom_navigation
+
 }
