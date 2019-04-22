@@ -39,5 +39,6 @@ dependencies {
     implementation libraries.androidx_room
     annotationProcessor libraries.androidx_room_compiler
     implementation libraries.ah_bottom_navigation
+    implementation libraries.advanced_webview
 
 }

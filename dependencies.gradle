@@ -12,7 +12,8 @@ ext.versions = [
         androidx_room            : "2.1.0-alpha06",
         zxing                    : "3.3.3",
         barcodescanner           : "1.9.13",
-        ah_bottom_navigation     : "2.3.4"
+        ah_bottom_navigation     : "2.3.4",
+        advanced_webview         : "v3.0.0",
 ]
 
 ext.build_versions = [
@@ -31,6 +32,7 @@ ext.libraries = [
         androidx_room_compiler   : "androidx.room:room-compiler:$versions.androidx_room",
 
         ah_bottom_navigation     : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
+        advanced_webview         : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",
 
         zxing_core               : "com.google.zxing:core:$versions.zxing",
         barcodescanner_core      : "me.dm7.barcodescanner:core:$versions.barcodescanner",

@@ -9,15 +9,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.beyondedge.hm.R;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
-public class PageFragment extends Fragment {
+public class PageFragment extends WebFragment {
     private FrameLayout fragmentContainer;
     private int mIndex;
 
@@ -43,9 +43,13 @@ public class PageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.page_layout, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initView(view);
-        return view;
     }
 
     /**
