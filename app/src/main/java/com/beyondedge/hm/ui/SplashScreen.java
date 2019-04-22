@@ -32,7 +32,7 @@ public class SplashScreen extends AwesomeSplash {
         configSplash.setTitleSplash("");
 //        configSplash.setTitleTextColor(R.color.Wheat);
 //        configSplash.setTitleTextSize(30f); //float value
-        configSplash.setAnimTitleDuration(0);
+        configSplash.setAnimTitleDuration(500);
 //        configSplash.setAnimTitleTechnique(Techniques.FlipInX);
 //        configSplash.setTitleFont("fonts/myfont.ttf"); //provide string to your font located in assets/fonts/
 

@@ -3,7 +3,6 @@ package com.beyondedge.hm.base;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -22,9 +21,12 @@ import java.util.List;
  */
 public abstract class BaseSearchLibActivity extends BaseActivity implements
         MaterialSearchView.OnQueryTextListener, SearchRecyclerAdapter.SearchRecyclerInterface {
+    protected QueryTextListener mQueryTextListener;
     private SearchViewModel model;
     private SearchRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
+
+    protected abstract QueryTextListener getQueryTextListener();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
         if (searchHolder == null) {
             throw new RuntimeException("searchHolder == null in Activity - " + getClass());
         }
+
+        mQueryTextListener = getQueryTextListener();
     }
 
     private void observeSearchList(SearchViewModel model) {
@@ -66,19 +70,23 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
         model.insertSearchEntity(query);
-        //TODO query
-//        model.searchFood(query, 0);
-        Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
         searchHolder.hideSearch();
+
+        if (mQueryTextListener != null) {
+            mQueryTextListener.onQueryTextSubmit(query);
+        }
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         searchHolder.showRecycler();
+
+        if (mQueryTextListener != null) {
+            mQueryTextListener.onQueryTextChange(newText);
+        }
         return true;
     }
-
 
     // adapter item clicked
     @Override
@@ -107,5 +115,11 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public interface QueryTextListener {
+        void onQueryTextSubmit(String query);
+
+        void onQueryTextChange(String newText);
     }
 }

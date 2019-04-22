@@ -26,6 +26,24 @@ public class MainActivity extends BaseSearchLibActivity {
     private Handler handler = new Handler();
 
     @Override
+    protected QueryTextListener getQueryTextListener() {
+        return new QueryTextListener() {
+            @Override
+            public void onQueryTextSubmit(String query) {
+                //TODO query
+//        model.searchFood(query, 0);
+                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
+                        Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onQueryTextChange(String newText) {
+
+            }
+        };
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -60,13 +78,10 @@ public class MainActivity extends BaseSearchLibActivity {
                         .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
                         .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
                         .build();
-                bottomNavigation.setNotification(notification, 1);
-
-                Snackbar.make(bottomNavigation, "App - ReLoad",
-                        Snackbar.LENGTH_SHORT).show();
+                bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
 
             }
-        }, 3000);
+        }, 2000);
     }
 
 
