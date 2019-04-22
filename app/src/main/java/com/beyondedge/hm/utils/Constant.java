@@ -130,7 +130,14 @@ public class Constant {
             "    \"lang\": {\n" +
             "        \"search_product\": \"Search Product\",\n" +
             "        \"shop\": \"Shop\",\n" +
-            "        \"cancel\": \"Cancel\"\n" +
+            "        \"cancel\": \"Cancel\",\n" +
+            "        \"app_setting_push_notification\" : \"H&M PUSH NOTIFICATION\",\n" +
+            "        \"app_setting_enable_news\" : \"Enable news from H&M\",\n" +
+            "        \"app_setting_region_settings\" : \"Region:\",\n" +
+            "        \"app_setting_distance_unit\" : \"Distance unit:\",\n" +
+            "        \"app_setting_touch_id\" : \"Touch ID\",\n" +
+            "        \"app_setting_about_the_app\" : \"ABOUT THE APP\",\n" +
+            "        \"app_setting_licences\" : \"Licences\",\n" +
             "    }\n" +
             "    \n" +
             "}\n";
