@@ -24,7 +24,7 @@ public class SplashScreen extends AwesomeSplash {
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
 
         //Customize Logo
-        configSplash.setLogoSplash(R.drawable.ic_logo); //or any other drawable
+        configSplash.setLogoSplash(R.mipmap.ic_logo); //or any other drawable
         configSplash.setAnimLogoSplashDuration(1500); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
