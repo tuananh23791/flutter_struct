@@ -31,13 +31,16 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation libraries.barcodescanner_zxing
+    implementation libraries.gson
+
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_material
     implementation libraries.androidx_constraintlayout
     implementation libraries.androidx_viewmodel
     implementation libraries.androidx_room
     annotationProcessor libraries.androidx_room_compiler
+
+    implementation libraries.barcodescanner_zxing
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview
     implementation libraries.awesome_plash

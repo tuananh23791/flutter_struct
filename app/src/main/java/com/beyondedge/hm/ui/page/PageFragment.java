@@ -6,19 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class PageFragment extends WebFragment {
-    private FrameLayout fragmentContainer;
+    private View fragmentContainer;
     private int mIndex;
 
     /**
@@ -57,7 +58,15 @@ public class PageFragment extends WebFragment {
      */
     private void initView(View view) {
         final TextView textInfo = view.findViewById(R.id.textInfo);
-        textInfo.setText(String.valueOf(mIndex));
+        fragmentContainer = view.findViewById(R.id.fragmentContainer);
+
+
+        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig.Menu menu = config.getMenuList().get(mIndex);
+        String linkPage = config.getPageLink(menu);
+        textInfo.setText(menu.getName() + "\n" + linkPage);
+
+        loadPage(linkPage);
     }
 
     /**

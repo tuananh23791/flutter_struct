@@ -12,6 +12,11 @@ import java.util.ArrayList;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    public static final int MENU_HOME = 0;
+    public static final int MENU_PROFILE = 1;
+    public static final int MENU_FAVORITE = 2;
+    public static final int MENU_CART = 3;
+    public static final int MENU_MORE = 4;
 
     private ArrayList<PageFragment> fragments = new ArrayList<>();
     private PageFragment currentFragment;
@@ -20,11 +25,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         super(fm);
 
         fragments.clear();
-        fragments.add(PageFragment.newInstance(0));
-        fragments.add(PageFragment.newInstance(1));
-        fragments.add(PageFragment.newInstance(2));
-        fragments.add(PageFragment.newInstance(3));
-        fragments.add(PageFragment.newInstance(4));
+        fragments.add(PageFragment.newInstance(MENU_HOME));
+        fragments.add(PageFragment.newInstance(MENU_PROFILE));
+        fragments.add(PageFragment.newInstance(MENU_FAVORITE));
+        fragments.add(PageFragment.newInstance(MENU_CART));
+        fragments.add(PageFragment.newInstance(MENU_MORE));
     }
 
     @Override
