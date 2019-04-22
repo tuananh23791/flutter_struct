@@ -16,6 +16,7 @@ ext.versions = [
         ah_bottom_navigation     : "2.3.4",
         advanced_webview         : "v3.0.0",
         awesome_plash            : "v1.0.0",
+        fabric                   : "2.9.9",
 
 ]
 
@@ -34,7 +35,8 @@ ext.libraries = [
         androidx_room            : "androidx.room:room-runtime:$versions.androidx_room",
         androidx_room_compiler   : "androidx.room:room-compiler:$versions.androidx_room",
 
-        gson   : "com.google.code.gson:gson:$versions.gson",
+        gson                     : "com.google.code.gson:gson:$versions.gson",
+        fabric                   : "com.crashlytics.sdk.android:crashlytics:$versions.fabric",
 
         ah_bottom_navigation     : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
         advanced_webview         : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",
