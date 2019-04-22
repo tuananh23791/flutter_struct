@@ -14,6 +14,7 @@ ext.versions = [
         barcodescanner           : "1.9.13",
         ah_bottom_navigation     : "2.3.4",
         advanced_webview         : "v3.0.0",
+        awesome_plash            : "v1.0.0",
 ]
 
 ext.build_versions = [
@@ -33,6 +34,7 @@ ext.libraries = [
 
         ah_bottom_navigation     : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
         advanced_webview         : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",
+        awesome_plash         : "com.github.ViksaaSkool:AwesomeSplash:$versions.awesome_plash",
 
         zxing_core               : "com.google.zxing:core:$versions.zxing",
         barcodescanner_core      : "me.dm7.barcodescanner:core:$versions.barcodescanner",

@@ -69,7 +69,7 @@ public class WebFragment extends Fragment implements AdvancedWebView.Listener {
 
         });
 //        myWebView.addHttpHeader("X-Requested-With", "");
-        loadPage("https://www.android.com");
+        loadPage("https://www.hm.com/vn/");
     }
 
     public void loadPage(String url) {

@@ -79,10 +79,10 @@ public class MainActivity extends BaseSearchLibActivity {
 
         // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("", R.drawable.ic_menu_hm);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("", R.drawable.ic_home_black_24dp);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("", R.drawable.ic_dashboard_black_24dp);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("", R.drawable.ic_notifications_black_24dp);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem("", R.drawable.ic_notifications_black_24dp);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("", R.drawable.ic_menu_profile);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("", R.drawable.ic_menu_favorite);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("", R.drawable.ic_menu_cart);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem("", R.drawable.ic_menu_more);
 
         // Add items
         bottomNavigation.addItem(item1);

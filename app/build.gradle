@@ -40,5 +40,6 @@ dependencies {
     annotationProcessor libraries.androidx_room_compiler
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview
+    implementation libraries.awesome_plash
 
 }

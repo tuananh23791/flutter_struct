@@ -10,10 +10,11 @@
 
     <color name="colorBackground">#F8F8F8</color>
     <color name="colorBottomBar">#FFFFFF</color>
-    <color name="colorActive">#F63D2B</color>
+    <color name="colorActive">#CF1B1D</color>
     <color name="colorInActive">#000000</color>
     <color name="colorBlack">#000000</color>
     <color name="colorNotification">#F63D2B</color>
+    <color name="colorRedHM">#CF1B1D</color>
     <color name="colorNotificationText">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSecondaryText">#C6C6C6</color>
