@@ -3,8 +3,11 @@ package com.beyondedge.hm.ui.page;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.beyondedge.hm.ui.page.more.MorePageFragment;
 
 import java.util.ArrayList;
 
@@ -18,8 +21,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public static final int MENU_CART = 3;
     public static final int MENU_MORE = 4;
 
-    private ArrayList<PageFragment> fragments = new ArrayList<>();
-    private PageFragment currentFragment;
+    private ArrayList<PageInterface> fragments = new ArrayList<>();
+    private PageInterface currentFragment;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -29,12 +32,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         fragments.add(PageFragment.newInstance(MENU_PROFILE));
         fragments.add(PageFragment.newInstance(MENU_FAVORITE));
         fragments.add(PageFragment.newInstance(MENU_CART));
-        fragments.add(PageFragment.newInstance(MENU_MORE));
+        fragments.add(MorePageFragment.newInstance());
     }
 
     @Override
-    public PageFragment getItem(int position) {
-        return fragments.get(position);
+    public Fragment getItem(int position) {
+        return ((Fragment) fragments.get(position));
     }
 
     @Override
@@ -45,7 +48,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         if (getCurrentFragment() != object) {
-            currentFragment = ((PageFragment) object);
+            currentFragment = ((PageInterface) object);
         }
         super.setPrimaryItem(container, position, object);
     }
@@ -53,7 +56,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     /**
      * Get the current fragment
      */
-    public PageFragment getCurrentFragment() {
+    public PageInterface getCurrentFragment() {
         return currentFragment;
     }
 }

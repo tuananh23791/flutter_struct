@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page;
+package com.beyondedge.hm.ui.page.more;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,68 +6,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.base.BaseFragment;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
+import com.beyondedge.hm.ui.page.PageInterface;
 
 /**
- * Created by Hoa Nguyen on Apr 22 2019.
+ * Created by Hoa Nguyen on Apr 23 2019.
  */
-public class PageFragment extends WebFragment implements PageInterface {
+public class MorePageFragment extends BaseFragment implements PageInterface {
     private View fragmentContainer;
-    private int mIndex;
+    private MorePageAdapter mMorePageAdapter;
+    private RecyclerView recyclerView;
 
-    /**
-     * Create a new instance of the fragment
-     */
-    public static PageFragment newInstance(int index) {
-        PageFragment fragment = new PageFragment();
-        Bundle b = new Bundle();
-        b.putInt("index", index);
-        fragment.setArguments(b);
+    public static MorePageFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MorePageFragment fragment = new MorePageFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        mIndex = bundle.getInt("index", 0);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.more_layout, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView(view);
-    }
-
-    /**
-     * Init view
-     */
-    private void initView(View view) {
-        final TextView textInfo = view.findViewById(R.id.textInfo);
+        recyclerView = view.findViewById(R.id.recyclerView);
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
-
+        mMorePageAdapter = new MorePageAdapter();
 
         HMConfig config = LoadConfig.getInstance().load();
-        HMConfig.Menu menu = config.getMenuList().get(mIndex);
-        String linkPage = config.getPageLink(menu);
-        textInfo.setText(menu.getName() + "\n" + linkPage);
 
-        loadPage(linkPage);
+        if (config != null) {
+            mMorePageAdapter.submitList(config.getMenuList().get(4).getSubListMenu());
+        }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.VERTICAL, false));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mMorePageAdapter);
     }
+
 
     /**
      * Refresh

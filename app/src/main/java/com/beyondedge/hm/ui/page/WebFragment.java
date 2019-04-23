@@ -17,13 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.base.BaseFragment;
 
 import im.delight.android.webview.AdvancedWebView;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
-public class WebFragment extends Fragment implements AdvancedWebView.Listener {
+public class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     AdvancedWebView myWebView;
 
     @Override

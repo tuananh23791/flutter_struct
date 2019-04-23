@@ -27,7 +27,7 @@ public class HMConfig {
     }
 
     public String getPageLink(Menu menu) {
-        return version.getMainDomain() + menu.url;
+        return version.getMainDomain() + menu.getUrl();
     }
 
     public static class Version {
