@@ -65,6 +65,7 @@ public class SingleDownloadActivity extends BaseActivity implements FetchObserve
         etaTextView = findViewById(R.id.etaTextView);
         value = findViewById(R.id.value);
         downloadSpeedTextView = findViewById(R.id.downloadSpeedTextView);
+
         if (IS_FORCE_LOCAL_CONFIG) {
             readConfig();
         } else {

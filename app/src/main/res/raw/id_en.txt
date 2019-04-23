@@ -9,21 +9,21 @@
     "menu": [
         {
             "url": "home",
-            "name": "Home"
+            "name": "Home - Default"
             
         },
         {
             "url": "profile",
-            "name": "Profile"
+            "name": "Profile- Default"
             
         },
         {
             "url": "wishlist",
-            "name": "Wish List"
+            "name": "Wish List- Default"
         },
         {
             "url": "cart",
-            "name": "Shopping Cart"
+            "name": "Shopping Cart- Default"
         },
         {
             "url": "",

@@ -1,6 +1,5 @@
 package com.beyondedge.hm.config;
 
-import com.beyondedge.hm.utils.Constant;
 import com.google.gson.Gson;
 
 /**
