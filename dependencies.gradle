@@ -17,6 +17,8 @@ ext.versions = [
         advanced_webview         : "v3.0.0",
         awesome_plash            : "v1.0.0",
         fabric                   : "2.9.9",
+        fetch_download_file      : "3.0.4",
+        timber                   : "4.7.1",
 
 ]
 
@@ -28,22 +30,25 @@ ext.build_versions = [
 ]
 
 ext.libraries = [
-        androidx_material        : "com.google.android.material:material:$versions.androidx_material",
-        androidx_appcompat       : "androidx.appcompat:appcompat:$versions.androidx_appcompat",
-        androidx_constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout",
-        androidx_viewmodel       : "androidx.lifecycle:lifecycle-extensions:$versions.androidx_viewmodel",
-        androidx_room            : "androidx.room:room-runtime:$versions.androidx_room",
-        androidx_room_compiler   : "androidx.room:room-compiler:$versions.androidx_room",
+        androidx_material         : "com.google.android.material:material:$versions.androidx_material",
+        androidx_appcompat        : "androidx.appcompat:appcompat:$versions.androidx_appcompat",
+        androidx_constraintlayout : "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout",
+        androidx_viewmodel        : "androidx.lifecycle:lifecycle-extensions:$versions.androidx_viewmodel",
+        androidx_room             : "androidx.room:room-runtime:$versions.androidx_room",
+        androidx_room_compiler    : "androidx.room:room-compiler:$versions.androidx_room",
 
-        gson                     : "com.google.code.gson:gson:$versions.gson",
-        fabric                   : "com.crashlytics.sdk.android:crashlytics:$versions.fabric",
+        gson                      : "com.google.code.gson:gson:$versions.gson",
+        fabric                    : "com.crashlytics.sdk.android:crashlytics:$versions.fabric",
+        timber                    : "com.jakewharton.timber:timber:$versions.timber",
 
-        ah_bottom_navigation     : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
-        advanced_webview         : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",
-        awesome_plash            : "com.github.ViksaaSkool:AwesomeSplash:$versions.awesome_plash",
+        ah_bottom_navigation      : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
+        advanced_webview          : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",
+        awesome_plash             : "com.github.ViksaaSkool:AwesomeSplash:$versions.awesome_plash",
+        fetch_download_file       : "com.tonyodev.fetch2:fetch2:$versions.fetch_download_file",
+        fetch_download_file_plugin: "com.tonyodev.fetch2fileserver:fetch2fileserver:$versions.fetch_download_file",
 
-        zxing_core               : "com.google.zxing:core:$versions.zxing",
-        barcodescanner_core      : "me.dm7.barcodescanner:core:$versions.barcodescanner",
-        barcodescanner_zbar      : "me.dm7.barcodescanner:zbar:$versions.barcodescanner",
-        barcodescanner_zxing     : "me.dm7.barcodescanner:zxing:$versions.barcodescanner"
+        zxing_core                : "com.google.zxing:core:$versions.zxing",
+        barcodescanner_core       : "me.dm7.barcodescanner:core:$versions.barcodescanner",
+        barcodescanner_zbar       : "me.dm7.barcodescanner:zbar:$versions.barcodescanner",
+        barcodescanner_zxing      : "me.dm7.barcodescanner:zxing:$versions.barcodescanner"
 ]

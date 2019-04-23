@@ -2,8 +2,8 @@ package com.beyondedge.hm.ui;
 
 import android.content.Intent;
 
-import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.SingleDownloadActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -43,7 +43,8 @@ public class SplashScreen extends AwesomeSplash {
         //transit to another activity here
         //or do whatever you want
 
-        startActivity(new Intent(SplashScreen.this, MainActivity.class));
+//        startActivity(new Intent(SplashScreen.this, MainActivity.class));
+        startActivity(new Intent(SplashScreen.this, SingleDownloadActivity.class));
         finish();
     }
 }

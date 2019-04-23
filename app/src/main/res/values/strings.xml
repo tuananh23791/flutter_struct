@@ -5,4 +5,17 @@
     <string name="title_notifications">Notifications</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Search Product</string>
+    <string name="permission_not_enabled">Please enable the Write External Storage Permission</string>
+    <string name="download_eta_sec">%1$ds left</string>
+    <string name="download_eta_min">%1$dm %2$ds left</string>
+    <string name="download_eta_hrs">%1$dh %2$dm %3$ds left</string>
+    <string name="download_speed_bytes">%1$d B/s</string>
+    <string name="download_speed_kb">%1$s KB/s</string>
+    <string name="download_speed_mb">%1$s MB/s</string>
+    <string name="queued">QUEUED</string>
+    <string name="added">ADDED</string>
+    <string name="downloading">downloading…</string>
+    <string name="status_unknown">Status Unknown</string>
+    <string name="percent_progress">%1$d%%</string>
+    <string name="retry">RETRY</string>
 </resources>

@@ -3,6 +3,8 @@
     package="com.beyondedge.hm">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".HMApplication"
@@ -34,6 +36,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <activity android:name=".config.SingleDownloadActivity" />
     </application>
 
 </manifest>

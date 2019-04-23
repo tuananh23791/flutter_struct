@@ -116,7 +116,7 @@ public class Constant {
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Indonesia/English\",\n" +
-            "            \"propertyFile\": \"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\"\n" +
+            "            \"propertyFile\": \"http://sharefile.beyondedge.com.sg/hm/setting/id_en.txt\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Thailand/English\",\n" +

@@ -1,0 +1,137 @@
+{
+    "version": {
+        "versionAndroid": "0.0.1",
+        "versioniOS": "0.0.1",
+        "status": 0,
+        "MainDomain": "http://sharefile.beyondedge.com.sg/hm/id/",
+        "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+    },
+    "menu": [
+        {
+            "url": "home",
+            "name": "Home"
+            
+        },
+        {
+            "url": "profile",
+            "name": "Profile"
+            
+        },
+        {
+            "url": "wishlist",
+            "name": "Wish List"
+        },
+        {
+            "url": "cart",
+            "name": "Shopping Cart"
+        },
+        {
+            "url": "",
+            "name": "More",
+            "subListMenu": [
+                {
+                    "name": "Inbox",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Customer Service",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Magazine",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Store Locator",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Catalogue Lookup",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Follow Us",
+                    "url": "",
+                    "subListMenu":  [
+                        {
+                            "iconName": "newletter",
+                            "url": "https://www.hm.com",
+                            "name": "Newletter"
+                        },
+                        {
+                            "iconName": "facebook",
+                            "url": "https://www.facebook.com/hm",
+                            "name": "Facebook"
+                        },
+                        {
+                            "iconName": "twitter",
+                            "url": "https://twitter.com/hm",
+                            "name": "Twitter"
+                        },
+                        {
+                            "iconName": "instagram",
+                            "url": "https://www.instagram.com/hm/",
+                            "name": "Instagram"
+                        },
+                        {
+                            "iconName": "youtube",
+                            "url": "https://www.youtube.com/user/hennesandmauritz",
+                            "name": "Youtube"
+                        },
+                        {
+                            "iconName": "pinterest",
+                            "url": "https://www.pinterest.com/hm/",
+                            "name": "Pinterest"
+                        }
+                    ]
+                },
+                
+                {
+                    "name": "Gift Card",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "Magazine",
+                    "url": "https://www.hm.com"
+                },
+                {
+                    "name": "App Setting",
+                    "url": ""
+                }
+            ]
+            
+        }
+        
+    ],
+    "region": [
+        {
+            "name": "Indonesia/Bahasa",
+            "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
+        },
+        {
+            "name": "Indonesia/English",
+            "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+        },
+        {
+            "name": "Thailand/English",
+            "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
+        },
+        {
+            "name": "Thailand/Thai",
+            "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+        }
+    ],
+    "lang": {
+        "search_product": "Search Product",
+        "shop": "Shop",
+        "cancel": "Cancel",
+        "app_setting_push_notification" : "H&M PUSH NOTIFICATION",
+        "app_setting_enable_news" : "Enable news from H&M",
+        "app_setting_region_settings" : "Region:",
+        "app_setting_distance_unit" : "Distance unit:",
+        "app_setting_touch_id" : "Touch ID",
+        "app_setting_about_the_app" : "ABOUT THE APP",
+        "app_setting_licences" : "Licences"
+    }
+    
+}

@@ -30,10 +30,16 @@ public class LoadConfig {
     }
 
     public HMConfig load() {
-        if (mHMConfig == null || forceLoadConfig) {
-            mHMConfig = mGson.fromJson(Constant.JSON_CONFIG, HMConfig.class);
+        if (mHMConfig == null) {
+            throw new RuntimeException("mHMConfig null now");
         }
         return mHMConfig;
     }
 
+    public void setHMConfig(HMConfig config) {
+        if (config == null) {
+            throw new RuntimeException("setHMConfig must be != null");
+        }
+        mHMConfig = config;
+    }
 }
