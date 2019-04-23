@@ -4,6 +4,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
+    flavorDimensions "default"
 
     defaultConfig {
         applicationId "com.beyondedge.hm"
@@ -23,6 +24,40 @@ android {
     dataBinding {
         enabled = true
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = "HM_" + output.name + "_v${variant.versionName}_(${releaseTime()}).apk"
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name.contains('release')) {
+            variant.setIgnore(true)
+        }
+    }
+
+    productFlavors {
+        def STRING = "String"
+        def BOOLEAN = "boolean"
+        def INT = "int"
+        def TRUE = "true"
+        def FALSE = "false"
+
+        def LOG = "LOG"
+
+        dev {
+            buildConfigField BOOLEAN, LOG, TRUE
+        }
+
+        stable {
+            buildConfigField BOOLEAN, LOG, FALSE
+        }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd HHmmss", TimeZone.getTimeZone("GMT+7"))
 }
 
 dependencies {

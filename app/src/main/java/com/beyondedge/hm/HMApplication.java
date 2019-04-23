@@ -18,7 +18,12 @@ public class HMApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appExecutors = new AppExecutors();
-        Fabric.with(this, new Crashlytics());
+
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(BuildConfig.DEBUG && BuildConfig.LOG)
+                .build();
+        Fabric.with(fabric);
     }
 
     public SearchDatabase getDatabase() {
