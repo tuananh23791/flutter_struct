@@ -72,21 +72,11 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             }
         });
 
-        String title = "";
         HMConfig config = LoadConfig.getInstance().load();
 
         if (config != null) {
-            HMConfig.Menu more = config.getMoreMenu();
             mMorePageAdapter.submitList(config.getMoreSubListMenuList());
-            title = more.getName();
         }
-
-        FragmentActivity activity = getActivity();
-
-        if (activity instanceof BaseActivity) {
-            ((BaseActivity) activity).setTitleToolbar(title);
-        }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.VERTICAL, false));
 
         recyclerView.setHasFixedSize(true);
@@ -111,6 +101,20 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
      */
     @Override
     public void willBeDisplayed() {
+        String title = "";
+        HMConfig config = LoadConfig.getInstance().load();
+
+        if (config != null) {
+            HMConfig.Menu more = config.getMoreMenu();
+            title = more.getName();
+        }
+
+        FragmentActivity activity = getActivity();
+
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).setTitleToolbar(title);
+        }
+
         // Do what you want here, for example animate the content
         if (fragmentContainer != null) {
             Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);

@@ -69,6 +69,7 @@ public class MainActivity extends BaseSearchServerLibActivity {
 
         currentFragment = adapterViewPager.getCurrentFragment();
 
+        //TODO
         handler.postDelayed(() -> {
             AHNotification notification = new AHNotification.Builder()
                     .setText("100")
