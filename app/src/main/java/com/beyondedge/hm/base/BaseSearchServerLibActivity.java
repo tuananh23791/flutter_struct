@@ -127,4 +127,9 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         void onQueryTextChange(String newText);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

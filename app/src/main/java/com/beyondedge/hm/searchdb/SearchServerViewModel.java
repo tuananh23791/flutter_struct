@@ -32,13 +32,14 @@ public class SearchServerViewModel extends AndroidViewModel {
         return getSearchListLive;
     }
 
-    public void searchQuery(String query){
+    public void searchQuery(String query) {
         repository.searchQuery(query);
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
+        repository.clear();
     }
 
 }
