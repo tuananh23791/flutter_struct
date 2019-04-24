@@ -39,6 +39,7 @@
 
         <activity android:name=".config.SingleDownloadActivity" />
         <activity android:name=".ui.screen.PageWebActivity" />
+        <activity android:name=".ui.screen.FollowUsActivity" />
     </application>
 
 </manifest>

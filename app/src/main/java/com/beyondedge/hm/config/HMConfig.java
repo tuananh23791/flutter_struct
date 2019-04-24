@@ -16,6 +16,7 @@ public class HMConfig {
     private Version version;
     private ArrayList<Menu> mainMenu;
     private ArrayList<Menu> subListMore;
+    private ArrayList<Menu> subListMenuFolowUs;
 
     public Version getVersion() {
         return version;
@@ -29,9 +30,31 @@ public class HMConfig {
         return subListMore;
     }
 
+    public ArrayList<Menu> getSubListMenuFolowUs() {
+        return subListMenuFolowUs;
+    }
+
     public Menu getMoreMenu() {
         try {
-            return mainMenu.get(4);
+            for (Menu menu : mainMenu) {
+                if (Constant.MENU_MORE_PATH.equals(menu.url)) {
+                    return menu;
+                }
+            }
+        } catch (Exception e) {
+
+        }
+
+        return null;
+    }
+
+    public Menu getFollowUsMenu() {
+        try {
+            for (Menu menu : subListMore) {
+                if (Constant.FOLLOW_US_PATH.equals(menu.url)) {
+                    return menu;
+                }
+            }
         } catch (Exception e) {
 
         }
@@ -78,7 +101,14 @@ public class HMConfig {
         private String iconName;
         private ArrayList<Menu> subListMenu;
 
+        public boolean isExternalURL() {
+            return !TextUtils.isEmpty(url) && url.startsWith("http");
+        }
+
         public String getUrl() {
+            if (isExternalURL()) {
+                return url;
+            }
             HMConfig config = LoadConfig.getInstance().load();
             if (config != null) {
                 try {
@@ -99,9 +129,22 @@ public class HMConfig {
             return name;
         }
 
-        public String getIconName() {
+        //        public String getIconName() {
+//            return iconName;
+//        }
+        public String getIconFullUrl() {
+            HMConfig config = LoadConfig.getInstance().load();
+            if (config != null) {
+                try {
+                    return config.version.getIconUrl() + iconName;
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                return "";
+            }
             return iconName;
         }
+
 
         public ArrayList<Menu> getSubListMenu() {
             return subListMenu;

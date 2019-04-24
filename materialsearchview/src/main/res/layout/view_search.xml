@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/relHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:minHeight="@dimen/search_height">
+        android:background="@color/colorBackground"
+        android:minHeight="@dimen/search_height"
+        tools:background="@color/colorRedHM">
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/search_height"
-            android:layout_height="@dimen/search_height"
+            android:layout_width="@dimen/appbar_height"
+            android:layout_height="@dimen/appbar_height"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="@drawable/image_background"
@@ -22,30 +25,86 @@
             android:padding="@dimen/image_padding"
             app:srcCompat="@drawable/ic_arrow_back" />
 
-        <EditText
-            android:id="@+id/editText"
+
+        <RelativeLayout
+            android:id="@+id/editTextGroup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_height"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_toStartOf="@+id/imgClear"
             android:layout_toLeftOf="@+id/imgClear"
             android:layout_toEndOf="@+id/imgBack"
             android:layout_toRightOf="@+id/imgBack"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:imeOptions="actionSearch"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:textSize="@dimen/search_text_size" />
+            android:background="@drawable/search_backgrround">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/search_height"
+                android:layout_height="@dimen/search_height"
+                android:background="@drawable/image_background"
+                android:clickable="false"
+                android:contentDescription="@null"
+                android:focusable="false"
+                android:padding="@dimen/image_search_padding"
+                android:tint="@color/colorGrayTextMenu"
+                app:srcCompat="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@+id/imgPicture"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:imeOptions="actionSearch"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textColor="@color/colorGrayTextMenu"
+                tools:text="1111111" />
+
+            <ImageView
+                android:id="@+id/imgPicture"
+                android:layout_width="@dimen/search_height"
+                android:layout_height="@dimen/search_height"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_toStartOf="@+id/imgBarcode"
+                android:background="@drawable/image_background"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:padding="@dimen/image_search_padding"
+                app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/imgBarcode"
+                android:layout_width="@dimen/search_height"
+                android:layout_height="@dimen/search_height"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/image_background"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:padding="@dimen/image_search_padding"
+                app:srcCompat="@drawable/ic_barcode"
+                tools:visibility="visible" />
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/imgClear"
-            android:layout_width="@dimen/search_height"
-            android:layout_height="@dimen/search_height"
+            android:layout_width="@dimen/appbar_height"
+            android:layout_height="@dimen/appbar_height"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="@drawable/image_background"
             android:clickable="true"
@@ -53,21 +112,38 @@
             android:focusable="true"
             android:padding="@dimen/image_padding"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_close" />
+            app:srcCompat="@drawable/ic_close"
+            tools:visibility="visible" />
+
+        <FrameLayout
+            android:id="@+id/frameLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/editTextGroup"
+            android:background="@color/colorWhite"
+            android:padding="16dp">
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/linearItemsHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editText"
+            android:layout_below="@+id/editTextGroup"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+            <!--<View-->
+            <!--android:id="@+id/divider"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@android:color/darker_gray" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"

@@ -74,9 +74,14 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
+    implementation libraries.retrofit
+    implementation libraries.retrofit_gson_converter
+    implementation libraries.retrofit_log
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
+    implementation libraries.glide
+    annotationProcessor libraries.glide_compiler
 
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_recyclerview

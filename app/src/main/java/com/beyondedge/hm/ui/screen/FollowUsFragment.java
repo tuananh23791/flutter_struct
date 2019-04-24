@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page.more;
+package com.beyondedge.hm.ui.screen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,34 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
-import com.beyondedge.hm.ui.screen.FollowUsActivity;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
+import com.beyondedge.hm.utils.URLUtils;
 
 /**
- * Created by Hoa Nguyen on Apr 23 2019.
+ * Created by Hoa Nguyen on Apr 24 2019.
  */
-public class MorePageFragment extends BaseFragment implements PageInterface {
+public class FollowUsFragment extends BaseFragment implements PageInterface {
     private View fragmentContainer;
-    private MorePageAdapter mMorePageAdapter;
+    private FollowUsMenuAdapter mAdapter;
     private RecyclerView recyclerView;
 
-    public static MorePageFragment newInstance() {
+    public static FollowUsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        MorePageFragment fragment = new MorePageFragment();
+        FollowUsFragment fragment = new FollowUsFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -58,15 +51,14 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
-        mMorePageAdapter = new MorePageAdapter();
-        mMorePageAdapter.setOnItemClickListener(menu -> {
-            String url = menu.getUrl();
-            if (url != null && url.contains(Constant.FOLLOW_US_PATH)) {
-                startActivity(FollowUsActivity.class);
+        mAdapter = new FollowUsMenuAdapter();
+        mAdapter.setOnItemClickListener(menu -> {
+            if (menu.isExternalURL()) {
+                URLUtils.openInWebBrowser(getActivity(), menu.getUrl());
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);
-                intent.putExtra(PageWebActivity.EXTRA_URL, url);
+                intent.putExtra(PageWebActivity.EXTRA_URL, menu.getUrl());
                 intent.putExtra(PageWebActivity.EXTRA_TITLE, menu.getName());
                 startActivity(intent);
             }
@@ -76,8 +68,8 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
         HMConfig config = LoadConfig.getInstance().load();
 
         if (config != null) {
-            HMConfig.Menu more = config.getMoreMenu();
-            mMorePageAdapter.submitList(config.getMoreSubListMenuList());
+            HMConfig.Menu more = config.getFollowUsMenu();
+            mAdapter.submitList(config.getSubListMenuFolowUs());
             title = more.getName();
         }
 
@@ -91,7 +83,7 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new PaddingDividerItemDecoration(recyclerView.getContext()).paddingLeft());
-        recyclerView.setAdapter(mMorePageAdapter);
+        recyclerView.setAdapter(mAdapter);
     }
 
 
