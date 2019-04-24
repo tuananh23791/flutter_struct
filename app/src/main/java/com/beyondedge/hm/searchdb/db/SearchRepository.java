@@ -49,4 +49,5 @@ public class SearchRepository {
     public LiveData<List<SearchEntity>> getSearchListLive() {
         return database.getSearchDao().getSearchListLive();
     }
+
 }

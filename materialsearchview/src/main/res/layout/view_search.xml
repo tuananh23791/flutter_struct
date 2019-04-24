@@ -48,8 +48,8 @@
                 android:clickable="false"
                 android:contentDescription="@null"
                 android:focusable="false"
-                android:tint="@color/colorGrayTextMenu"
                 android:padding="@dimen/image_search_padding"
+                android:tint="@color/colorGrayTextMenu"
                 app:srcCompat="@drawable/ic_search" />
 
             <EditText
@@ -60,11 +60,11 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
-                android:textColor="@color/colorGrayTextMenu"
                 android:imeOptions="actionSearch"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textColor="@color/colorGrayTextMenu"
                 tools:text="1111111" />
 
             <ImageView
@@ -112,8 +112,24 @@
             android:focusable="true"
             android:padding="@dimen/image_padding"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:srcCompat="@drawable/ic_close" />
+            app:srcCompat="@drawable/ic_close"
+            tools:visibility="visible" />
+
+        <FrameLayout
+            android:id="@+id/frameLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/editTextGroup"
+            android:background="@color/colorWhite"
+            android:padding="16dp">
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/linearItemsHolder"
@@ -123,11 +139,11 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+            <!--<View-->
+            <!--android:id="@+id/divider"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@android:color/darker_gray" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"

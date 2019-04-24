@@ -11,14 +11,14 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.beyondedge.hm.base.BaseSearchLibActivity;
+import com.beyondedge.hm.base.BaseSearchServerLibActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends BaseSearchLibActivity {
+public class MainActivity extends BaseSearchServerLibActivity {
     //    private TextView mTextMessage;
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;

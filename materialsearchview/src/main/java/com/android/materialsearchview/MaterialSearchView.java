@@ -142,6 +142,18 @@ public class MaterialSearchView extends CardView {
         checkForAdapter();
     }
 
+    public void showLoading() {
+        if (b.recycler.getAdapter() != null && b.recycler.getAdapter().getItemCount() <= 0) {
+            b.frameLoading.setVisibility(VISIBLE);
+            b.recycler.setVisibility(GONE);
+        }
+    }
+
+    public void hideLoading() {
+        b.frameLoading.setVisibility(GONE);
+        b.recycler.setVisibility(VISIBLE);
+    }
+
     private void submitText(CharSequence s) {
         mUserQuery = b.editText.getText();
         updateClearButton();

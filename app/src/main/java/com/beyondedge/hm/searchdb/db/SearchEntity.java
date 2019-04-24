@@ -5,8 +5,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.beyondedge.hm.searchdb.SearchInterface;
+
 @Entity(tableName = "search_table")
-public class SearchEntity {
+public class SearchEntity implements SearchInterface {
     @PrimaryKey
     @NonNull
     private String text;
@@ -18,6 +20,7 @@ public class SearchEntity {
     }
 
     @NonNull
+    @Override
     public String getText() {
         return text;
     }
@@ -33,4 +36,5 @@ public class SearchEntity {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
 }
