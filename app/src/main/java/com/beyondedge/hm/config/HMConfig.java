@@ -7,27 +7,40 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class HMConfig {
     private Version version;
-    private ArrayList<Menu> menu;
+    private ArrayList<Menu> mainMenu;
+    private ArrayList<Menu> subListMore;
 
     public Version getVersion() {
         return version;
     }
 
-    public ArrayList<Menu> getMenuList() {
-        return menu;
+    public ArrayList<Menu> getMainMenuList() {
+        return mainMenu;
+    }
+
+    public ArrayList<Menu> getMoreSubListMenuList() {
+        return subListMore;
+    }
+
+    public Menu getMoreMenu() {
+        try {
+            return mainMenu.get(4);
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 
     boolean isValidConfig() {
-        return version != null && !TextUtils.isEmpty(version.mainDomain) && CollectionUtils.isNotEmpty(menu);
-    }
-
-    public String getPageLink(Menu menu) {
-        return version.getMainDomain() + menu.getUrl();
+        return version != null && !TextUtils.isEmpty(version.mainDomain) && CollectionUtils.isNotEmpty(mainMenu);
     }
 
     public static class Version {
@@ -66,6 +79,19 @@ public class HMConfig {
         private ArrayList<Menu> subListMenu;
 
         public String getUrl() {
+            HMConfig config = LoadConfig.getInstance().load();
+            if (config != null) {
+                try {
+                    return config.version.getMainDomain() + url;
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                return "";
+            }
+            return url;
+        }
+
+        public String getRelativeUrl() {
             return url;
         }
 

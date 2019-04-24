@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.config.HMConfig;
@@ -60,16 +61,13 @@ public class PageFragment extends WebFragment implements PageInterface {
      * Init view
      */
     private void initView(View view) {
-        final TextView textInfo = view.findViewById(R.id.textInfo);
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
 
 
         HMConfig config = LoadConfig.getInstance().load();
-        mMenu = config.getMenuList().get(mIndex);
-        String linkPage = config.getPageLink(mMenu);
-        textInfo.setText(mMenu.getName() + "\n" + linkPage);
+        mMenu = config.getMainMenuList().get(mIndex);
 
-        loadPage(linkPage);
+        loadPage(mMenu.getUrl());
     }
 
     /**

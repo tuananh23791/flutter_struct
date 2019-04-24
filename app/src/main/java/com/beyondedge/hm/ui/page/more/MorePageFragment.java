@@ -10,10 +10,12 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.base.BaseFragment;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
@@ -62,13 +64,25 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             startActivity(intent);
         });
 
+        String title = "";
         HMConfig config = LoadConfig.getInstance().load();
 
         if (config != null) {
-            mMorePageAdapter.submitList(config.getMenuList().get(4).getSubListMenu());
+            HMConfig.Menu more = config.getMoreMenu();
+            mMorePageAdapter.submitList(config.getMoreSubListMenuList());
+            title = more.getName();
         }
 
+        FragmentActivity activity = getActivity();
+
+        if (activity != null && activity instanceof BaseActivity) {
+            ((BaseActivity) activity).setTitleToolbar(title);
+        }
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.VERTICAL, false));
+
+
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new PaddingDividerItemDecoration(recyclerView.getContext()).paddingLeft());
         recyclerView.setAdapter(mMorePageAdapter);

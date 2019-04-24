@@ -17,7 +17,7 @@ public abstract class BaseActivitySingleFragment extends BaseActivity {
 
         setContentView(R.layout.activity_single_fragment);
         getSupportFragmentManager().beginTransaction()
-                .add(createFragment(), "Single_Fragment")
+                .add(R.id.frame_content, createFragment(), "Single_Fragment")
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .commit();
     }

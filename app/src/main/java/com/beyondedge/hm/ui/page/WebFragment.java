@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.base.BaseFragment;
 
 import im.delight.android.webview.AdvancedWebView;
@@ -27,12 +27,12 @@ import im.delight.android.webview.AdvancedWebView;
  */
 public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     AdvancedWebView myWebView;
+    private TextView textInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Nullable
     @Override
@@ -43,6 +43,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        textInfo = view.findViewById(R.id.textInfo);
+        textInfo.setVisibility(View.GONE);
         initView(view);
     }
 
@@ -81,6 +83,10 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     protected void loadPage(String url) {
+        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+            textInfo.setVisibility(View.VISIBLE);
+            textInfo.setText(url);
+        }
         myWebView.loadUrl(url);
     }
 

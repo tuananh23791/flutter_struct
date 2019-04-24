@@ -117,7 +117,7 @@ public class MainActivity extends BaseSearchLibActivity {
 
         bottomNavigation.setCurrentItem(0);
         HMConfig config = LoadConfig.getInstance().load();
-        setTitleToolbar(config.getMenuList().get(0).getName());
+        setTitleToolbar(config.getMainMenuList().get(0).getName());
 
         // OR
 //        AHNotification notification = new AHNotification.Builder()
