@@ -1,5 +1,6 @@
 package com.beyondedge.hm.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +16,9 @@ import com.beyondedge.hm.R;
  * Created by Hoa Nguyen on Apr 23 2019.
  */
 public class BaseFragment extends Fragment {
-    public static BaseFragment newInstance() {
 
-        Bundle args = new Bundle();
-
-        BaseFragment fragment = new BaseFragment();
-        fragment.setArguments(args);
-        return fragment;
+    protected void startActivity(Class className) {
+        startActivity(new Intent(this.getActivity(), className));
     }
 
     @Nullable

@@ -23,4 +23,8 @@
         <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
     </style>
 
+    <style name="TextMenu" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorGrayTextMenu</item>
+    </style>
+
 </resources>

@@ -3,22 +3,22 @@
         "versionAndroid": "0.0.1",
         "versioniOS": "0.0.1",
         "status": 0,
-        "MainDomain": "http://sharefile.beyondedge.com.sg/hm/id/",
+        "MainDomain": "https://hmthuat.specom.io/",
         "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
     },
     "menu": [
         {
-            "url": "home",
+            "url": "",
             "name": "Home - Default"
-            
+
         },
         {
-            "url": "profile",
+            "url": "customer-service.html",
             "name": "Profile- Default"
-            
+
         },
         {
-            "url": "wishlist",
+            "url": "store-locator",
             "name": "Wish List- Default"
         },
         {
@@ -31,23 +31,23 @@
             "subListMenu": [
                 {
                     "name": "Inbox",
-                    "url": "https://www.hm.com"
+                    "url": "https://hmthuat.specom.io/"
                 },
                 {
                     "name": "Customer Service",
-                    "url": "https://www.hm.com"
+                    "url": "https://hmthuat.specom.io/customer-service.html/"
                 },
                 {
                     "name": "Magazine",
-                    "url": "https://www.hm.com"
+                    "url": "https://hmthuat.specom.io/"
                 },
                 {
                     "name": "Store Locator",
-                    "url": "https://www.hm.com"
+                    "url": "https://hmthuat.specom.io/store-locator/"
                 },
                 {
                     "name": "Catalogue Lookup",
-                    "url": "https://www.hm.com"
+                    "url": "https://hmthuat.specom.io/"
                 },
                 {
                     "name": "Follow Us",
@@ -85,7 +85,7 @@
                         }
                     ]
                 },
-                
+
                 {
                     "name": "Gift Card",
                     "url": "https://www.hm.com"
@@ -99,9 +99,9 @@
                     "url": ""
                 }
             ]
-            
+
         }
-        
+
     ],
     "region": [
         {
@@ -133,5 +133,5 @@
         "app_setting_about_the_app" : "ABOUT THE APP",
         "app_setting_licences" : "Licences"
     }
-    
+
 }

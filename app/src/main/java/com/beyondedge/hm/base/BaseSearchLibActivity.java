@@ -25,6 +25,7 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
     private SearchViewModel model;
     private SearchRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
+    private boolean isShowSearchMenu = true;
 
     protected abstract QueryTextListener getQueryTextListener();
 
@@ -54,6 +55,11 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
                 adapterSearch.setItems(searchEntities);
             }
         });
+    }
+
+    protected void showHideSearchMenu(boolean isShow) {
+        isShowSearchMenu = isShow;
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -104,6 +110,7 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
         return true;
     }
 

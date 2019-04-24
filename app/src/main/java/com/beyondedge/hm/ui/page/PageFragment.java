@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 
@@ -21,6 +23,7 @@ import com.beyondedge.hm.config.LoadConfig;
 public class PageFragment extends WebFragment implements PageInterface {
     private View fragmentContainer;
     private int mIndex;
+    private HMConfig.Menu mMenu;
 
     /**
      * Create a new instance of the fragment
@@ -62,9 +65,9 @@ public class PageFragment extends WebFragment implements PageInterface {
 
 
         HMConfig config = LoadConfig.getInstance().load();
-        HMConfig.Menu menu = config.getMenuList().get(mIndex);
-        String linkPage = config.getPageLink(menu);
-        textInfo.setText(menu.getName() + "\n" + linkPage);
+        mMenu = config.getMenuList().get(mIndex);
+        String linkPage = config.getPageLink(mMenu);
+        textInfo.setText(mMenu.getName() + "\n" + linkPage);
 
         loadPage(linkPage);
     }
@@ -85,6 +88,12 @@ public class PageFragment extends WebFragment implements PageInterface {
      */
     @Override
     public void willBeDisplayed() {
+        FragmentActivity activity = getActivity();
+
+        if (activity != null && activity instanceof BaseActivity) {
+            ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+        }
+
         // Do what you want here, for example animate the content
         if (fragmentContainer != null) {
             Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);

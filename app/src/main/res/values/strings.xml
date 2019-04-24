@@ -18,4 +18,5 @@
     <string name="status_unknown">Status Unknown</string>
     <string name="percent_progress">%1$d%%</string>
     <string name="retry">RETRY</string>
+    <string name="load_failed">Load Failed.</string>
 </resources>

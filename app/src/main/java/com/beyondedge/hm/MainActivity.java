@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -13,6 +12,8 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.beyondedge.hm.base.BaseSearchLibActivity;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -50,8 +51,6 @@ public class MainActivity extends BaseSearchLibActivity {
 //        mTextMessage = findViewById(R.id.message);
         viewPager = findViewById(R.id.view_pager);
 
-        Toolbar toolbar = findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
         settingBottomNavigation();
         initSearchView();
         initViewPager();
@@ -70,17 +69,14 @@ public class MainActivity extends BaseSearchLibActivity {
 
         currentFragment = adapterViewPager.getCurrentFragment();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                AHNotification notification = new AHNotification.Builder()
-                        .setText("100")
-                        .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
-                        .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
-                        .build();
-                bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
+        handler.postDelayed(() -> {
+            AHNotification notification = new AHNotification.Builder()
+                    .setText("100")
+                    .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
+                    .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
+                    .build();
+            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
 
-            }
         }, 2000);
     }
 
@@ -120,6 +116,8 @@ public class MainActivity extends BaseSearchLibActivity {
         bottomNavigation.setInactiveColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorInActive));
 
         bottomNavigation.setCurrentItem(0);
+        HMConfig config = LoadConfig.getInstance().load();
+        setTitleToolbar(config.getMenuList().get(0).getName());
 
         // OR
 //        AHNotification notification = new AHNotification.Builder()
@@ -135,34 +133,33 @@ public class MainActivity extends BaseSearchLibActivity {
         //        bottomNavigation.setItemDisableColor(Color.parseColor("#3A000000"));
 
         // Set listeners
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
+        bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
 
-                if (currentFragment == null) {
-                    currentFragment = adapterViewPager.getCurrentFragment();
-                }
-
-                if (wasSelected) {
-                    currentFragment.refresh();
-                    return true;
-                }
-
-                if (currentFragment != null) {
-                    currentFragment.willBeHidden();
-                }
-
-                viewPager.setCurrentItem(position, false);
-
-                if (currentFragment == null) {
-                    return true;
-                }
-
+            if (currentFragment == null) {
                 currentFragment = adapterViewPager.getCurrentFragment();
-                currentFragment.willBeDisplayed();
+            }
 
+            if (wasSelected) {
+                currentFragment.refresh();
                 return true;
             }
+
+            if (currentFragment != null) {
+                currentFragment.willBeHidden();
+            }
+
+            viewPager.setCurrentItem(position, false);
+
+            if (currentFragment == null) {
+                return true;
+            }
+
+            currentFragment = adapterViewPager.getCurrentFragment();
+            currentFragment.willBeDisplayed();
+
+            showHideSearchMenu(position != ViewPagerAdapter.MENU_MORE);
+
+            return true;
         });
 
 //        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {

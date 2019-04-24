@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.base.BaseFragment;
 
 import im.delight.android.webview.AdvancedWebView;
@@ -24,7 +25,7 @@ import im.delight.android.webview.AdvancedWebView;
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
-public class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
+public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     AdvancedWebView myWebView;
 
     @Override
@@ -65,7 +66,13 @@ public class WebFragment extends BaseFragment implements AdvancedWebView.Listene
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
+
+//                FragmentActivity activity = getActivity();
+//
+//                if (activity != null && activity instanceof BaseActivity) {
+//                    ((BaseActivity) activity).setTitleToolbar(title);
+//                }
             }
 
         });

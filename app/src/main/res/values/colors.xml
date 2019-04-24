@@ -4,9 +4,9 @@
     <!--<color name="colorPrimaryDark">#00574B</color>-->
     <!--<color name="colorAccent">#D81B60</color>-->
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#C6C6C6</color>
+    <color name="colorPrimaryDark">#1D1D1D</color>
+    <color name="colorAccent">#000000</color>
 
     <color name="colorBackground">#F8F8F8</color>
     <color name="colorBottomBar">#FFFFFF</color>
@@ -18,4 +18,7 @@
     <color name="colorNotificationText">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSecondaryText">#C6C6C6</color>
+
+    <color name="colorGrayTextMenu">#1D1D1D</color>
+    <color name="colorGrayTextTitle">#000000</color>
 </resources>

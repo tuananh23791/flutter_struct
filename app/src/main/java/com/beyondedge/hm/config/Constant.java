@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
  * Created by Hoa Nguyen on Apr 23 2019.
  */
 public class Constant {
-    public static final boolean IS_FORCE_LOCAL_CONFIG = false;
+    public static final boolean IS_FORCE_LOCAL_CONFIG = true;
     public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/HM/setting/id_en.txt";
 
     public static String getAuthorizationParam() {
