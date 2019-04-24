@@ -16,6 +16,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:name="androidx.core.content.FileProvider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="8c9eb83d238f201cfbdc3b1529996c712747daee" />

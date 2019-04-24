@@ -139,6 +139,19 @@ public class MaterialSearchView extends CardView {
         b.editText.setTextColor(getTextColor());
         setDrawableTint(b.imgBack.getDrawable(), searchIconColor);
         setDrawableTint(b.imgClear.getDrawable(), searchIconColor);
+        b.imgPicture.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenerQuery.onActionSearch(ActionSearch.Picture);
+            }
+        });
+
+        b.imgBarcode.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenerQuery.onActionSearch(ActionSearch.Barcode);
+            }
+        });
         checkForAdapter();
     }
 
@@ -396,10 +409,16 @@ public class MaterialSearchView extends CardView {
         return icons - padding;
     }
 
+    public enum ActionSearch {
+        Picture, Barcode
+    }
+
     public interface OnQueryTextListener {
         boolean onQueryTextSubmit(String query);
 
         boolean onQueryTextChange(String newText);
+
+        void onActionSearch(ActionSearch type /*0 - Picture ,1 - Barcode */);
     }
 
     public interface OnVisibilityListener {
