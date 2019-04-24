@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 public class Constant {
     public static final boolean IS_FORCE_LOCAL_CONFIG = true;
     public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/HM/setting/id_en.txt";
+    public static final String FOLLOW_US_PATH = "subListMenuFolowUs";
+    public static final String MENU_MORE_PATH = "subListMore";
 
     public static String getAuthorizationParam() {
         String username = "hm";

@@ -80,6 +80,8 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
+    implementation libraries.glide
+    annotationProcessor libraries.glide_compiler
 
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_recyclerview
