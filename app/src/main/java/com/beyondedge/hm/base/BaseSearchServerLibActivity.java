@@ -117,8 +117,20 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     }
 
     protected void showHideSearchMenu(boolean isShow) {
-        isShowSearchMenu = isShow;
-        invalidateOptionsMenu();
+//        isShowSearchMenu = isShow;
+//        invalidateOptionsMenu();
+
+        if (!isShow) {
+            searchHolder.hideSearch();
+            btSearch.setVisibility(View.GONE);
+            btShare.setVisibility(View.GONE);
+        } else {
+            if (isToolBarSearch) {
+                toolBarSearch();
+            } else {
+                menuSearch();
+            }
+        }
     }
 
     protected void toolBarSearch() {
