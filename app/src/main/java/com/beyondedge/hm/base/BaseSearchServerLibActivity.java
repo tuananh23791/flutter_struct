@@ -8,8 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,8 +44,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_UNKNOWN = -1;
     private static final int ACTION_PICK = 1;
     private static final int ACTION_TAKE_PICTURE = 2;
-
     protected QueryTextListener mQueryTextListener;
+    boolean isToolBarSearch = true;
+    private View btSearch;
+    private View btShare;
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
@@ -74,7 +75,37 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         }
 
         mQueryTextListener = getQueryTextListener();
+
+        btSearch = findViewById(R.id.btn_search);
+        btShare = findViewById(R.id.btn_share);
+
+        btShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO share
+            }
+        });
+
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchHolder.canBack(true);
+                searchHolder.showSearch();
+            }
+        });
+        searchHolder.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isShowSearchMenu) {
+                    toolBarSearch();
+                } else {
+                    menuSearch();
+                }
+            }
+        });
+
     }
+
 
     private void observeSearchList(SearchServerViewModel model) {
         model.getSearchListLive().observe(this, searchEntities -> {
@@ -88,9 +119,30 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         invalidateOptionsMenu();
     }
 
+    protected void toolBarSearch() {
+        isToolBarSearch = true;
+        btSearch.setVisibility(View.GONE);
+        btShare.setVisibility(View.GONE);
+        searchHolder.canBack(false);
+        searchHolder.showSearch();
+    }
+
+    protected void menuSearch() {
+        searchHolder.canBack(true);
+        isToolBarSearch = false;
+        btSearch.setVisibility(View.VISIBLE);
+        //TODO
+        btShare.setVisibility(View.GONE);
+        if (!isToolBarSearch) {
+            searchHolder.hideSearch();
+        } else {
+            searchHolder.hideKeyboard();
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        if (searchHolder.isVisible()) {
+        if (searchHolder.isVisible() && !isToolBarSearch) {
             searchHolder.hideSearch();
         } else {
             super.onBackPressed();
@@ -101,7 +153,11 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
-        searchHolder.hideSearch();
+        if (!isToolBarSearch)
+            searchHolder.hideSearch();
+        else {
+            searchHolder.hideKeyboard();
+        }
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
@@ -134,22 +190,24 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         //TODO
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_search) {
+//            searchHolder.showSearch();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_search) {
-            searchHolder.showSearch();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     //--Search Take Picture
 
     private void takePicture(int requestCode) {

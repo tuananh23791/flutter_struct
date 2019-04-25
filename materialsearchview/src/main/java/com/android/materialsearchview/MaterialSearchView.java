@@ -33,7 +33,7 @@ import com.android.materialsearchview.databinding.ViewSearchBinding;
 public class MaterialSearchView extends CardView {
     static final String LOG_TAG = "MaterialSearchView";
     private static final int ANIMATION_DURATION = 250;
-
+    boolean canBack = false;
     private boolean animateSearchView;
     private int searchMenuPosition;
     private String searchHint;
@@ -43,7 +43,6 @@ public class MaterialSearchView extends CardView {
     private CharSequence mUserQuery;
     private boolean hasAdapter = false;
     private boolean hideSearch = false;
-
     private ViewSearchBinding b;
     private OnQueryTextListener listenerQuery;
     private final TextView.OnEditorActionListener mOnEditorActionListener = new TextView.OnEditorActionListener() {
@@ -82,11 +81,11 @@ public class MaterialSearchView extends CardView {
         }
     };
 
+
     public MaterialSearchView(@NonNull Context context) {
         super(context);
         init(context, null);
     }
-
 
     public MaterialSearchView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -153,6 +152,13 @@ public class MaterialSearchView extends CardView {
             }
         });
         checkForAdapter();
+
+        canBack(canBack);
+    }
+
+    public void canBack(boolean canBack) {
+        this.canBack = canBack;
+        b.imgBack.setVisibility(canBack ? VISIBLE : GONE);
     }
 
     public void showLoading() {
@@ -281,6 +287,10 @@ public class MaterialSearchView extends CardView {
                     b.linearItemsHolder.setVisibility(View.VISIBLE);
                 }
             }
+    }
+
+    public void hideKeyboard() {
+        hideKeyboardFrom(getContext(), b.editText);
     }
 
     public void hideSearch() {

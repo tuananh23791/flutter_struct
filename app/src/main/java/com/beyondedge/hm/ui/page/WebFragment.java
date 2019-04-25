@@ -59,7 +59,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
             }
 
         });
