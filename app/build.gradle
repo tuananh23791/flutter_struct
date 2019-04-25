@@ -1,10 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
+    flavorDimensions "default"
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.beyondedge.hm"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
@@ -12,22 +15,91 @@ android {
         versionName version_app.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = "HM_" + output.name + "_v${variant.versionName}_(${releaseTime()}).apk"
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name.contains('release')) {
+            variant.setIgnore(true)
+        }
+    }
+
+    productFlavors {
+        def STRING = "String"
+        def BOOLEAN = "boolean"
+        def INT = "int"
+        def TRUE = "true"
+        def FALSE = "false"
+
+        def LOG = "LOG"
+
+        dev {
+            buildConfigField BOOLEAN, LOG, TRUE
+        }
+
+        stable {
+            buildConfigField BOOLEAN, LOG, FALSE
+        }
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd HHmmss", TimeZone.getTimeZone("GMT+7"))
 }
 
 dependencies {
+    api project(path: ':materialsearchview')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation libraries.barcodescanner_zxing
+    implementation libraries.retrofit
+    implementation libraries.retrofit_gson_converter
+    implementation libraries.retrofit_log
+    implementation libraries.gson
+    implementation libraries.fabric
+    implementation libraries.timber
+    implementation libraries.glide
+    annotationProcessor libraries.glide_compiler
+
     implementation libraries.androidx_appcompat
+    implementation libraries.androidx_recyclerview
     implementation libraries.androidx_material
     implementation libraries.androidx_constraintlayout
+    implementation libraries.androidx_viewmodel
+    implementation libraries.androidx_room
+    annotationProcessor libraries.androidx_room_compiler
+
+    implementation libraries.barcodescanner_zxing
+    implementation libraries.zxing_core
+//    implementation libraries.barcodescanner_core
+
+    implementation libraries.ah_bottom_navigation
+    implementation libraries.advanced_webview
+    implementation libraries.awesome_plash
+    implementation libraries.fetch_download_file
+//    implementation libraries.fetch_download_file_plugin
+
+
 }

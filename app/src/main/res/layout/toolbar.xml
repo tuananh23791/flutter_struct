@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/colorBackground"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp"
+    app:contentInsetStartWithNavigation="0dp"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+    app:theme="@style/myCustomAppBarTheme">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/AppTheme.ActionBar.TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Title" />
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btn_search"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_share"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_search"
+            tools:visibility="visible" />
+
+
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>

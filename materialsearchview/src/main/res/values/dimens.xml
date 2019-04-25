@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="appbar_height">48dp</dimen>
+    <dimen name="search_height">40dp</dimen>
+    <dimen name="image_padding">12dp</dimen>
+    <dimen name="image_search_padding">8dp</dimen>
+    <dimen name="search_text_size">18sp</dimen>
+</resources>
