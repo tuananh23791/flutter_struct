@@ -23,6 +23,7 @@ import com.beyondedge.hm.R;
 import com.beyondedge.hm.searchdb.SearchServerViewModel;
 import com.beyondedge.hm.searchdb.SearchSuggestRecyclerAdapter;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
+import com.beyondedge.hm.ui.screen.ScanActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_UNKNOWN = -1;
     private static final int ACTION_PICK = 1;
     private static final int ACTION_TAKE_PICTURE = 2;
+    private static final int ACTION_SCAN = 3;
     protected QueryTextListener mQueryTextListener;
     boolean isToolBarSearch = true;
     private View btSearch;
@@ -210,16 +212,25 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
     //--Search Take Picture
 
-    private void takePicture(int requestCode) {
+    private void takePictureWithPermission(int requestCode) {
         this.mImageAction = ACTION_TAKE_PICTURE;
         this.mRequestCode = requestCode;
 
         if (checkCameraImagePermission()) {
-            takePicture();
+            takePictureWithPermission();
         }
     }
 
-    private void takePicture() {
+    private void takeScanWithPermission(int requestCode) {
+        this.mImageAction = ACTION_SCAN;
+        this.mRequestCode = requestCode;
+
+        if (checkCameraImagePermission()) {
+            startActivity(ScanActivity.class);
+        }
+    }
+
+    private void takePictureWithPermission() {
         try {
             dispatchTakePictureIntent();
         } catch (IOException e) {
@@ -317,11 +328,13 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             case PERMISSIONS_REQUEST_CAMERA:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     if (mImageAction == ACTION_TAKE_PICTURE) {
-                        takePicture();
+                        takePictureWithPermission();
+                    } else if (mImageAction == ACTION_SCAN) {
+                        startActivity(ScanActivity.class);
                     }
                 } else {
                     //TODO
-//                    showRequestError(getString(R.string.permission_camera_note));
+                    Toast.makeText(this, getString(R.string.permission_camera_note), Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -370,9 +383,9 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     @Override
     public void onActionSearch(MaterialSearchView.ActionSearch type /*0 - Picture ,1 - Barcode */) {
         if (type == MaterialSearchView.ActionSearch.Picture) {
-            takePicture();
+            takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
-            //TODO
+            takeScanWithPermission(900);
         }
     }
 

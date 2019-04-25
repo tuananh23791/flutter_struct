@@ -19,4 +19,6 @@
     <string name="percent_progress">%1$d%%</string>
     <string name="retry">RETRY</string>
     <string name="load_failed">Load Failed.</string>
+    <string name="product_barcode">Product Barcode</string>
+    <string name="permission_camera_note">Please provide access Camera permission.</string>
 </resources>

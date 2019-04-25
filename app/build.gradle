@@ -92,6 +92,9 @@ dependencies {
     annotationProcessor libraries.androidx_room_compiler
 
     implementation libraries.barcodescanner_zxing
+    implementation libraries.zxing_core
+//    implementation libraries.barcodescanner_core
+
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview
     implementation libraries.awesome_plash
