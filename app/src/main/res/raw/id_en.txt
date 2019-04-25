@@ -4,7 +4,7 @@
       "versioniOS": "0.0.1",
       "status": 0 ,
       "MainDomain": "https://hmiduat.specom.io/",
-      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+      "iconUrl":"http://sharefile.beyondedge.com.sg/HM/social/"
     },
     "mainMenu": [
       {
@@ -54,32 +54,32 @@
 
      "subListMenuFolowUs":  [
           {
-            "iconName": "newletter",
+            "iconName": "newsletter.png",
             "url": "newsletter/",
             "name": "Newletter"
           },
           {
-            "iconName": "facebook",
+            "iconName": "facebook.png",
             "url": "https://www.facebook.com/hm",
             "name": "Facebook"
           },
           {
-            "iconName": "twitter",
+            "iconName": "twitter.png",
             "url": "https://twitter.com/hm",
             "name": "Twitter"
           },
           {
-            "iconName": "instagram",
+            "iconName": "instagram.png",
             "url": "https://www.instagram.com/hm/",
             "name": "Instagram"
           },
           {
-            "iconName": "youtube",
+            "iconName": "youtube.png",
             "url": "https://www.youtube.com/user/hennesandmauritz",
             "name": "Youtube"
           },
           {
-            "iconName": "pinterest",
+            "iconName": "pinterest.png",
             "url": "https://www.pinterest.com/hm/",
             "name": "Pinterest"
           }
@@ -88,19 +88,19 @@
     "region": [
       {
         "name": "Indonesia/Bahasa",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/ID-ID.txt"
       },
       {
         "name": "Indonesia/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/ID-EN.txt"
       },
       {
         "name": "Thailand/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/TH-EN.txt"
       },
       {
         "name": "Thailand/Thai",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/TH-TH.txt"
       }
     ],
     "lang": {
