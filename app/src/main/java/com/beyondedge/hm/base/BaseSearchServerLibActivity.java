@@ -25,6 +25,7 @@ import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.searchdb.SearchServerViewModel;
 import com.beyondedge.hm.searchdb.SearchSuggestRecyclerAdapter;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
+import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.ui.screen.ScanActivity;
 
 import java.io.File;
@@ -402,7 +403,14 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         if (type == MaterialSearchView.ActionSearch.Picture) {
             takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
-            takeScanWithPermission(900);
+            if (BuildConfig.DEBUG && BuildConfig.LOG) {
+//                Toast.makeText(this, "DEBUG", Toast.LENGTH_SHORT).show();
+                PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
+                        "http://sharefile.beyondedge.com.sg/hm/id/checkout.html", "checkout");
+            } else {
+                takeScanWithPermission(900);
+            }
+
         }
     }
 
