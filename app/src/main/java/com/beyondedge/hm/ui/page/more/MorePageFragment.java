@@ -23,6 +23,7 @@ import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.screen.FollowUsActivity;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.ui.screen.SettingsActivity;
 import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
 
 /**
@@ -63,6 +64,8 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             String url = menu.getUrl();
             if (url != null && url.contains(Constant.FOLLOW_US_PATH)) {
                 startActivity(FollowUsActivity.class);
+            } else if (url != null && url.contains(Constant.APP_SETTING_PATH)) {
+                startActivity(SettingsActivity.class);
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);

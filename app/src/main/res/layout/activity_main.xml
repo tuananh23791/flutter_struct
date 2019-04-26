@@ -67,7 +67,6 @@
             android:layout_margin="4dp"
             android:visibility="invisible"
             app:cardElevation="4dp"
-            app:search_hint="Search..."
             app:search_menu_position="1" />
 
     <!--</FrameLayout>-->

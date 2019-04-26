@@ -3,6 +3,7 @@ package com.beyondedge.hm.config;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.utils.CollectionUtils;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -13,10 +14,41 @@ import timber.log.Timber;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class HMConfig {
+    @SerializedName("lang")
+    public JsonElement jsonLanguage;
+
+    @SerializedName("version")
     private Version version;
+    @SerializedName("mainMenu")
     private ArrayList<Menu> mainMenu;
+    @SerializedName("subListMore")
     private ArrayList<Menu> subListMore;
+    @SerializedName("subListFolowUs")
     private ArrayList<Menu> subListMenuFolowUs;
+    @SerializedName("region")
+    private ArrayList<Region> region;
+
+    private JsonElement getLang() {
+        return jsonLanguage;
+    }
+
+    public String getLanguageBy(String param) {
+        try {
+            JsonElement jsonElement = jsonLanguage.getAsJsonObject().get(param);
+
+            if (jsonElement != null) {
+                return jsonElement.getAsString();
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        return "";
+    }
+
+    public ArrayList<Region> getRegion() {
+        return region;
+    }
 
     public Version getVersion() {
         return version;
@@ -67,23 +99,17 @@ public class HMConfig {
     }
 
     public static class Version {
-        private String versionAndroid;
-        private String versioniOS;
-        private int status;
+        @SerializedName("versionAndroidCode")
+        private ArrayList<String> versionAndroidForceUpdate;
+
         @SerializedName("MainDomain")
         private String mainDomain;
+
+        @SerializedName("iconUrl")
         private String iconUrl;
 
-        public String getVersionAndroid() {
-            return versionAndroid;
-        }
-
-        public String getVersioniOS() {
-            return versioniOS;
-        }
-
-        public int getStatus() {
-            return status;
+        public ArrayList<String> getVersionAndroidForceUpdate() {
+            return versionAndroidForceUpdate;
         }
 
         public String getMainDomain() {
@@ -156,6 +182,27 @@ public class HMConfig {
 
         public boolean hasSubMenu() {
             return !CollectionUtils.isEmpty(subListMenu);
+        }
+    }
+
+    public static class Region {
+        private String name;
+        private String propertyFile;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPropertyFile() {
+            return propertyFile;
+        }
+    }
+
+    public static class Lang {
+        private String search_product;
+
+        public String getSearchProduct() {
+            return search_product;
         }
     }
 }

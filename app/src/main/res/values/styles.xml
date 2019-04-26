@@ -27,4 +27,12 @@
         <item name="android:textColor">@color/colorGrayTextMenu</item>
     </style>
 
+    <style name="TextSettingTitle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorGrayTextTitle</item>
+    </style>
+
+    <style name="TextSettingInfo" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorGrayTextInfo</item>
+    </style>
+
 </resources>

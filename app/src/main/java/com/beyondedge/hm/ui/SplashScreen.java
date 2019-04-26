@@ -13,6 +13,7 @@ import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.ParseFileAsyncTask;
+import com.beyondedge.hm.utils.PrefManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
@@ -145,10 +146,10 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
 
     private void enqueueDownload() {
         doingTask++;
-        final String url = Constant.LINK_CONFIG;
+        final String url = PrefManager.getInstance().getCurrentLinkConfig();
         final String filePath = Constant.getLinkSavedFile();
         request = new Request(url, filePath);
-        request.addHeader("Authorization", Constant.getAuthorizationParam());
+//        request.addHeader("Authorization", Constant.getAuthorizationParam());
         fetch.attachFetchObserversForDownload(request.getId(), this)
                 .enqueue(request,
                         result -> request = result,
@@ -160,6 +161,7 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
 
     private void updateViews(@NotNull Download download, Reason reason) {
         if (request.getId() == download.getId()) {
+            Timber.d("updateViews : %1$s - %2$s", reason.toString(), download.getProgress());
             if (reason == Reason.DOWNLOAD_COMPLETED || reason == Reason.DOWNLOAD_ERROR) {
                 if (reason == Reason.DOWNLOAD_ERROR) {
                     Timber.d("Download  Error: %1$s", download.toString());

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
+import com.beyondedge.hm.config.HMConfig;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;

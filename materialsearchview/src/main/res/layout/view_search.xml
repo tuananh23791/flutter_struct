@@ -79,7 +79,7 @@
                 android:contentDescription="@null"
                 android:focusable="true"
                 android:padding="@dimen/image_search_padding"
-                app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+                app:srcCompat="@drawable/ic_camera"
                 tools:visibility="visible" />
 
             <ImageView

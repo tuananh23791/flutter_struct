@@ -1,5 +1,6 @@
 package com.beyondedge.hm.ui.screen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,14 @@ import com.beyondedge.hm.utils.URLUtils;
 public class PageWebActivity extends BaseActivitySingleFragment {
     public static final String EXTRA_URL = "EXTRA_URL";
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
+
+    public static void startScreen(Activity from, String url, String title) {
+        Intent intent = new Intent(from, PageWebActivity.class);
+        intent.putExtra(EXTRA_URL, url);
+        intent.putExtra(EXTRA_TITLE, title);
+
+        from.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

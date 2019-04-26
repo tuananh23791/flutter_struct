@@ -340,10 +340,12 @@ public class MaterialSearchView extends CardView {
         return searchHint;
     }
 
-    public void setSearchHint(String searchHint) {
+    public void setSearchHint(String searchHint, boolean isFocus) {
         this.searchHint = searchHint;
+        b.editText.setHint(this.searchHint);
         invalidate();
-        requestFocus();
+        if (isFocus)
+            requestFocus();
     }
 
     public void setSearchIconColor(int searchIconColor) {
