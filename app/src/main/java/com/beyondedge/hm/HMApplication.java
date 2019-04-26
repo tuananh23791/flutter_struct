@@ -21,9 +21,14 @@ import timber.log.Timber;
  */
 public class HMApplication extends Application {
     private AppExecutors appExecutors;
+    private static HMApplication instance;
+    public static Application getInstance(){
+        return instance;
+    }
 
     public void onCreate() {
         super.onCreate();
+        instance = this;
         appExecutors = new AppExecutors();
 
         boolean isDEBUG = BuildConfig.DEBUG && BuildConfig.LOG;

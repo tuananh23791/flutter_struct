@@ -15,7 +15,7 @@ import com.beyondedge.hm.utils.PrefManager;
 public class Constant {
     /*Cheat CODE*/
     public static final boolean IS_FORCE_LOCAL_CONFIG = false;
-    public static final boolean IS_FORCE_LOCAL_THAI_CONFIG = true;
+    public static final boolean IS_FORCE_LOCAL_THAI_CONFIG = false;
 
     public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt";
     public static final String FOLLOW_US_PATH = "subListMenuFolowUs";

@@ -1,6 +1,7 @@
 package com.beyondedge.hm.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -40,6 +41,14 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
     private Request request;
     private Fetch fetch;
     private int doingTask = 0;
+
+    public static void startActivity(Activity from) {
+        Intent intent = new Intent(from, SplashScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        from.startActivity(intent);
+    }
+
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
@@ -196,4 +205,5 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
 //        });
 //        snackbar.show();
     }
+
 }

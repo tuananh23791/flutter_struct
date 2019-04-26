@@ -144,7 +144,8 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         searchHolder.canBack(false);
-        searchHolder.showSearch();
+        if (!searchHolder.isVisible())
+            searchHolder.showSearch();
     }
 
     protected void menuSearch() {

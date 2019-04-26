@@ -13,6 +13,10 @@
             name="region"
             type="String" />
 
+        <variable
+            name="permissionText"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,86 +25,59 @@
         android:padding="@dimen/activity_vertical_margin">
 
         <TextView
-            android:id="@+id/tvNotification"
+            android:id="@+id/tvPermission"
             style="@style/TextSettingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/notification"
+            android:text="@string/permission_settings"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvNotificationInfo"
+            android:id="@+id/tvPermissionInfo"
             style="@style/TextSettingInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:text="@{permissionText}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNotification"
-            tools:text="Off" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPermission"
+            tools:text="- Camera - On\n- Notification - Off" />
 
-        <Switch
-            android:id="@+id/switchNotification"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/rightArrowPermission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNotificationInfo"
+            android:tint="@color/colorGrayLine"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPermissionInfo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvNotification" />
+            app:layout_constraintTop_toTopOf="@+id/tvPermission"
+            app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
         <View
-            android:id="@+id/lineNotification"
+            android:id="@+id/pressPermission"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            app:layout_constraintBottom_toTopOf="@+id/linePermission"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/linePermission"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorGrayLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNotificationInfo" />
-
-
-        <TextView
-            android:id="@+id/tvCamera"
-            style="@style/TextSettingTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/camera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineNotification" />
-
-        <TextView
-            android:id="@+id/tvCameraInfo"
-            style="@style/TextSettingInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCamera"
-            tools:text="On" />
-
-        <Switch
-            android:id="@+id/switchCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCameraInfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvCamera" />
-
-        <View
-            android:id="@+id/lineCamera"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorGrayLine"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCameraInfo" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tvPermissionInfo" />
+<!--////-->
         <TextView
             android:id="@+id/tvRegion"
             style="@style/TextSettingTitle"
@@ -109,7 +86,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/region_language"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineCamera" />
+            app:layout_constraintTop_toBottomOf="@+id/linePermission" />
 
         <TextView
             android:id="@+id/tvRegionInfo"
@@ -143,7 +120,7 @@
             app:layout_constraintBottom_toTopOf="@+id/lineRegion"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineCamera" />
+            app:layout_constraintTop_toBottomOf="@+id/linePermission" />
 
         <View
             android:id="@+id/lineRegion"

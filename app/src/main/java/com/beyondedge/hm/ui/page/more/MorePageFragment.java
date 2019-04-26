@@ -65,7 +65,7 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             if (url != null && url.contains(Constant.FOLLOW_US_PATH)) {
                 startActivity(FollowUsActivity.class);
             } else if (url != null && url.contains(Constant.APP_SETTING_PATH)) {
-                startActivity(SettingsActivity.class);
+                SettingsActivity.startScreen(getActivity(), menu.getName());
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);
