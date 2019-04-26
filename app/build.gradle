@@ -80,6 +80,7 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
+    implementation libraries.power_preference
     implementation libraries.glide
     annotationProcessor libraries.glide_compiler
 

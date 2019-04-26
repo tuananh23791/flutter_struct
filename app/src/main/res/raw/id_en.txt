@@ -1,14 +1,14 @@
 {
      "version": {
-      "versionAndroid": "0.0.1",
-      "versioniOS": "0.0.1",
-      "status": 0 ,
-      "MainDomain": "https://hmiduat.specom.io/",
-      "iconUrl":"http://sharefile.beyondedge.com.sg/HM/social/"
-    },
+      "versionAndroidCode": ["0.0.1","0.0.2"],
+      "versioniOS": ["0.0.1","0.0.2"],
+      "MainDomain": "https://hmthuat.specom.io/",
+      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+      },
+
     "mainMenu": [
       {
-	      "url": "",
+	    "url": "",
         "name": "Home"
       },
       {
@@ -24,9 +24,10 @@
         "name": "Shopping Cart"
       },
       {
-	      "url": "subListMore",
+	    "url": "subListMore",
         "name": "More"
-      }      ],
+      }
+	  ],
 
 
     "subListMore": [
@@ -44,7 +45,7 @@
         },
         {
           "name": "Follow Us",
-          "url": "subListMenuFolowUs"
+          "url": "subListFolowUs"
         },
         {
           "name": "App Setting",
@@ -52,11 +53,11 @@
         }
       ],
 
-     "subListMenuFolowUs":  [
+     "subListFolowUs":  [
           {
             "iconName": "newsletter.png",
             "url": "newsletter/",
-            "name": "Newletter"
+            "name": "Newsletter"
           },
           {
             "iconName": "facebook.png",
@@ -88,35 +89,33 @@
     "region": [
       {
         "name": "Indonesia/Bahasa",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/ID-ID.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
       },
       {
         "name": "Indonesia/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/ID-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
       },
       {
         "name": "Thailand/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/TH-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
       },
       {
         "name": "Thailand/Thai",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/HM/setting/TH-TH.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
       }
     ],
     "lang": {
         "search_product": "Search Product",
         "shop": "Shop",
         "cancel": "Cancel",
-        "app_setting_push_notification" : "H&M PUSH NOTIFICATION",
-        "app_setting_enable_news" : "Enable news from H&M",
+        "app_setting_push_notification" : "App Permission",
         "app_setting_region_settings" : "Region:",
-        "app_setting_distance_unit" : "Distance unit:",
-        "app_setting_touch_id" : "Touch ID",
-        "app_setting_about_the_app" : "ABOUT THE APP",
-        "app_setting_licences" : "Licences",
+        "app_setting_app_version" : "App Version",
         "scan_barcode" : "Barcode",
         "scan_productImage" : "Product Image",
-        "scan_TitleView" : "Scan"
+        "AlertNewVersion" : "Application has new version",
+		"NewVersion_update" : "Update",
+		"NewVersion_cancel" : "Cancel"
     }
 
 }

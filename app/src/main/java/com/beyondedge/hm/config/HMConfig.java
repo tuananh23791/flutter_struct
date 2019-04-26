@@ -13,10 +13,19 @@ import timber.log.Timber;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class HMConfig {
+    @SerializedName("version")
     private Version version;
+
+    @SerializedName("mainMenu")
     private ArrayList<Menu> mainMenu;
+
+    @SerializedName("subListMore")
     private ArrayList<Menu> subListMore;
+
+    @SerializedName("subListFolowUs")
     private ArrayList<Menu> subListMenuFolowUs;
+
+    @SerializedName("region")
     private ArrayList<Region> region;
 
     public ArrayList<Region> getRegion() {
@@ -72,23 +81,17 @@ public class HMConfig {
     }
 
     public static class Version {
-        private String versionAndroid;
-        private String versioniOS;
-        private int status;
+        @SerializedName("versionAndroidCode")
+        private ArrayList<String> versionAndroidForceUpdate;
+
         @SerializedName("MainDomain")
         private String mainDomain;
+
+        @SerializedName("iconUrl")
         private String iconUrl;
 
-        public String getVersionAndroid() {
-            return versionAndroid;
-        }
-
-        public String getVersioniOS() {
-            return versioniOS;
-        }
-
-        public int getStatus() {
-            return status;
+        public ArrayList<String> getVersionAndroidForceUpdate() {
+            return versionAndroidForceUpdate;
         }
 
         public String getMainDomain() {

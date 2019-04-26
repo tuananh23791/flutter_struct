@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.beyondedge.hm.HMApplication;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
 import com.beyondedge.hm.config.Constant;
@@ -25,6 +26,7 @@ import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.ParseFileAsyncTask;
 import com.beyondedge.hm.databinding.SettingsLayoutBinding;
 import com.beyondedge.hm.ui.SplashScreen;
+import com.beyondedge.hm.utils.PrefManager;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
@@ -41,10 +43,10 @@ import timber.log.Timber;
  * Created by Hoa Nguyen on Apr 25 2019.
  */
 public class SettingsFragment extends BaseFragment implements FetchObserver<Download> {
-    ProgressDialog dialog;
+    private ProgressDialog dialog;
     private SettingsLayoutBinding binding;
     private SettingViewModel mViewModel;
-    private int whichRegion = 0;
+    private int whichRegion = 1;
     private Request request;
     private Fetch fetch;
 
@@ -74,9 +76,7 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HMConfig config = LoadConfig.getInstance().load();
-        binding.setAppVersion(config.getVersion().getVersionAndroid());
-
+        binding.setAppVersion(((HMApplication) view.getContext().getApplicationContext()).getVersionName());
 
         binding.tvNotificationInfo.setText(mViewModel.getTextSwitch(binding.switchNotification.isChecked()));
         binding.tvCameraInfo.setText(mViewModel.getTextSwitch(binding.switchCamera.isChecked()));
@@ -88,30 +88,35 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
                 -> binding.tvCameraInfo.setText(mViewModel.getTextSwitch(isChecked)));
 
 
-        final ArrayList<HMConfig.Region> regions = config.getRegion();
-        binding.setRegion(regions.get(whichRegion).getName());
-
+        updateUIRegion();
         binding.pressRegion.setOnClickListener(v -> {
-//            HMConfig config = LoadConfig.getInstance().load();
-//            ArrayList<HMConfig.Region> regions = config.getRegion();
+            HMConfig config = LoadConfig.getInstance().load();
+            ArrayList<HMConfig.Region> regions = config.getRegion();
             CharSequence[] arrs = new CharSequence[regions.size()];
             HMConfig.Region region;
+            String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
             for (int i = 0; i < regions.size(); i++) {
                 region = regions.get(i);
                 arrs[i] = region.getName();
+
+                if (region.getPropertyFile().equals(currentLinkConfig)) {
+                    whichRegion = i;
+                }
             }
             new AlertDialog.Builder(view.getContext())
                     .setSingleChoiceItems(arrs, whichRegion, (dialog, which) -> {
-                        whichRegion = which;
-                        HMConfig.Region selectedRegion = regions.get(whichRegion);
-                        binding.setRegion(selectedRegion.getName());
-                        dialog.dismiss();
+                        //tODO
+//                        whichRegion = which;
+                        HMConfig.Region selectedRegion = regions.get(which);
+//                        binding.setRegion(selectedRegion.getName());
                         enqueueDownload(selectedRegion.getPropertyFile());
+                        dialog.dismiss();
                     })
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
         });
     }
+
 
     @Override
     public void onResume() {
@@ -147,10 +152,9 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
                 Toast.makeText(getActivity(), "Undo", Toast.LENGTH_SHORT).show();
             }
         });
-        Constant.currentLinkConfig = newLink;
-        final String url = newLink;
+        PrefManager.getInstance().putCurrentLinkConfig(newLink);
         final String filePath = Constant.getLinkSavedFile();
-        request = new Request(url, filePath);
+        request = new Request(newLink, filePath);
         request.addHeader("Authorization", Constant.getAuthorizationParam());
         fetch.attachFetchObserversForDownload(request.getId(), this)
                 .enqueue(request,
@@ -188,7 +192,9 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
                 if (getView() != null) {
                     //TODO
 //                    restartApp();
-                    Toast.makeText(getActivity(), "Parsed!", Toast.LENGTH_SHORT).show();
+                    request = null;
+                    Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+                    updateUIRegion();
 
                     if (getView() != null && dialog != null) {
                         dialog.dismiss();
@@ -196,6 +202,22 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
                 }
             }).execute();
         }
+    }
+
+    private void updateUIRegion() {
+        HMConfig config = LoadConfig.getInstance().load();
+        final ArrayList<HMConfig.Region> regions = config.getRegion();
+        HMConfig.Region region;
+        String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
+        for (int i = 0; i < regions.size(); i++) {
+            region = regions.get(i);
+
+            if (region.getPropertyFile().equals(currentLinkConfig)) {
+                whichRegion = i;
+            }
+        }
+        HMConfig.Region selectedRegion = regions.get(whichRegion);
+        binding.setRegion(selectedRegion.getName());
     }
 
     private void handleDownloadConfigError(String serverError) {

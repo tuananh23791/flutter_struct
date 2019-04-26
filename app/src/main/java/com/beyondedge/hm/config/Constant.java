@@ -11,14 +11,12 @@ import androidx.annotation.NonNull;
  * Created by Hoa Nguyen on Apr 23 2019.
  */
 public class Constant {
-    public static final boolean IS_FORCE_LOCAL_CONFIG = true;
-    public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/HM/setting/id_en.txt";
+    public static final boolean IS_FORCE_LOCAL_CONFIG = false;
+    public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt";
     public static final String FOLLOW_US_PATH = "subListMenuFolowUs";
     public static final String APP_SETTING_PATH = "app_setting";
     public static final String MENU_MORE_PATH = "subListMore";
 
-    //TODO save Prefs
-    public static String currentLinkConfig = LINK_CONFIG;
 
     public static String getAuthorizationParam() {
         String username = "hm";
