@@ -149,7 +149,7 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
         final String url = PrefManager.getInstance().getCurrentLinkConfig();
         final String filePath = Constant.getLinkSavedFile();
         request = new Request(url, filePath);
-        request.addHeader("Authorization", Constant.getAuthorizationParam());
+//        request.addHeader("Authorization", Constant.getAuthorizationParam());
         fetch.attachFetchObserversForDownload(request.getId(), this)
                 .enqueue(request,
                         result -> request = result,

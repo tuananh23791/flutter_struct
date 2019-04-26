@@ -48,7 +48,6 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".config.SingleDownloadActivity" />
         <activity android:name=".ui.screen.PageWebActivity" />
         <activity android:name=".ui.screen.FollowUsActivity" />
         <activity android:name=".ui.screen.ScanActivity" />

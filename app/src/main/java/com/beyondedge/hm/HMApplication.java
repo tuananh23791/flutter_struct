@@ -14,7 +14,6 @@ import com.tonyodev.fetch2.HttpUrlConnectionDownloader;
 import com.tonyodev.fetch2core.Downloader;
 
 import io.fabric.sdk.android.Fabric;
-import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 /**
@@ -27,14 +26,16 @@ public class HMApplication extends Application {
         super.onCreate();
         appExecutors = new AppExecutors();
 
+        boolean isDEBUG = BuildConfig.DEBUG && BuildConfig.LOG;
+
         final Fabric fabric = new Fabric.Builder(this)
                 .kits(new Crashlytics())
-                .debuggable(BuildConfig.DEBUG && !BuildConfig.LOG)
+                .debuggable(isDEBUG)
                 .build();
         Fabric.with(fabric);
 
         //Timber log
-        if (BuildConfig.DEBUG && BuildConfig.LOG) {
+        if (isDEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
 

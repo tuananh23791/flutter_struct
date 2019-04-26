@@ -155,7 +155,7 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
         PrefManager.getInstance().putCurrentLinkConfig(newLink);
         final String filePath = Constant.getLinkSavedFile();
         request = new Request(newLink, filePath);
-        request.addHeader("Authorization", Constant.getAuthorizationParam());
+//        request.addHeader("Authorization", Constant.getAuthorizationParam());
         fetch.attachFetchObserversForDownload(request.getId(), this)
                 .enqueue(request,
                         result -> request = result,
