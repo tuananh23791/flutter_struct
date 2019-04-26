@@ -25,7 +25,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.materialsearchview.databinding.ViewSearchBinding;
@@ -100,6 +102,15 @@ public class MaterialSearchView extends CardView {
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @BindingAdapter("dividerDirection")
+    public static void dividerDirection(RecyclerView recyclerView, boolean isDividerDirection) {
+        if (isDividerDirection) {
+            RecyclerView.ItemDecoration decoration =
+                    new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
+            recyclerView.addItemDecoration(decoration);
+        }
     }
 
     private void init(Context context, AttributeSet attrs) {

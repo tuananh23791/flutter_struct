@@ -119,10 +119,10 @@
             android:id="@+id/frameLoading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_below="@+id/editTextGroup"
             android:background="@color/colorWhite"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:visibility="gone">
 
             <ProgressBar
                 android:layout_width="24dp"
@@ -150,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                app:dividerDirection="@{true}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </RelativeLayout>
