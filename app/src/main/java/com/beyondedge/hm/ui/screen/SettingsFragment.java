@@ -1,7 +1,13 @@
 package com.beyondedge.hm.ui.screen;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +15,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.beyondedge.hm.HMApplication;
 import com.beyondedge.hm.R;
@@ -28,7 +34,6 @@ import java.util.ArrayList;
  */
 public class SettingsFragment extends BaseFragment {
     private SettingsLayoutBinding binding;
-    private SettingViewModel mViewModel;
     private int whichRegion = 1;
     private boolean isForceRestartApp = false;
 
@@ -43,7 +48,6 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
         super.onCreate(savedInstanceState);
     }
 
@@ -58,16 +62,6 @@ public class SettingsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setAppVersion(((HMApplication) view.getContext().getApplicationContext()).getVersionName());
-
-        binding.tvNotificationInfo.setText(mViewModel.getTextSwitch(binding.switchNotification.isChecked()));
-        binding.tvCameraInfo.setText(mViewModel.getTextSwitch(binding.switchCamera.isChecked()));
-
-        binding.switchNotification.setOnCheckedChangeListener((buttonView, isChecked)
-                -> binding.tvNotificationInfo.setText(mViewModel.getTextSwitch(isChecked)));
-
-        binding.switchCamera.setOnCheckedChangeListener((buttonView, isChecked)
-                -> binding.tvCameraInfo.setText(mViewModel.getTextSwitch(isChecked)));
-
 
         updateUIRegion();
         binding.pressRegion.setOnClickListener(v -> {
@@ -101,6 +95,43 @@ public class SettingsFragment extends BaseFragment {
                     })
                     .show();
         });
+
+        binding.pressPermission.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", HMApplication.getInstance().getPackageName(), null);
+            intent.setData(uri);
+            getActivity().startActivity(intent);
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAppPermision();
+    }
+
+    private void updateAppPermision() {
+        StringBuilder builder = new StringBuilder();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                builder.append("- Camera: On");
+            } else {
+                builder.append("- Camera: Off");
+            }
+
+            builder.append("\n");
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                builder.append("- Storage: On");
+            } else {
+                builder.append("- Storage: Off");
+            }
+
+            binding.setPermissionText(builder.toString());
+        } else {
+            builder.append("N/A");
+            binding.setPermissionText(builder.toString());
+        }
     }
 
     private void updateUIRegion() {

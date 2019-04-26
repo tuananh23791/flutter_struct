@@ -48,7 +48,7 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
                 | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY);
         from.startActivity(intent);
     }
-    
+
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
