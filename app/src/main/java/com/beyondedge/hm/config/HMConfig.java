@@ -17,6 +17,11 @@ public class HMConfig {
     private ArrayList<Menu> mainMenu;
     private ArrayList<Menu> subListMore;
     private ArrayList<Menu> subListMenuFolowUs;
+    private ArrayList<Region> region;
+
+    public ArrayList<Region> getRegion() {
+        return region;
+    }
 
     public Version getVersion() {
         return version;
@@ -156,6 +161,19 @@ public class HMConfig {
 
         public boolean hasSubMenu() {
             return !CollectionUtils.isEmpty(subListMenu);
+        }
+    }
+
+    public static class Region {
+        private String name;
+        private String propertyFile;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPropertyFile() {
+            return propertyFile;
         }
     }
 }

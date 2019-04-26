@@ -21,4 +21,6 @@
 
     <color name="colorGrayTextMenu">#1D1D1D</color>
     <color name="colorGrayTextTitle">#000000</color>
+    <color name="colorGrayLine">#C6C6C6</color>
+    <color name="colorGrayTextInfo">#B0B0B0</color>
 </resources>

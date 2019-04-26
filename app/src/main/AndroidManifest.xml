@@ -52,6 +52,7 @@
         <activity android:name=".ui.screen.PageWebActivity" />
         <activity android:name=".ui.screen.FollowUsActivity" />
         <activity android:name=".ui.screen.ScanActivity" />
+        <activity android:name=".ui.screen.SettingsActivity" />
     </application>
 
 </manifest>

@@ -21,4 +21,8 @@
     <string name="load_failed">Load Failed.</string>
     <string name="product_barcode">Product Barcode</string>
     <string name="permission_camera_note">Please provide access Camera permission.</string>
+    <string name="notification">Notification</string>
+    <string name="camera">Camera</string>
+    <string name="region_language">Region / Language</string>
+    <string name="app_version">App Version</string>
 </resources>

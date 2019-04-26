@@ -48,7 +48,7 @@
         },
         {
           "name": "App Setting",
-          "url": ""
+          "url": "app_setting"
         }
       ],
 
