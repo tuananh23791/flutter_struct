@@ -218,6 +218,9 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
         }
         HMConfig.Region selectedRegion = regions.get(whichRegion);
         binding.setRegion(selectedRegion.getName());
+
+        binding.tvLang.setText(config.getLang().getSearchProduct());
+        binding.tvLangInfo.setText(selectedRegion.getPropertyFile());
     }
 
     private void handleDownloadConfigError(String serverError) {

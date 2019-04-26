@@ -7,6 +7,8 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
+import com.beyondedge.hm.utils.PrefManager;
+
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
  */
@@ -36,6 +38,7 @@ public class Constant {
 
     @NonNull
     public static String getLinkSavedFile() {
-        return getSaveDir() + Uri.parse(LINK_CONFIG).getLastPathSegment();
+        String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
+        return getSaveDir() + Uri.parse(currentLinkConfig).getLastPathSegment();
     }
 }

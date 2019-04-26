@@ -28,6 +28,13 @@ public class HMConfig {
     @SerializedName("region")
     private ArrayList<Region> region;
 
+    @SerializedName("lang")
+    private Lang lang;
+
+    public Lang getLang() {
+        return lang;
+    }
+
     public ArrayList<Region> getRegion() {
         return region;
     }
@@ -177,6 +184,14 @@ public class HMConfig {
 
         public String getPropertyFile() {
             return propertyFile;
+        }
+    }
+
+    public static class Lang {
+        private String search_product;
+
+        public String getSearchProduct() {
+            return search_product;
         }
     }
 }

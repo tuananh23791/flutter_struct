@@ -12,13 +12,13 @@
         <variable
             name="region"
             type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_vertical_margin">
-
 
         <TextView
             android:id="@+id/tvNotification"
@@ -200,5 +200,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAppVersionInfo" />
 
+
+        <!--////For Testing-->
+
+        <TextView
+            android:id="@+id/tvLang"
+            style="@style/TextSettingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Search Product" />
+
+        <TextView
+            android:id="@+id/tvLangInfo"
+            style="@style/TextSettingInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLang"
+            tools:text="http" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
