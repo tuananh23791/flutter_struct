@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.materialsearchview.MaterialSearchView;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.searchdb.SearchServerViewModel;
 import com.beyondedge.hm.searchdb.SearchSuggestRecyclerAdapter;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
@@ -66,9 +68,12 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     }
 
     protected void initSearchView() {
+        HMConfig config = LoadConfig.getInstance().load();
         model = ViewModelProviders.of(this).get(SearchServerViewModel.class);
         observeSearchList(model);
         searchHolder = findViewById(R.id.searchHolder);
+
+        searchHolder.setSearchHint(config.getLanguageBy("search_product"), false);
         adapterSearch = new SearchSuggestRecyclerAdapter(this);
         searchHolder.addQueryTextListener(this);
         searchHolder.setSearchRecyclerAdapter(adapterSearch);

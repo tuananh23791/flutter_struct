@@ -114,7 +114,23 @@ public final class Utils {
     public static String loadJSONFromAsset(Context context) {
         String json;
         try {
-            InputStream is =  context.getResources().openRawResource(R.raw.id_en);
+            InputStream is = context.getResources().openRawResource(R.raw.id_en);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return "";
+        }
+        return json;
+    }
+
+    public static String loadJSONFromAsset(Context context, int idFile) {
+        String json;
+        try {
+            InputStream is = context.getResources().openRawResource(idFile);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

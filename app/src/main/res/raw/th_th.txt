@@ -1,0 +1,119 @@
+{
+    "version": {
+      "versionAndroidCode": ["0.0.1","0.0.2"],
+      "versioniOS": ["0.0.1","0.0.2"],
+      "MainDomain": "https://hmthuat.specom.io/",
+      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+      },
+
+    "mainMenu": [
+      {
+        "url": "",
+        "name": "Home-Thai"
+      },
+      {
+        "url": "customer/account/",
+        "name": "Profile-Thai"
+      },
+      {
+        "url": "wishlist/",
+        "name": "Wish List-Thai"
+      },
+      {
+        "url": "checkout/cart/",
+        "name": "Shopping Cart-Thai"
+      },
+      {
+        "url": "subListMore",
+        "name": "More-Thai"
+      }      ],
+
+
+    "subListMore": [
+        {
+          "name": "Customer Service-Thai",
+          "url": "customer-service.html"
+        },
+        {
+          "name": "Store Locator-Thai",
+          "url": "store-locator/"
+        },
+        {
+          "name": "Catalogue Lookup-Thai",
+          "url": "rest/V1/getProductsBySearch/articlenumber"
+        },
+        {
+          "name": "Follow Us-Thai",
+          "url": "subListFolowUs"
+        },
+        {
+          "name": "App Setting-Thai",
+          "url": "app_setting"
+        }
+      ],
+
+     "subListFolowUs":  [
+          {
+            "iconName": "newsletter.png",
+            "url": "newsletter/",
+            "name": "Newsletter-Thai"
+          },
+          {
+            "iconName": "facebook.png",
+            "url": "https://www.facebook.com/hm",
+            "name": "Facebook-Thai"
+          },
+          {
+            "iconName": "twitter.png",
+            "url": "https://twitter.com/hm",
+            "name": "Twitter-Thai"
+          },
+          {
+            "iconName": "instagram.png",
+            "url": "https://www.instagram.com/hm/",
+            "name": "Instagram-Thai"
+          },
+          {
+            "iconName": "youtube.png",
+            "url": "https://www.youtube.com/user/hennesandmauritz",
+            "name": "Youtube-Thai"
+          },
+          {
+            "iconName": "pinterest.png",
+            "url": "https://www.pinterest.com/hm/",
+            "name": "Pinterest-Thai"
+          }
+          ]  ,
+
+    "region": [
+      {
+        "name": "Indonesia/Bahasa",
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
+      },
+      {
+        "name": "Indonesia/English",
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+      },
+      {
+        "name": "Thailand/English",
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
+      },
+      {
+        "name": "Thailand/Thai",
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+      }
+    ],
+	"lang": {
+		"search_product": "ค้นหาผลิตภัณฑ์-Thai",
+		"shop": "Shop-Thai",
+		"bt_cancel": "ยกเลิก-Thai",
+		"app_setting_push_notification": "การอนุญาตแอป-Thai",
+		"app_setting_region_settings": "ภูมิภาค:-Thai",
+		"app_setting_app_version" : "App Version-Thai",
+		"scan_barcode": "บาร์โค้ด-Thai",
+		"scan_productImage": "รูปภาพผลิตภัณฑ์-Thai",
+		"AlertNewVersion": "แอปพลิเคชันมีเวอร์ชั่นใหม่-Thai",
+		"NewVersion_update": "อัปเดต-Thai",
+		"NewVersion_cancel": "ยกเลิก-Thai"
+	}
+}

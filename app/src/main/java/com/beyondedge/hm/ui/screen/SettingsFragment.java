@@ -219,7 +219,7 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
         HMConfig.Region selectedRegion = regions.get(whichRegion);
         binding.setRegion(selectedRegion.getName());
 
-        binding.tvLang.setText(config.getLang().getSearchProduct());
+        binding.tvLang.setText(config.getLanguageBy("search_product"));
         binding.tvLangInfo.setText(selectedRegion.getPropertyFile());
     }
 
