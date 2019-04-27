@@ -158,7 +158,7 @@ public class MainActivity extends BaseSearchServerLibActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
-            showHideSearchMenu(position != ViewPagerAdapter.MENU_MORE);
+            showHideSearchMenu(position == ViewPagerAdapter.MENU_HOME);
 
             return true;
         });

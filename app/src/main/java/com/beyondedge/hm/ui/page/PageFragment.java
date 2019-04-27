@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 
@@ -88,10 +87,16 @@ public class PageFragment extends WebFragment implements PageInterface {
         FragmentActivity activity = getActivity();
 
         if (activity != null && activity instanceof BaseActivity) {
-            if (Constant.MENU_MORE_PATH.equals(mMenu.getUrl())) {
-                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
-            } else {
+//            if (Constant.MENU_MORE_PATH.equals(mMenu.getUrl())) {
+//                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+//            } else {
+//                ((BaseActivity) activity).setTitleToolbar("");
+//            }
+
+            if (mIndex == 0) {
                 ((BaseActivity) activity).setTitleToolbar("");
+            } else {
+                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
             }
         }
 
