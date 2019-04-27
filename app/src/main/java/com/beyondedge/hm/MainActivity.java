@@ -16,7 +16,7 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
-import com.google.android.material.snackbar.Snackbar;
+import com.beyondedge.hm.ui.screen.PageWebActivity;
 
 public class MainActivity extends BaseSearchServerLibActivity {
     //    private TextView mTextMessage;
@@ -31,10 +31,12 @@ public class MainActivity extends BaseSearchServerLibActivity {
         return new QueryTextListener() {
             @Override
             public void onQueryTextSubmit(String query) {
-                //TODO query
-//        model.searchFood(query, 0);
-                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
-                        Snackbar.LENGTH_SHORT).show();
+                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
+                        "catalogsearch/result/?q=" + query;
+
+                PageWebActivity.startScreen(MainActivity.this, fullURL, "");
+//                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
+//                        Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
