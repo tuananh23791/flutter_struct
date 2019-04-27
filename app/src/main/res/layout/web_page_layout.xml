@@ -18,6 +18,12 @@
         android:textStyle="italic"
         android:visibility="gone" />
 
+    <ProgressBar
+        android:id="@+id/progress_horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <im.delight.android.webview.AdvancedWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"

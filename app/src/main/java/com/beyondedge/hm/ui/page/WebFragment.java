@@ -13,6 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +23,11 @@ import androidx.annotation.Nullable;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import im.delight.android.webview.AdvancedWebView;
-import timber.log.Timber;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
@@ -36,6 +35,7 @@ import timber.log.Timber;
 public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     AdvancedWebView myWebView;
     private TextView textInfo;
+    private ProgressBar progressHorizontal;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textInfo = view.findViewById(R.id.textInfo);
+        progressHorizontal = view.findViewById(R.id.progress_horizontal);
         textInfo.setVisibility(View.GONE);
         initView(view);
     }
@@ -88,6 +89,18 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //                if (activity != null && activity instanceof BaseActivity) {
 //                    ((BaseActivity) activity).setTitleToolbar(title);
 //                }
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int progress) {
+                if (progress < 100 && progressHorizontal.getVisibility() == ProgressBar.GONE) {
+                    progressHorizontal.setVisibility(ProgressBar.VISIBLE);
+                }
+
+                progressHorizontal.setProgress(progress);
+                if (progress >= 100) {
+                    progressHorizontal.setVisibility(ProgressBar.GONE);
+                }
             }
 
         });
