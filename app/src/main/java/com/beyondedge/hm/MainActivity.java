@@ -11,14 +11,13 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.beyondedge.hm.base.BaseSearchServerLibActivity;
+import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
 
-public class MainActivity extends BaseSearchServerLibActivity {
+public class MainActivity extends BaseTemplateActivity {
     //    private TextView mTextMessage;
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;
@@ -26,25 +25,25 @@ public class MainActivity extends BaseSearchServerLibActivity {
     private AHBottomNavigationViewPager viewPager;
     private Handler handler = new Handler();
 
-    @Override
-    protected QueryTextListener getQueryTextListener() {
-        return new QueryTextListener() {
-            @Override
-            public void onQueryTextSubmit(String query) {
-                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
-                        "catalogsearch/result/?q=" + query;
-
-                PageWebActivity.startScreen(MainActivity.this, fullURL, "");
-//                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
-//                        Snackbar.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onQueryTextChange(String newText) {
-
-            }
-        };
-    }
+//    @Override
+//    protected QueryTextListener getQueryTextListener() {
+//        return new QueryTextListener() {
+//            @Override
+//            public void onQueryTextSubmit(String query) {
+//                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
+//                        "catalogsearch/result/?q=" + query;
+//
+//                PageWebActivity.startScreen(MainActivity.this, fullURL, "");
+////                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
+////                        Snackbar.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onQueryTextChange(String newText) {
+//
+//            }
+//        };
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

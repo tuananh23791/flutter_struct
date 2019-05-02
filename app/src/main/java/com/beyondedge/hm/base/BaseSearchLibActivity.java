@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
+ * No more Used, check @{BaseSearchServerLibActivity}
  */
 public abstract class BaseSearchLibActivity extends BaseActivity implements
         MaterialSearchView.OnQueryTextListener, SearchRecyclerAdapter.SearchRecyclerInterface {
