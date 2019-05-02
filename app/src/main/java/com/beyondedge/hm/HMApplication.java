@@ -8,6 +8,7 @@ import com.beyondedge.hm.searchdb.db.SearchDatabase;
 import com.beyondedge.hm.searchdb.db.SearchRepository;
 import com.beyondedge.hm.utils.AppExecutors;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.FetchConfiguration;
 import com.tonyodev.fetch2.HttpUrlConnectionDownloader;
@@ -20,9 +21,10 @@ import timber.log.Timber;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class HMApplication extends Application {
-    private AppExecutors appExecutors;
     private static HMApplication instance;
-    public static Application getInstance(){
+    private AppExecutors appExecutors;
+
+    public static Application getInstance() {
         return instance;
     }
 
@@ -33,11 +35,14 @@ public class HMApplication extends Application {
 
         boolean isDEBUG = BuildConfig.DEBUG && BuildConfig.LOG;
 
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(isDEBUG)
+        // Initializes Fabric for builds that don't use the debug build type.
+        Crashlytics kit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder()
+                        .disabled(isDEBUG)
+                        .build())
                 .build();
-        Fabric.with(fabric);
+
+        Fabric.with(this, kit);
 
         //Timber log
         if (isDEBUG) {
