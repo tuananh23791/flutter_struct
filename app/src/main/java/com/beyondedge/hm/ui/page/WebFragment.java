@@ -23,9 +23,7 @@ import androidx.annotation.Nullable;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.beyondedge.hm.config.TemplateMessage;
 
 import im.delight.android.webview.AdvancedWebView;
 
@@ -216,14 +214,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
          */
         @JavascriptInterface
         public void postMessage(String message) {
-//            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-
-            try {
-                JSONObject jsonObject = new JSONObject(message);
-                Toast.makeText(mContext, jsonObject.getString("page_title"), Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            TemplateMessage templateMessage = TemplateMessage.fromJson(message);
+            Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
         }
 
         /**
