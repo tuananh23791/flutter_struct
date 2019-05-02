@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.config.HMConfig;
@@ -89,7 +87,17 @@ public class PageFragment extends WebFragment implements PageInterface {
         FragmentActivity activity = getActivity();
 
         if (activity != null && activity instanceof BaseActivity) {
-            ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+//            if (Constant.MENU_MORE_PATH.equals(mMenu.getUrl())) {
+//                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+//            } else {
+//                ((BaseActivity) activity).setTitleToolbar("");
+//            }
+
+            if (mIndex == 0) {
+                ((BaseActivity) activity).setTitleToolbar("");
+            } else {
+                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+            }
         }
 
         // Do what you want here, for example animate the content
@@ -97,6 +105,8 @@ public class PageFragment extends WebFragment implements PageInterface {
             Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
             fragmentContainer.startAnimation(fadeIn);
         }
+
+        //TODO handle category here
     }
 
     /**

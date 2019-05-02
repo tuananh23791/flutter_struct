@@ -1,54 +1,41 @@
 package com.beyondedge.hm.ui.screen;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.beyondedge.hm.HMApplication;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.config.ParseFileAsyncTask;
 import com.beyondedge.hm.databinding.SettingsLayoutBinding;
 import com.beyondedge.hm.ui.SplashScreen;
 import com.beyondedge.hm.utils.PrefManager;
-import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.Fetch;
-import com.tonyodev.fetch2.Request;
-import com.tonyodev.fetch2core.FetchObserver;
-import com.tonyodev.fetch2core.Reason;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import timber.log.Timber;
 
 /**
  * Created by Hoa Nguyen on Apr 25 2019.
  */
-public class SettingsFragment extends BaseFragment implements FetchObserver<Download> {
-    private ProgressDialog dialog;
+public class SettingsFragment extends BaseFragment {
     private SettingsLayoutBinding binding;
-    private SettingViewModel mViewModel;
     private int whichRegion = 1;
-    private Request request;
-    private Fetch fetch;
+    private boolean isForceRestartApp = false;
 
     public static SettingsFragment newInstance() {
 
@@ -61,8 +48,6 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
-        fetch = Fetch.Impl.getDefaultInstance();
         super.onCreate(savedInstanceState);
     }
 
@@ -77,16 +62,6 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setAppVersion(((HMApplication) view.getContext().getApplicationContext()).getVersionName());
-
-        binding.tvNotificationInfo.setText(mViewModel.getTextSwitch(binding.switchNotification.isChecked()));
-        binding.tvCameraInfo.setText(mViewModel.getTextSwitch(binding.switchCamera.isChecked()));
-
-        binding.switchNotification.setOnCheckedChangeListener((buttonView, isChecked)
-                -> binding.tvNotificationInfo.setText(mViewModel.getTextSwitch(isChecked)));
-
-        binding.switchCamera.setOnCheckedChangeListener((buttonView, isChecked)
-                -> binding.tvCameraInfo.setText(mViewModel.getTextSwitch(isChecked)));
-
 
         updateUIRegion();
         binding.pressRegion.setOnClickListener(v -> {
@@ -105,102 +80,57 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
             }
             new AlertDialog.Builder(view.getContext())
                     .setSingleChoiceItems(arrs, whichRegion, (dialog, which) -> {
-                        //tODO
-//                        whichRegion = which;
                         HMConfig.Region selectedRegion = regions.get(which);
-//                        binding.setRegion(selectedRegion.getName());
-                        enqueueDownload(selectedRegion.getPropertyFile());
+                        PrefManager.getInstance().putCurrentLinkConfig(selectedRegion.getPropertyFile());
+                        if (which != whichRegion) {
+                            isForceRestartApp = true;
+                        }
                         dialog.dismiss();
                     })
                     .setPositiveButton(android.R.string.ok, null)
+                    .setOnDismissListener(dialog -> {
+                        if (isForceRestartApp) {
+                            new Handler().postDelayed(this::restartApp, 200);
+                        }
+                    })
                     .show();
         });
-    }
 
+        binding.pressPermission.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", HMApplication.getInstance().getPackageName(), null);
+            intent.setData(uri);
+            getActivity().startActivity(intent);
+        });
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (request != null) {
-            fetch.attachFetchObserversForDownload(request.getId(), this);
-        }
+        updateAppPermision();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (request != null) {
-            fetch.removeFetchObserversForDownload(request.getId(), this);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (fetch != null)
-            fetch.close();
-    }
-
-    private void enqueueDownload(String newLink) {
-        dialog = ProgressDialog.show(getActivity(), "",
-                "Loading. Please wait...", true, true);
-
-        dialog.setOnDismissListener(dialog -> {
-            if (request != null) {
-                fetch.cancel(request.getId());
-                request = null;
-                Toast.makeText(getActivity(), "Undo", Toast.LENGTH_SHORT).show();
+    private void updateAppPermision() {
+        StringBuilder builder = new StringBuilder();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                builder.append("- Camera: On");
+            } else {
+                builder.append("- Camera: Off");
             }
-        });
-        PrefManager.getInstance().putCurrentLinkConfig(newLink);
-        final String filePath = Constant.getLinkSavedFile();
-        request = new Request(newLink, filePath);
-//        request.addHeader("Authorization", Constant.getAuthorizationParam());
-        fetch.attachFetchObserversForDownload(request.getId(), this)
-                .enqueue(request,
-                        result -> request = result,
-//                        result -> {
-//                        }
-                        result -> handleDownloadConfigError(result.toString())
-                );
-    }
 
-    @Override
-    public void onChanged(Download download, @NotNull Reason reason) {
-        if (getView() != null) {
-            if (request.getId() == download.getId()) {
-                if (reason == Reason.DOWNLOAD_COMPLETED || reason == Reason.DOWNLOAD_ERROR) {
-                    if (reason == Reason.DOWNLOAD_ERROR) {
-                        Timber.d("Download  Error: %1$s", download.toString());
-                    }
-                    request = null;
-                    readConfig();
-                } else if (reason == Reason.DOWNLOAD_WAITING_ON_NETWORK) {
-                    Toast.makeText(getActivity(), "Waiting for network...", Toast.LENGTH_SHORT).show();
-                } else if (reason == Reason.DOWNLOAD_CANCELLED) {
-                    request = null;
-                    Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
-                }
+            builder.append("\n");
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                builder.append("- Storage: On");
+            } else {
+                builder.append("- Storage: Off");
             }
-        }
-    }
 
-    private void readConfig() {
-        Timber.d("Download  Completed");
-        if (this.getContext() != null) {
-            new ParseFileAsyncTask(this.getContext()).setTaskListener(() -> {
-                if (getView() != null) {
-                    //TODO
-//                    restartApp();
-                    request = null;
-                    Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
-                    updateUIRegion();
-
-                    if (getView() != null && dialog != null) {
-                        dialog.dismiss();
-                    }
-                }
-            }).execute();
+            binding.setPermissionText(builder.toString());
+        } else {
+            builder.append("N/A");
+            binding.setPermissionText(builder.toString());
         }
     }
 
@@ -223,19 +153,7 @@ public class SettingsFragment extends BaseFragment implements FetchObserver<Down
         binding.tvLangInfo.setText(selectedRegion.getPropertyFile());
     }
 
-    private void handleDownloadConfigError(String serverError) {
-        //TODO
-        Timber.d("Download Config Error: %1$s", serverError);
-        Toast.makeText(getActivity(), "Cannot load Region", Toast.LENGTH_SHORT).show();
-    }
-
     private void restartApp() {
-        Intent mStartActivity = new Intent(getActivity(), SplashScreen.class);
-        int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId, mStartActivity,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
+        SplashScreen.startActivity(getActivity());
     }
 }

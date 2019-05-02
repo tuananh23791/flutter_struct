@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.eugene.fithealth.search.SearchActivity">
 
     <data>
@@ -15,6 +15,7 @@
         android:id="@+id/itemHolder"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/colorWhite"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -27,9 +28,9 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:contentDescription="@null"
+            android:tint="@android:color/darker_gray"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_search"
-            android:tint="@android:color/darker_gray" />
+            app:srcCompat="@drawable/ic_search" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,13 +38,14 @@
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingStart="72dp"
-            android:paddingLeft="72dp"
-            android:paddingEnd="72dp"
-            android:paddingRight="72dp"
+            android:paddingStart="46dp"
+            android:paddingLeft="46dp"
+            android:paddingEnd="46dp"
+            android:paddingRight="46dp"
             android:text="@{text}"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="search string" />
 
         <ImageView
             android:id="@+id/imgDelete"
@@ -58,8 +60,8 @@
             android:focusable="true"
             android:foreground="@drawable/image_background"
             android:padding="12dp"
+            android:tint="@android:color/darker_gray"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_delete"
-            android:tint="@android:color/darker_gray" />
+            app:srcCompat="@drawable/ic_delete" />
     </RelativeLayout>
 </layout>

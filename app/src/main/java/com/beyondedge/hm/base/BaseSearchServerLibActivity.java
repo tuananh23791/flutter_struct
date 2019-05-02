@@ -122,6 +122,16 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         });
     }
 
+    public void setToolBarSearch(boolean toolBarSearch) {
+        isToolBarSearch = toolBarSearch;
+
+        if (isToolBarSearch) {
+            toolBarSearch();
+        } else {
+            menuSearch();
+        }
+    }
+
     protected void showHideSearchMenu(boolean isShow) {
 //        isShowSearchMenu = isShow;
 //        invalidateOptionsMenu();
@@ -144,7 +154,8 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         searchHolder.canBack(false);
-        searchHolder.showSearch();
+        if (!searchHolder.isVisible())
+            searchHolder.showSearch();
     }
 
     protected void menuSearch() {
