@@ -2,6 +2,7 @@ package com.beyondedge.hm.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -13,11 +14,14 @@ import androidx.annotation.NonNull;
 import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.config.Constant;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.ParseFileAsyncTask;
+import com.beyondedge.hm.utils.AppVersion;
 import com.beyondedge.hm.utils.PrefManager;
+import com.beyondedge.hm.utils.URLUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 import com.tonyodev.fetch2core.FetchObserver;
@@ -34,6 +38,10 @@ import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
+ * <p>
+ * 1.show splash logo
+ * 2.download config file
+ * 3.check version app
  */
 public class SplashScreen extends AwesomeSplash implements FetchObserver<Download> {
 
@@ -77,14 +85,55 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
     @Override
     public void animationsFinished() {
         doingTask--;
-        gotoMainScreen();
+        postExecuteSplashScreen();
     }
 
-    private void gotoMainScreen() {
+    private void postExecuteSplashScreen() {
         if (doingTask <= 0) {
-            startActivity(new Intent(SplashScreen.this, MainActivity.class));
-            finish();
+            HMConfig config = LoadConfig.getInstance().load();
+            if (config != null) {
+                //show popup force update app
+                boolean isShowDialog = AppVersion.isForceUpdate(this,
+                        config.getVersion().getVersionAndroidForceUpdate());
+                boolean isForceUpdate = false;
+                if (isShowDialog) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
+                            .setMessage(config.getLanguageBy("AlertNewVersion"))
+                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
+                                    (dialog, which) -> {
+                                        dialog.dismiss();
+                                        SplashScreen.this.finish();
+                                        URLUtils.openInWebBrowser(SplashScreen.this,
+                                                "https://play.google.com/store/apps?hl=en");
+                                    });
+
+                    if (!isForceUpdate) {
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            directToMainScreen();
+                        });
+                        builder.setCancelable(true);
+                    } else {
+                        builder.setCancelable(false);
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            SplashScreen.this.finish();
+                        });
+                    }
+
+                    builder.show();
+                } else {
+                    directToMainScreen();
+                }
+            } else {
+                directToMainScreen();
+            }
         }
+    }
+
+    private void directToMainScreen() {
+        startActivity(new Intent(SplashScreen.this, MainActivity.class));
+        finish();
     }
 
     @Override
@@ -192,18 +241,9 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
     private void readConfig() {
         new ParseFileAsyncTask(this).setTaskListener(() -> {
             doingTask--;
-            gotoMainScreen();
+            postExecuteSplashScreen();
         }).execute();
     }
 
-    private void showDownloadErrorSnackBar(@NotNull Error error) {
-        //TODO
-//        final Snackbar snackbar = Snackbar.make(mainView, "Download Failed: ErrorCode: " + error, Snackbar.LENGTH_INDEFINITE);
-//        snackbar.setAction(R.string.retry, v -> {
-//            fetch.retry(request.getId());
-//            snackbar.dismiss();
-//        });
-//        snackbar.show();
-    }
 
 }
