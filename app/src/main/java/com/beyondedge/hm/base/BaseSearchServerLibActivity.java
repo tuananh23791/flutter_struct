@@ -1,6 +1,7 @@
 package com.beyondedge.hm.base;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,13 +50,9 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_TAKE_PICTURE = 2;
     private static final int ACTION_SCAN = 3;
     protected QueryTextListener mQueryTextListener;
-    boolean isToolBarSearch = true;
-    private View btSearch;
-    private View btShare;
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
-    private boolean isShowSearchMenu = true;
     private int mRequestCode;
     private int mImageAction;
     private String mCurrentPhotoPath;
@@ -66,6 +62,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    boolean isSearchInit() {
+        return searchHolder != null;
     }
 
     protected void initSearchView() {
@@ -84,34 +84,34 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         mQueryTextListener = getQueryTextListener();
 
-        btSearch = findViewById(R.id.btn_search);
-        btShare = findViewById(R.id.btn_share);
+    }
 
-        btShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO share
-            }
-        });
+    protected void canBack(boolean can) {
+        searchHolder.canBack(can);
+    }
 
-        btSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchHolder.canBack(true);
-                searchHolder.showSearch();
-            }
-        });
-        searchHolder.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isShowSearchMenu) {
-                    toolBarSearch();
-                } else {
-                    menuSearch();
-                }
-            }
-        });
+    protected void showSearch() {
+        if (!searchHolder.isVisible())
+            searchHolder.showSearch();
+    }
 
+    protected void hideSearch() {
+        if (searchHolder.isVisible())
+            searchHolder.hideSearch();
+        else
+            searchHolder.hideKeyboard();
+    }
+
+    protected boolean isSearchVisible() {
+        return searchHolder.isVisible();
+    }
+
+    protected void hideKeyboard() {
+        searchHolder.hideKeyboard();
+    }
+
+    protected boolean isVisible() {
+        return searchHolder.isVisible();
     }
 
 
@@ -122,73 +122,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         });
     }
 
-    public void setToolBarSearch(boolean toolBarSearch) {
-        isToolBarSearch = toolBarSearch;
-
-        if (isToolBarSearch) {
-            toolBarSearch();
-        } else {
-            menuSearch();
-        }
-    }
-
-    protected void showHideSearchMenu(boolean isShow) {
-//        isShowSearchMenu = isShow;
-//        invalidateOptionsMenu();
-
-        if (!isShow) {
-            searchHolder.hideSearch();
-            btSearch.setVisibility(View.GONE);
-            btShare.setVisibility(View.GONE);
-        } else {
-            if (isToolBarSearch) {
-                toolBarSearch();
-            } else {
-                menuSearch();
-            }
-        }
-    }
-
-    protected void toolBarSearch() {
-        isToolBarSearch = true;
-        btSearch.setVisibility(View.GONE);
-        btShare.setVisibility(View.GONE);
-        searchHolder.canBack(false);
-        if (!searchHolder.isVisible())
-            searchHolder.showSearch();
-    }
-
-    protected void menuSearch() {
-        searchHolder.canBack(true);
-        isToolBarSearch = false;
-        btSearch.setVisibility(View.VISIBLE);
-        //TODO
-        btShare.setVisibility(View.GONE);
-        if (!isToolBarSearch) {
-            searchHolder.hideSearch();
-        } else {
-            searchHolder.hideKeyboard();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (searchHolder.isVisible() && !isToolBarSearch) {
-            searchHolder.hideSearch();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     // MaterialSearchView listeners
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
-        if (!isToolBarSearch)
-            searchHolder.hideSearch();
-        else {
-            searchHolder.hideKeyboard();
-        }
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
@@ -200,9 +137,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public boolean onQueryTextChange(String newText) {
         searchHolder.showRecycler();
 
-//        if (mQueryTextListener != null) {
-//            mQueryTextListener.onQueryTextChange(newText);
-//        }
+        //TODO improve here
         searchHolder.showLoading();
         model.searchQuery(newText);
         return true;
@@ -220,24 +155,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public void onSearchDeleteClicked(SearchEntity searchEntity) {
         //TODO
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_search) {
-//            searchHolder.showSearch();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
     //--Search Take Picture
 
@@ -415,13 +332,30 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
             if (BuildConfig.DEBUG && BuildConfig.LOG) {
-//                Toast.makeText(this, "DEBUG", Toast.LENGTH_SHORT).show();
-                PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
-                        "http://sharefile.beyondedge.com.sg/hm/id/checkout.html", "checkout");
+                showTestPopup();
             } else {
                 takeScanWithPermission(900);
             }
+        }
+    }
 
+    private void showTestPopup() {
+        if (BuildConfig.DEBUG && BuildConfig.LOG) {
+            final String[] data = {
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCate.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCateShare.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/product%20detail.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/profile.html",
+            };
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(data, 0, (dialog, which) -> {
+                        PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
+                                data[which], "");
+                        dialog.dismiss();
+                    })
+                    .show();
         }
     }
 

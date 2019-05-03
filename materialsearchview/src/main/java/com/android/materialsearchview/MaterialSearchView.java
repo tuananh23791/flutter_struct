@@ -60,6 +60,7 @@ public class MaterialSearchView extends CardView {
         public void onClick(View v) {
             if (v == b.imgClear) {
                 setSearchText(null);
+                hideKeyboard();
             } else if (v == b.imgBack) {
                 hideSearch();
             }
@@ -271,6 +272,7 @@ public class MaterialSearchView extends CardView {
         hideSearch = false;
         checkForAdapter();
         setVisibility(View.VISIBLE);
+
         if (animateSearchView)
             if (Build.VERSION.SDK_INT >= 21) {
                 Animator animatorShow = ViewAnimationUtils.createCircularReveal(

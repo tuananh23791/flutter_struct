@@ -19,13 +19,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.beyondedge.hm.base.BaseTemplateActivity;
+import com.beyondedge.hm.config.TemplateMessage;
 
 import im.delight.android.webview.AdvancedWebView;
 
@@ -110,7 +110,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
     }
 
-    protected void loadPage(String url) {
+    public void loadPage(String url) {
         if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
             textInfo.setVisibility(View.VISIBLE);
             textInfo.setText(url);
@@ -216,13 +216,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
          */
         @JavascriptInterface
         public void postMessage(String message) {
-//            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            TemplateMessage templateMessage = TemplateMessage.fromJson(message);
+            Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
 
-            try {
-                JSONObject jsonObject = new JSONObject(message);
-                Toast.makeText(mContext, jsonObject.getString("page_title"), Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            FragmentActivity activity = getActivity();
+
+            if (activity instanceof BaseTemplateActivity) {
+                ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
             }
         }
 

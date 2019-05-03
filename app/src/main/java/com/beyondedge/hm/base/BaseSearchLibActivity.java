@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
+ * No more Used, check @{BaseSearchServerLibActivity}
  */
 public abstract class BaseSearchLibActivity extends BaseActivity implements
         MaterialSearchView.OnQueryTextListener, SearchRecyclerAdapter.SearchRecyclerInterface {
@@ -76,7 +77,7 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
         model.insertSearchEntity(query);
-        searchHolder.hideSearch();
+//        searchHolder.hideSearch();
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
