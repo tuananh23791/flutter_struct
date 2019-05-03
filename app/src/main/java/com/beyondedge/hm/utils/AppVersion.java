@@ -12,18 +12,14 @@ import java.util.ArrayList;
  */
 public class AppVersion {
     public static boolean isForceUpdate(Context context, ArrayList<String> listForce) {
-        if (CollectionUtils.isEmpty(listForce)) {
+        String currentAppVer = getCurrentAppVer(context);
+        return isForceUpdate(currentAppVer, listForce);
+    }
+
+    public static boolean isForceUpdate(String currentAppVer, ArrayList<String> listForce) {
+        if (CollectionUtils.isEmpty(listForce) || TextUtils.isEmpty(currentAppVer)) {
             return false;
         }
-        String currentAppVer;
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            currentAppVer = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            currentAppVer = "";
-        }
-
         String largestVer = currentAppVer;
 
         for (String ver : listForce) {
@@ -35,6 +31,19 @@ public class AppVersion {
         return !largestVer.equals(currentAppVer);
     }
 
+    private static String getCurrentAppVer(Context context) {
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * check version is lager or equal other version
+     */
     public static boolean isLager(String ver, String ver2) {
         if (TextUtils.isEmpty(ver) || TextUtils.isEmpty(ver2)) return false;
 
@@ -57,8 +66,6 @@ public class AppVersion {
 
         //== ver is return true
         return true;
-
-
     }
 
     public static String getStringNum(String[] parse, int pos) {
