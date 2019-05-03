@@ -71,6 +71,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         super.onCreate(savedInstanceState);
     }
 
+    boolean isSearchInit() {
+        return searchHolder != null;
+    }
+
     protected void initSearchView() {
         HMConfig config = LoadConfig.getInstance().load();
         model = ViewModelProviders.of(this).get(SearchServerViewModel.class);
@@ -132,6 +136,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             searchHolder.hideSearch();
         else
             searchHolder.hideKeyboard();
+    }
+
+    protected boolean isSearchVisible() {
+        return searchHolder.isVisible();
     }
 
     protected void hideKeyboard() {

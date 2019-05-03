@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivitySingleFragment;
 import com.beyondedge.hm.base.EmptyFragment;
+import com.beyondedge.hm.ui.page.WebFragment;
 import com.beyondedge.hm.utils.URLUtils;
 
 /**
@@ -50,6 +51,17 @@ public class PageWebActivity extends BaseActivitySingleFragment {
         } else {
             showAlertDialog("URL invalid", false, (dialog, which) -> finish());
             return EmptyFragment.newInstance(getString(R.string.load_failed));
+        }
+    }
+
+    @Override
+    protected void handleSearchLink(String fullURL) {
+//        Snackbar.make(findViewById(R.id.frame_content), "Link:[" + fullURL + "]",
+//                Snackbar.LENGTH_SHORT).show();
+
+        Fragment currentFragment = getCurrentFragment();
+        if (currentFragment instanceof WebFragment) {
+            ((WebFragment) currentFragment).loadPage(fullURL);
         }
     }
 }

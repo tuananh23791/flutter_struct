@@ -110,7 +110,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
     }
 
-    protected void loadPage(String url) {
+    public void loadPage(String url) {
         if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
             textInfo.setVisibility(View.VISIBLE);
             textInfo.setText(url);

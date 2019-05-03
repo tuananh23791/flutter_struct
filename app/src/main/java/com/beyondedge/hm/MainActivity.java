@@ -52,8 +52,8 @@ public class MainActivity extends BaseTemplateActivity {
 //        mTextMessage = findViewById(R.id.message);
         viewPager = findViewById(R.id.view_pager);
 
-        settingBottomNavigation();
         initSearchView();
+        settingBottomNavigation();
         initViewPager();
     }
 
@@ -118,6 +118,13 @@ public class MainActivity extends BaseTemplateActivity {
         bottomNavigation.setInactiveColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorInActive));
 
         bottomNavigation.setCurrentItem(0);
+        bottomNavigation.post(new Runnable() {
+            @Override
+            public void run() {
+                setSearchType(SEARCH_TYPE_FULL_TOOLBAR);
+            }
+        });
+
         HMConfig config = LoadConfig.getInstance().load();
         setTitleToolbar(config.getMainMenuList().get(0).getName());
 
@@ -159,9 +166,7 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
-            //TODO
-            showHideSearchMenu(position == ViewPagerAdapter.MENU_HOME);
-
+            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
             return true;
         });
 

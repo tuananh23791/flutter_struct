@@ -13,14 +13,19 @@ import com.beyondedge.hm.utils.URLUtils;
  * Created by Hoa Nguyen on May 02 2019.
  */
 public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
+    public static final int SEARCH_TYPE_HIDE_ALL = 0;
+    public static final int SEARCH_TYPE_FULL_TOOLBAR = 1;
+    public static final int SEARCH_TYPE_MENU = 2;
     public static final String HOME = "home";
     public static final String PROD_CAT = "prod_cat";
     public static final String PROD_DETAIL = "prod_detail";
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
 
-    private boolean isFULLToolBarSearch = true;
+    //    private boolean isFULLToolBarSearch = true;
+    private int searchType = SEARCH_TYPE_HIDE_ALL;
     private boolean isCanShare = false;
+    private boolean isCanBack = false;
     private View btSearch;
     private View btShare;
 
@@ -43,11 +48,39 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             canBack(true);
             showSearch();
         });
+
+        super.canBack(false);
+
+        validateSearch();
+    }
+
+    @Override
+    protected void canBack(boolean can) {
+//        super.canBack(can);
+
+        isCanBack = can;
+    }
+
+    @Override
+    protected void enableBackButtonToolbar() {
+//        super.enableBackButtonToolbar();
+
+        View backBt = findViewById(R.id.btn_back);
+        if (backBt != null) {
+            backBt.setVisibility(View.VISIBLE);
+            backBt.setOnClickListener(v -> {
+                if (isCanBack && isSearchVisible()) {
+                    hideSearch();
+                } else {
+                    finish();
+                }
+            });
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (isVisible() && !isFULLToolBarSearch) {
+        if (isVisible() && searchType == SEARCH_TYPE_MENU) {
             hideSearch();
         } else {
             super.onBackPressed();
@@ -57,11 +90,11 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     @Override
     protected Runnable initTemplate() {
         return () -> {
-            if (isFULLToolBarSearch) {
-                toolBarSearch();
-            } else {
-                menuSearch();
-            }
+//            if (isFULLToolBarSearch) {
+//                toolBarSearch();
+//            } else {
+//                menuSearch();
+//            }
         };
     }
 
@@ -81,43 +114,76 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     protected void updateToolbarByTemplate(String template) {
         if (TextUtils.isEmpty(template)) {
             //HOME
-            setFULLToolBarSearch(true);
+            searchType = SEARCH_TYPE_FULL_TOOLBAR;
+
         } else if (TemplateMessage.PROD_CAT.equals(template)) {
             //PROD_CAT
-            setFULLToolBarSearch(false);
+            searchType = SEARCH_TYPE_MENU;
         } else if (TemplateMessage.PROD_DETAIL.equals(template)) {
             //PROD_DETAIL
-            setFULLToolBarSearch(false);
+            searchType = SEARCH_TYPE_MENU;
         } else if (TemplateMessage.ACCOUNT.equals(template)) {
             //ACCOUNT
-            hideAllSearch();
+            searchType = SEARCH_TYPE_HIDE_ALL;
         } else if (TemplateMessage.CHECKOUT.equals(template)) {
             //ACCOUNT
-            hideAllSearch();
+            searchType = SEARCH_TYPE_HIDE_ALL;
         } else {
             //HOME
-            setFULLToolBarSearch(true);
+            searchType = SEARCH_TYPE_FULL_TOOLBAR;
         }
+
+        validateSearch();
     }
 
+    protected void initSearchType(int searchType) {
+        this.searchType = searchType;
+    }
 
-    protected void showHideSearchMenu(boolean isShow) {
+    protected void setSearchType(int searchType) {
+        this.searchType = searchType;
 
-        if (!isShow) {
-            hideSearch();
-            btSearch.setVisibility(View.GONE);
-            btShare.setVisibility(View.GONE);
-        } else {
-            if (isFULLToolBarSearch) {
-                toolBarSearch();
-            } else {
-                menuSearch();
+        validateSearch();
+    }
+
+    private void validateSearch() {
+        if (isSearchInit()) {
+            switch (searchType) {
+
+                case SEARCH_TYPE_FULL_TOOLBAR:
+                    toolBarSearch();
+                    break;
+
+                case SEARCH_TYPE_MENU:
+                    menuSearch();
+                    break;
+
+                case SEARCH_TYPE_HIDE_ALL:
+                default:
+                    hideSearch();
+                    btSearch.setVisibility(View.GONE);
+                    btShare.setVisibility(View.GONE);
+                    break;
             }
         }
     }
 
+//    protected void showHideSearchMenu(boolean isShow) {
+//        if (!isShow) {
+//            hideSearch();
+//            btSearch.setVisibility(View.GONE);
+//            btShare.setVisibility(View.GONE);
+//        } else {
+//            if (isFULLToolBarSearch) {
+//                toolBarSearch();
+//            } else {
+//                menuSearch();
+//            }
+//        }
+//    }
+
     private void toolBarSearch() {
-        isFULLToolBarSearch = true;
+//        isFULLToolBarSearch = true;
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         canBack(false);
@@ -126,7 +192,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     private void menuSearch() {
         canBack(true);
-        isFULLToolBarSearch = false;
+//        isFULLToolBarSearch = false;
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
 //        if (!isFULLToolBarSearch) {
@@ -137,20 +203,26 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         hideSearch();
     }
 
-    private void setFULLToolBarSearch(boolean FULLToolBarSearch) {
-        isFULLToolBarSearch = FULLToolBarSearch;
-
-        if (isFULLToolBarSearch) {
-            toolBarSearch();
-        } else {
-            menuSearch();
-        }
-    }
+//    private void setFULLToolBarSearch(boolean FULLToolBarSearch) {
+//        isFULLToolBarSearch = FULLToolBarSearch;
+//
+//        if (isFULLToolBarSearch) {
+//            toolBarSearch();
+//        } else {
+//            menuSearch();
+//        }
+//    }
 
     private void hideAllSearch() {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         hideSearch();
+    }
+
+    protected void handleSearchLink(String fullURL) {
+        PageWebActivity.startScreen(BaseTemplateActivity.this, fullURL, "");
+//                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
+//                        Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -159,7 +231,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             @Override
             public void onQueryTextSubmit(String query) {
 
-                if (isFULLToolBarSearch) {
+                if (searchType == SEARCH_TYPE_FULL_TOOLBAR) {
                     hideKeyboard();
                 } else {
                     hideSearch();
@@ -167,10 +239,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
                 String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
                         "catalogsearch/result/?q=" + query;
-
-                PageWebActivity.startScreen(BaseTemplateActivity.this, fullURL, "");
-//                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
-//                        Snackbar.LENGTH_SHORT).show();
+                handleSearchLink(fullURL);
             }
 
             @Override
