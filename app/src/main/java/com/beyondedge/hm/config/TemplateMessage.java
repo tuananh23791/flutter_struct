@@ -41,7 +41,7 @@ public class TemplateMessage {
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
 
-    @SerializedName("pageTitle")
+    @SerializedName("page_title")
     private String pageTitle;
     @SerializedName("page_template")
     private String pageTemplate;
@@ -74,7 +74,7 @@ public class TemplateMessage {
     @NonNull
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "[title=%s {template=%s} {cart=%d} {share=%s}]", pageTitle, pageTemplate, cartCount, sharePageUrl);
+        return String.format(Locale.getDefault(), "[title=%s \ntemplate=%s \ncart=%d \nshare=%s]", pageTitle, pageTemplate, cartCount, sharePageUrl);
     }
 
     public String getPageTitle() {

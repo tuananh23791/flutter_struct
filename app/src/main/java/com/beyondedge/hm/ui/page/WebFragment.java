@@ -19,10 +19,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
+import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.TemplateMessage;
 
 import im.delight.android.webview.AdvancedWebView;
@@ -216,6 +218,12 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         public void postMessage(String message) {
             TemplateMessage templateMessage = TemplateMessage.fromJson(message);
             Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
+
+            FragmentActivity activity = getActivity();
+
+            if (activity instanceof BaseTemplateActivity) {
+                ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+            }
         }
 
         /**

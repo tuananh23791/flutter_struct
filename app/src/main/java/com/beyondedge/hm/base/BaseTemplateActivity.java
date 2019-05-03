@@ -7,6 +7,7 @@ import com.beyondedge.hm.R;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.utils.URLUtils;
 
 /**
  * Created by Hoa Nguyen on May 02 2019.
@@ -18,10 +19,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
 
-    private boolean isToolBarSearch = true;
-    private boolean isShowSearchMenu = true;
+    private boolean isFULLToolBarSearch = true;
+    private boolean isCanShare = false;
     private View btSearch;
     private View btShare;
+
+    private TemplateMessage mTemplateMessage;
 
     @Override
     protected void initSearchView() {
@@ -31,7 +34,9 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btShare = findViewById(R.id.btn_share);
 
         btShare.setOnClickListener(v -> {
-            //TODO share
+            if (mTemplateMessage != null && URLUtils.isURLValid(mTemplateMessage.getSharePageUrl())) {
+                URLUtils.share(BaseTemplateActivity.this, mTemplateMessage.getSharePageUrl());
+            }
         });
 
         btSearch.setOnClickListener(v -> {
@@ -42,7 +47,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     @Override
     public void onBackPressed() {
-        if (isVisible() && !isToolBarSearch) {
+        if (isVisible() && !isFULLToolBarSearch) {
             hideSearch();
         } else {
             super.onBackPressed();
@@ -52,13 +57,49 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     @Override
     protected Runnable initTemplate() {
         return () -> {
-            if (isShowSearchMenu) {
+            if (isFULLToolBarSearch) {
                 toolBarSearch();
             } else {
                 menuSearch();
             }
         };
     }
+
+    //* * logic code */
+
+    public void updateTemplate(TemplateMessage templateMessage) {
+        mTemplateMessage = templateMessage;
+
+        String tempString = mTemplateMessage != null ? templateMessage.getPageTemplate() : "";
+
+        isCanShare = mTemplateMessage != null && !TextUtils.isEmpty(templateMessage.getSharePageUrl());
+        updateToolbarByTemplate(tempString);
+
+        setTitleToolbar(templateMessage.getPageTitle());
+    }
+
+    protected void updateToolbarByTemplate(String template) {
+        if (TextUtils.isEmpty(template)) {
+            //HOME
+            setFULLToolBarSearch(true);
+        } else if (TemplateMessage.PROD_CAT.equals(template)) {
+            //PROD_CAT
+            setFULLToolBarSearch(false);
+        } else if (TemplateMessage.PROD_DETAIL.equals(template)) {
+            //PROD_DETAIL
+            setFULLToolBarSearch(false);
+        } else if (TemplateMessage.ACCOUNT.equals(template)) {
+            //ACCOUNT
+            hideAllSearch();
+        } else if (TemplateMessage.CHECKOUT.equals(template)) {
+            //ACCOUNT
+            hideAllSearch();
+        } else {
+            //HOME
+            setFULLToolBarSearch(true);
+        }
+    }
+
 
     protected void showHideSearchMenu(boolean isShow) {
 
@@ -67,7 +108,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             btSearch.setVisibility(View.GONE);
             btShare.setVisibility(View.GONE);
         } else {
-            if (isToolBarSearch) {
+            if (isFULLToolBarSearch) {
                 toolBarSearch();
             } else {
                 menuSearch();
@@ -76,7 +117,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     }
 
     private void toolBarSearch() {
-        isToolBarSearch = true;
+        isFULLToolBarSearch = true;
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         canBack(false);
@@ -85,11 +126,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     private void menuSearch() {
         canBack(true);
-        isToolBarSearch = false;
+        isFULLToolBarSearch = false;
         btSearch.setVisibility(View.VISIBLE);
-        //TODO
-        btShare.setVisibility(View.GONE);
-//        if (!isToolBarSearch) {
+        btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
+//        if (!isFULLToolBarSearch) {
 //           hideSearch();
 //        } else {
 //            searchHolder.hideKeyboard();
@@ -97,14 +137,20 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         hideSearch();
     }
 
-    private void setToolBarSearch(boolean toolBarSearch) {
-        isToolBarSearch = toolBarSearch;
+    private void setFULLToolBarSearch(boolean FULLToolBarSearch) {
+        isFULLToolBarSearch = FULLToolBarSearch;
 
-        if (isToolBarSearch) {
+        if (isFULLToolBarSearch) {
             toolBarSearch();
         } else {
             menuSearch();
         }
+    }
+
+    private void hideAllSearch() {
+        btSearch.setVisibility(View.GONE);
+        btShare.setVisibility(View.GONE);
+        hideSearch();
     }
 
     @Override
@@ -112,6 +158,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         return new QueryTextListener() {
             @Override
             public void onQueryTextSubmit(String query) {
+
+                if (isFULLToolBarSearch) {
+                    hideKeyboard();
+                } else {
+                    hideSearch();
+                }
 
                 String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
                         "catalogsearch/result/?q=" + query;
@@ -128,20 +180,5 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         };
     }
 
-    public void updateToolbarByTemplate(String template) {
-        if (TextUtils.isEmpty(template)) {
-            //HOME
-            setToolBarSearch(true);
-        } else if (TemplateMessage.PROD_CAT.equals(template)) {
-            //ACCOUNT
-        } else if (TemplateMessage.PROD_DETAIL.equals(template)) {
-            //ACCOUNT
-        } else if (TemplateMessage.ACCOUNT.equals(template)) {
-            //ACCOUNT
-        } else if (TemplateMessage.CHECKOUT.equals(template)) {
-            //ACCOUNT
-        } else {
-            //HOME
-        }
-    }
+
 }

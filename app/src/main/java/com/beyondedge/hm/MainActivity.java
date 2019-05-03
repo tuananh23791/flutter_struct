@@ -159,6 +159,7 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
+            //TODO
             showHideSearchMenu(position == ViewPagerAdapter.MENU_HOME);
 
             return true;

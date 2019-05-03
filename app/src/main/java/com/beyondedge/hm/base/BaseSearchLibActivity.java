@@ -77,7 +77,7 @@ public abstract class BaseSearchLibActivity extends BaseActivity implements
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
         model.insertSearchEntity(query);
-        searchHolder.hideSearch();
+//        searchHolder.hideSearch();
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);

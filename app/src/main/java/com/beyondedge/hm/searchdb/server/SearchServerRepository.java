@@ -29,11 +29,12 @@ public class SearchServerRepository {
     Call<ArrayList<SearchEntity>> queryCall;
     private NetworkAPI networkAPI;
     private OkHttpClient okHttpClient;
-    private MutableLiveData<List<SearchEntity>> mListLiveData;
+    private MutableLiveData<List<SearchEntity>> mListLiveData = new MutableLiveData<>();
+    ;
     private Callback<ArrayList<SearchEntity>> callQueryHandle = new Callback<ArrayList<SearchEntity>>() {
         @Override
         public void onResponse(@NonNull Call<ArrayList<SearchEntity>> call, @NonNull Response<ArrayList<SearchEntity>> response) {
-            if (call.isCanceled())
+            if (call.isCanceled() || mListLiveData == null)
                 return;
 
             if (response.isSuccessful()) {
@@ -115,13 +116,11 @@ public class SearchServerRepository {
     }
 
     public LiveData<List<SearchEntity>> getSearchListLive() {
-        if (mListLiveData == null)
-            mListLiveData = new MutableLiveData<>();
         return mListLiveData;
     }
 
     public void clear() {
-        mListLiveData = null;
+        cancelQueryCall();
     }
 
     private void cancelQueryCall() {
@@ -142,5 +141,4 @@ public class SearchServerRepository {
             queryCall.enqueue(callQueryHandle);
         }
     }
-
 }

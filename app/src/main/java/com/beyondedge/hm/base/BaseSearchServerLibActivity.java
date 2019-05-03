@@ -1,6 +1,7 @@
 package com.beyondedge.hm.base;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -133,6 +134,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             searchHolder.hideKeyboard();
     }
 
+    protected void hideKeyboard() {
+        searchHolder.hideKeyboard();
+    }
+
     protected boolean isVisible() {
         return searchHolder.isVisible();
     }
@@ -213,7 +218,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 //            searchHolder.hideKeyboard();
 //        }
 
-        hideSearch();
+//        hideSearch();
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
@@ -228,6 +233,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 //        if (mQueryTextListener != null) {
 //            mQueryTextListener.onQueryTextChange(newText);
 //        }
+        //TODO improve here
         searchHolder.showLoading();
         model.searchQuery(newText);
         return true;
@@ -440,13 +446,30 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
             if (BuildConfig.DEBUG && BuildConfig.LOG) {
-//                Toast.makeText(this, "DEBUG", Toast.LENGTH_SHORT).show();
-                PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
-                        "http://sharefile.beyondedge.com.sg/hm/id/checkout.html", "checkout");
+                showTestPopup();
             } else {
                 takeScanWithPermission(900);
             }
+        }
+    }
 
+    private void showTestPopup() {
+        if (BuildConfig.DEBUG && BuildConfig.LOG) {
+            final String[] data = {
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCate.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCateShare.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/product%20detail.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/profile.html",
+            };
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(data, 0, (dialog, which) -> {
+                        PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
+                                data[which], "");
+                        dialog.dismiss();
+                    })
+                    .show();
         }
     }
 
