@@ -120,6 +120,7 @@ public class SearchServerRepository {
     }
 
     public void clear() {
+        mListLiveData.postValue(new ArrayList<>());
         cancelQueryCall();
     }
 

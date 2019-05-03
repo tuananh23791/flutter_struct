@@ -18,38 +18,16 @@ import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 
 public class MainActivity extends BaseTemplateActivity {
-    //    private TextView mTextMessage;
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationViewPager viewPager;
     private Handler handler = new Handler();
 
-//    @Override
-//    protected QueryTextListener getQueryTextListener() {
-//        return new QueryTextListener() {
-//            @Override
-//            public void onQueryTextSubmit(String query) {
-//                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
-//                        "catalogsearch/result/?q=" + query;
-//
-//                PageWebActivity.startScreen(MainActivity.this, fullURL, "");
-////                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
-////                        Snackbar.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onQueryTextChange(String newText) {
-//
-//            }
-//        };
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        mTextMessage = findViewById(R.id.message);
         viewPager = findViewById(R.id.view_pager);
 
         initSearchView();
@@ -118,12 +96,7 @@ public class MainActivity extends BaseTemplateActivity {
         bottomNavigation.setInactiveColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorInActive));
 
         bottomNavigation.setCurrentItem(0);
-        bottomNavigation.post(new Runnable() {
-            @Override
-            public void run() {
-                setSearchType(SEARCH_TYPE_FULL_TOOLBAR);
-            }
-        });
+        bottomNavigation.post(() -> setSearchType(SEARCH_TYPE_FULL_TOOLBAR));
 
         HMConfig config = LoadConfig.getInstance().load();
         setTitleToolbar(config.getMainMenuList().get(0).getName());
@@ -170,22 +143,6 @@ public class MainActivity extends BaseTemplateActivity {
             return true;
         });
 
-//        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
-//            @Override
-//            public void onPositionChange(int pos) {
-//                switch (pos) {
-//                    case 0:
-//                        mTextMessage.setText(R.string.title_home);
-//                        break;
-//                    case 1:
-//                        mTextMessage.setText(R.string.title_dashboard);
-//                        break;
-//                    case 2:
-//                        mTextMessage.setText(R.string.title_notifications);
-//                        break;
-//                }
-//            }
-//        });
     }
 
     /**

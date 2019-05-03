@@ -3,6 +3,7 @@ package com.beyondedge.hm.ui.screen;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -34,13 +35,12 @@ public class PageWebActivity extends BaseActivitySingleFragment {
 
         enableBackButtonToolbar();
 
-        //TODO
-//        Intent intent = getIntent();
-//        String stringExtra = intent.getStringExtra(EXTRA_TITLE);
-//        if (TextUtils.isEmpty(stringExtra)) {
-//            stringExtra = getString(R.string.app_name);
-//        }
-//        setTitleToolbar(stringExtra);
+        Intent intent = getIntent();
+        String stringExtra = intent.getStringExtra(EXTRA_TITLE);
+        if (TextUtils.isEmpty(stringExtra)) {
+            stringExtra = getString(R.string.app_name);
+        }
+        setTitleToolbar(stringExtra);
     }
 
     @Override
