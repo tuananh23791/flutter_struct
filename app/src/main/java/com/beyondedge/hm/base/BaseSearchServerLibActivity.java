@@ -50,21 +50,14 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_TAKE_PICTURE = 2;
     private static final int ACTION_SCAN = 3;
     protected QueryTextListener mQueryTextListener;
-    //    boolean isToolBarSearch = true;
-//    private View btSearch;
-//    private View btShare;
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
-    //    private boolean isShowSearchMenu = true;
-    private boolean canHideSearch = true;
     private int mRequestCode;
     private int mImageAction;
     private String mCurrentPhotoPath;
 
     protected abstract QueryTextListener getQueryTextListener();
-
-    protected abstract Runnable initTemplate();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,35 +84,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         mQueryTextListener = getQueryTextListener();
 
-//        btSearch = findViewById(R.id.btn_search);
-//        btShare = findViewById(R.id.btn_share);
-//
-//        btShare.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //TODO share
-//            }
-//        });
-//
-//        btSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                searchHolder.canBack(true);
-//                searchHolder.showSearch();
-//            }
-//        });
-//        searchHolder.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (isShowSearchMenu) {
-//                    toolBarSearch();
-//                } else {
-//                    menuSearch();
-//                }
-//            }
-//        });
-
-        searchHolder.post(initTemplate());
     }
 
     protected void canBack(boolean can) {
@@ -158,75 +122,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         });
     }
 
-//    public void setToolBarSearch(boolean toolBarSearch) {
-//        isToolBarSearch = toolBarSearch;
-//
-//        if (isToolBarSearch) {
-//            toolBarSearch();
-//        } else {
-//            menuSearch();
-//        }
-//    }
-
-//    protected void showHideSearchMenu(boolean isShow) {
-////        isShowSearchMenu = isShow;
-////        invalidateOptionsMenu();
-//
-//        if (!isShow) {
-//            searchHolder.hideSearch();
-//            btSearch.setVisibility(View.GONE);
-//            btShare.setVisibility(View.GONE);
-//        } else {
-//            if (isToolBarSearch) {
-//                toolBarSearch();
-//            } else {
-//                menuSearch();
-//            }
-//        }
-//    }
-//
-//    protected void toolBarSearch() {
-//        isToolBarSearch = true;
-//        btSearch.setVisibility(View.GONE);
-//        btShare.setVisibility(View.GONE);
-//        searchHolder.canBack(false);
-//        if (!searchHolder.isVisible())
-//            searchHolder.showSearch();
-//    }
-//
-//    protected void menuSearch() {
-//        searchHolder.canBack(true);
-//        isToolBarSearch = false;
-//        btSearch.setVisibility(View.VISIBLE);
-//        //TODO
-//        btShare.setVisibility(View.GONE);
-//        if (!isToolBarSearch) {
-//            searchHolder.hideSearch();
-//        } else {
-//            searchHolder.hideKeyboard();
-//        }
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (searchHolder.isVisible() && !isToolBarSearch) {
-//            searchHolder.hideSearch();
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-
     // MaterialSearchView listeners
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
-//        if (!isToolBarSearch)
-//            searchHolder.hideSearch();
-//        else {
-//            searchHolder.hideKeyboard();
-//        }
-
-//        hideSearch();
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
@@ -238,9 +137,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public boolean onQueryTextChange(String newText) {
         searchHolder.showRecycler();
 
-//        if (mQueryTextListener != null) {
-//            mQueryTextListener.onQueryTextChange(newText);
-//        }
         //TODO improve here
         searchHolder.showLoading();
         model.searchQuery(newText);
@@ -259,24 +155,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public void onSearchDeleteClicked(SearchEntity searchEntity) {
         //TODO
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_search) {
-//            searchHolder.showSearch();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
     //--Search Take Picture
 

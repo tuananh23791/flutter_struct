@@ -87,17 +87,6 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         }
     }
 
-    @Override
-    protected Runnable initTemplate() {
-        return () -> {
-//            if (isFULLToolBarSearch) {
-//                toolBarSearch();
-//            } else {
-//                menuSearch();
-//            }
-        };
-    }
-
     //* * logic code */
 
     public void updateTemplate(TemplateMessage templateMessage) {
@@ -115,7 +104,6 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         if (TextUtils.isEmpty(template)) {
             //HOME
             searchType = SEARCH_TYPE_FULL_TOOLBAR;
-
         } else if (TemplateMessage.PROD_CAT.equals(template)) {
             //PROD_CAT
             searchType = SEARCH_TYPE_MENU;
@@ -134,10 +122,6 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         }
 
         validateSearch();
-    }
-
-    protected void initSearchType(int searchType) {
-        this.searchType = searchType;
     }
 
     protected void setSearchType(int searchType) {
@@ -160,30 +144,14 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
                 case SEARCH_TYPE_HIDE_ALL:
                 default:
-                    hideSearch();
-                    btSearch.setVisibility(View.GONE);
-                    btShare.setVisibility(View.GONE);
+                    hideAllSearch();
                     break;
             }
         }
     }
 
-//    protected void showHideSearchMenu(boolean isShow) {
-//        if (!isShow) {
-//            hideSearch();
-//            btSearch.setVisibility(View.GONE);
-//            btShare.setVisibility(View.GONE);
-//        } else {
-//            if (isFULLToolBarSearch) {
-//                toolBarSearch();
-//            } else {
-//                menuSearch();
-//            }
-//        }
-//    }
 
     private void toolBarSearch() {
-//        isFULLToolBarSearch = true;
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         canBack(false);
@@ -192,26 +160,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     private void menuSearch() {
         canBack(true);
-//        isFULLToolBarSearch = false;
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
-//        if (!isFULLToolBarSearch) {
-//           hideSearch();
-//        } else {
-//            searchHolder.hideKeyboard();
-//        }
         hideSearch();
     }
-
-//    private void setFULLToolBarSearch(boolean FULLToolBarSearch) {
-//        isFULLToolBarSearch = FULLToolBarSearch;
-//
-//        if (isFULLToolBarSearch) {
-//            toolBarSearch();
-//        } else {
-//            menuSearch();
-//        }
-//    }
 
     private void hideAllSearch() {
         btSearch.setVisibility(View.GONE);
