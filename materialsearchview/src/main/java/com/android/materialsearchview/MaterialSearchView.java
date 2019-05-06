@@ -83,7 +83,7 @@ public class MaterialSearchView extends CardView {
         public void afterTextChanged(Editable s) {
         }
     };
-
+    private boolean enableSearchPicture = false;
 
     public MaterialSearchView(@NonNull Context context) {
         super(context);
@@ -111,6 +111,22 @@ public class MaterialSearchView extends CardView {
             RecyclerView.ItemDecoration decoration =
                     new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
             recyclerView.addItemDecoration(decoration);
+        }
+    }
+
+    public void enableSearchPicture(boolean enableSearchPicture) {
+        this.enableSearchPicture = enableSearchPicture;
+
+        if (enableSearchPicture) {
+            b.imgPicture.setVisibility(VISIBLE);
+            b.imgPicture.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listenerQuery.onActionSearch(ActionSearch.Picture);
+                }
+            });
+        } else {
+            b.imgPicture.setVisibility(GONE);
         }
     }
 
@@ -150,12 +166,7 @@ public class MaterialSearchView extends CardView {
         b.editText.setTextColor(getTextColor());
         setDrawableTint(b.imgBack.getDrawable(), searchIconColor);
         setDrawableTint(b.imgClear.getDrawable(), searchIconColor);
-        b.imgPicture.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listenerQuery.onActionSearch(ActionSearch.Picture);
-            }
-        });
+        enableSearchPicture(false);
 
         b.imgBarcode.setOnClickListener(new OnClickListener() {
             @Override
