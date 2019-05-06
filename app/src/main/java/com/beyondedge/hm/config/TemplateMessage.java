@@ -5,6 +5,7 @@ package com.beyondedge.hm.config;
  */
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -65,7 +66,7 @@ public class TemplateMessage {
         try {
             return HMApplication.getGson().fromJson(json, TemplateMessage.class);
         } catch (JsonSyntaxException e) {
-
+            Toast.makeText(HMApplication.getInstance(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         return new TemplateMessage(HOME.toUpperCase(), HOME, CART_COUNT_UNDEFINE, "");

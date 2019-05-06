@@ -13,8 +13,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
+import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
+
+import static com.beyondedge.hm.ui.page.ViewPagerAdapter.MENU_HOME;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
@@ -23,6 +26,7 @@ public class PageFragment extends WebFragment implements PageInterface {
     private View fragmentContainer;
     private int mIndex;
     private HMConfig.Menu mMenu;
+
 
     /**
      * Create a new instance of the fragment
@@ -40,7 +44,7 @@ public class PageFragment extends WebFragment implements PageInterface {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        mIndex = bundle.getInt("index", 0);
+        mIndex = bundle.getInt("index", MENU_HOME);
     }
 
     @Nullable
@@ -84,19 +88,27 @@ public class PageFragment extends WebFragment implements PageInterface {
      */
     @Override
     public void willBeDisplayed() {
+        setDisplaying(true);
         FragmentActivity activity = getActivity();
 
-        if (activity != null && activity instanceof BaseActivity) {
+        if (activity instanceof BaseActivity) {
 //            if (Constant.MENU_MORE_PATH.equals(mMenu.getUrl())) {
 //                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
 //            } else {
 //                ((BaseActivity) activity).setTitleToolbar("");
 //            }
 
-            if (mIndex == 0) {
+            //TODO
+            if (mIndex == MENU_HOME) {
                 ((BaseActivity) activity).setTitleToolbar("");
             } else {
                 ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+            }
+
+            //update template cache
+
+            if (activity instanceof BaseTemplateActivity) {
+                ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
             }
         }
 
@@ -114,9 +126,12 @@ public class PageFragment extends WebFragment implements PageInterface {
      */
     @Override
     public void willBeHidden() {
+        setDisplaying(false);
         if (fragmentContainer != null) {
             Animation fadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
             fragmentContainer.startAnimation(fadeOut);
         }
+
+
     }
 }

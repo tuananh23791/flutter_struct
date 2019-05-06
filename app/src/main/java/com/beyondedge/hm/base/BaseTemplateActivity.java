@@ -86,9 +86,11 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     //* * logic code */
 
     public void updateTemplate(TemplateMessage templateMessage) {
+        if (templateMessage == null) return;
+
         mTemplateMessage = templateMessage;
 
-        String tempString = mTemplateMessage != null ? templateMessage.getPageTemplate() : "";
+        String tempString = templateMessage.getPageTemplate();
 
         isCanShare = mTemplateMessage != null && !TextUtils.isEmpty(templateMessage.getSharePageUrl());
         updateToolbarByTemplate(tempString);

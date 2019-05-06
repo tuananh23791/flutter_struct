@@ -33,9 +33,16 @@ import im.delight.android.webview.AdvancedWebView;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
-    AdvancedWebView myWebView;
+    protected boolean isDisplaying = false;
+    protected TemplateMessage templateMessage;
+
+    private AdvancedWebView myWebView;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
+
+    protected void setDisplaying(boolean displaying) {
+        isDisplaying = displaying;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,14 +114,15 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //        myWebView.addHttpHeader("X-Requested-With", "");
 //        loadPage("https://www.hm.com/vn/");
 
+        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
     }
 
     public void loadPage(String url) {
-        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
-            textInfo.setVisibility(View.VISIBLE);
-            textInfo.setText(url);
-        }
+//        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+//            textInfo.setVisibility(View.VISIBLE);
+//            textInfo.setText(url);
+//        }
         myWebView.loadUrl(url);
     }
 
@@ -152,6 +160,11 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
 //        testJavascript(myWebView);
+
+        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+            textInfo.setVisibility(View.VISIBLE);
+            textInfo.setText(url);
+        }
     }
 
     @Override
@@ -170,7 +183,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     public void onExternalPageRequest(String url) {
     }
 
-    //http://jira.newunionplayground.com:8080/browse/NAA-1574
     private void testJavascript(WebView webView) {
         webView.loadUrl(
                 "javascript:( " +
@@ -216,13 +228,30 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
          */
         @JavascriptInterface
         public void postMessage(String message) {
-            TemplateMessage templateMessage = TemplateMessage.fromJson(message);
-            Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
+            handleMessage(message);
+        }
 
-            FragmentActivity activity = getActivity();
+        /**
+         * Show a toast from the web page
+         */
+        @JavascriptInterface
+        public void process(String message) {
+            handleMessage(message);
+        }
 
-            if (activity instanceof BaseTemplateActivity) {
-                ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+        private void handleMessage(String message) {
+            templateMessage = TemplateMessage.fromJson(message);
+
+            if (isDisplaying) {
+                Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
+                FragmentActivity activity = getActivity();
+
+                //update template for change Title/Search toolbar setting
+                if (activity instanceof BaseTemplateActivity) {
+                    ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+                }
+            } else {
+                //will handled in next active page
             }
         }
 

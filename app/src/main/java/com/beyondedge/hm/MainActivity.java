@@ -31,8 +31,8 @@ public class MainActivity extends BaseTemplateActivity {
         viewPager = findViewById(R.id.view_pager);
 
         initSearchView();
-        settingBottomNavigation();
         initViewPager();
+        settingBottomNavigation();
     }
 
     @Override
@@ -139,7 +139,8 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
-            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
+            //TODO
+//            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
             return true;
         });
 
