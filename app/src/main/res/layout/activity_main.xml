@@ -55,19 +55,20 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/colorBackground">-->
+    <View
+        android:id="@+id/viewTempPadding"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:layout_alignParentStart="true" />
 
-        <com.android.materialsearchview.MaterialSearchView
-            android:id="@+id/searchHolder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:visibility="invisible"
-            app:cardElevation="4dp"
-            app:search_menu_position="1" />
-
-    <!--</FrameLayout>-->
+    <com.android.materialsearchview.MaterialSearchView
+        android:id="@+id/searchHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_toEndOf="@+id/viewTempPadding"
+        android:visibility="invisible"
+        app:cardElevation="4dp"
+        app:search_menu_position="1" />
 </RelativeLayout>

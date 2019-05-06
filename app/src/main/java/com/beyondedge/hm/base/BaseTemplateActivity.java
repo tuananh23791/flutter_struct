@@ -25,7 +25,6 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     //    private boolean isFULLToolBarSearch = true;
     private int searchType = SEARCH_TYPE_HIDE_ALL;
     private boolean isCanShare = false;
-    private boolean isCanBack = false;
     private View btSearch;
     private View btShare;
 
@@ -45,20 +44,17 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         });
 
         btSearch.setOnClickListener(v -> {
-            canBack(true);
+            settingBack(true);
             showSearch();
         });
 
-        super.canBack(false);
+        super.settingBack(false);
 
         validateSearch();
     }
 
-    @Override
-    protected void canBack(boolean can) {
-//        super.canBack(can);
-
-        isCanBack = can;
+    protected boolean isCanBack() {
+        return searchType != SEARCH_TYPE_FULL_TOOLBAR;
     }
 
     @Override
@@ -69,7 +65,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         if (backBt != null) {
             backBt.setVisibility(View.VISIBLE);
             backBt.setOnClickListener(v -> {
-                if (isCanBack && isSearchVisible()) {
+                if (isCanBack() && isSearchVisible()) {
                     hideSearch();
                 } else {
                     finish();
@@ -154,12 +150,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     private void toolBarSearch() {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
-        canBack(false);
+        settingBack(false);
         showSearch();
     }
 
     private void menuSearch() {
-        canBack(true);
+        settingBack(true);
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
         hideSearch();

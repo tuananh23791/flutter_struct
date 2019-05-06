@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
+    private View searchPaddingView;
     private int mRequestCode;
     private int mImageAction;
     private String mCurrentPhotoPath;
@@ -73,7 +75,9 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         model = ViewModelProviders.of(this).get(SearchServerViewModel.class);
         observeSearchList(model);
         searchHolder = findViewById(R.id.searchHolder);
-
+        searchPaddingView = findViewById(R.id.viewTempPadding);
+        //Comment - All now using back in activity tool_bar
+        searchHolder.canBack(false);
         searchHolder.setSearchHint(config.getLanguageBy("search_product"), false);
         adapterSearch = new SearchSuggestRecyclerAdapter(this);
         searchHolder.addQueryTextListener(this);
@@ -84,10 +88,15 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         mQueryTextListener = getQueryTextListener();
 
+
     }
 
-    protected void canBack(boolean can) {
-        searchHolder.canBack(can);
+    protected void settingBack(boolean can) {
+        //Comment - All now using back in activity tool_bar
+        //searchHolder.settingBack(can);
+        if (searchPaddingView != null) {
+            searchPaddingView.setVisibility(can ? View.VISIBLE : View.GONE);
+        }
     }
 
     protected void showSearch() {
