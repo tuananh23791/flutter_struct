@@ -21,6 +21,7 @@ import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
+import com.beyondedge.hm.ui.screen.cataloguelookup.CatalogueLookupActivity;
 import com.beyondedge.hm.ui.screen.FollowUsActivity;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.ui.screen.SettingsActivity;
@@ -66,6 +67,9 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
                 startActivity(FollowUsActivity.class);
             } else if (url != null && url.contains(Constant.APP_SETTING_PATH)) {
                 SettingsActivity.startScreen(getActivity(), menu.getName());
+            } else if (menu.isCatalogueLookupMenu()) {
+                Intent intent = new Intent(getActivity(), CatalogueLookupActivity.class);
+                startActivity(intent);
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);

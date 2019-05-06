@@ -21,6 +21,7 @@ public class Constant {
     public static final String FOLLOW_US_PATH = "subListFolowUs";
     public static final String APP_SETTING_PATH = "app_setting";
     public static final String MENU_MORE_PATH = "subListMore";
+    public static final String MENU_CATALOGUE_LOOKUP_PATH = "rest/V1/getProductsBySearch/articlenumber";
 
 
     public static String getAuthorizationParam() {

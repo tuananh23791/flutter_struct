@@ -53,7 +53,7 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
         mAdapter = new FollowUsMenuAdapter();
         mAdapter.setOnItemClickListener(menu -> {
-            if (menu.isExternalURL()) {
+             if (menu.isExternalURL()) {
                 URLUtils.openInWebBrowser(getActivity(), menu.getUrl());
             } else {
                 //Open Web Page

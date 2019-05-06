@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -16,4 +17,7 @@ public interface NetworkAPI {
     Call<ArrayList<SearchEntity>> searchProductQuery(
             @Query("q") String query,
             @Query("_") String token);
+    @GET("rest/V1/getProductsBySearch/articlenumber/{article}")
+    Call<String> catagolueLookupArticle(
+            @Path("article") String article);
 }

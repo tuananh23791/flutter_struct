@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 import timber.log.Timber;
 
+import static com.beyondedge.hm.config.Constant.MENU_CATALOGUE_LOOKUP_PATH;
+import static com.beyondedge.hm.config.Constant.MENU_MORE_PATH;
+
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
@@ -177,7 +180,11 @@ public class HMConfig {
         }
 
         public boolean isMoreMenu() {
-            return "More".equals(name);
+            return MENU_MORE_PATH.equals(url);
+        }
+
+        public boolean isCatalogueLookupMenu() {
+            return MENU_CATALOGUE_LOOKUP_PATH.equals(url);
         }
 
         public boolean hasSubMenu() {

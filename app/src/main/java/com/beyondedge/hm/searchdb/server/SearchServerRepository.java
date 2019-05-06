@@ -6,31 +6,21 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.api.NetworkAPI;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.beyondedge.hm.api.ServiceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 public class SearchServerRepository {
     private static SearchServerRepository instance;
     Call<ArrayList<SearchEntity>> queryCall;
-    private NetworkAPI networkAPI;
-    private OkHttpClient okHttpClient;
+
     private MutableLiveData<List<SearchEntity>> mListLiveData = new MutableLiveData<>();
-    ;
     private Callback<ArrayList<SearchEntity>> callQueryHandle = new Callback<ArrayList<SearchEntity>>() {
         @Override
         public void onResponse(@NonNull Call<ArrayList<SearchEntity>> call, @NonNull Response<ArrayList<SearchEntity>> response) {
@@ -56,64 +46,23 @@ public class SearchServerRepository {
         }
     };
 
-    private SearchServerRepository() {
-        networkAPI = createNetworkAPI();
+    private ServiceHelper mServiceHelper;
+
+    private SearchServerRepository(ServiceHelper serviceHelper) {
+        mServiceHelper = serviceHelper;
     }
 
     public static SearchServerRepository getInstance() {
         if (instance == null) {
             synchronized (SearchServerRepository.class) {
                 if (instance == null) {
-                    instance = new SearchServerRepository();
+                    instance = new SearchServerRepository(ServiceHelper.getInstance());
                 }
             }
         }
         return instance;
     }
 
-    private OkHttpClient createOKHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-        builder.connectTimeout(60, TimeUnit.SECONDS);
-        builder.readTimeout(60, TimeUnit.SECONDS);
-        builder.writeTimeout(60, TimeUnit.SECONDS);
-
-//        builder.addInterceptor(new Interceptor() {
-//            @Override
-//            public Response intercept(@NonNull Interceptor.Chain chain) throws IOException {
-//                //this is where we will add whatever we want to our request headers.
-//                Request basicRequest = chain.request();
-//                Request.Builder requestBuilder = basicRequest.newBuilder();
-//                requestBuilder.addHeader(HEADER_AUTHORIZATION, getAuthorizationParam());
-//
-//                return chain.proceed(requestBuilder.build());
-//            }
-//        });
-
-        if (BuildConfig.LOG) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(interceptor);
-        }
-
-        return builder.build();
-    }
-
-    private NetworkAPI createNetworkAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-
-        okHttpClient = createOKHttpClient();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://hmthuat.specom.io/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient)
-                .build();
-
-        networkAPI = retrofit.create(NetworkAPI.class);
-
-        return networkAPI;
-    }
 
     public LiveData<List<SearchEntity>> getSearchListLive() {
         return mListLiveData;
@@ -138,7 +87,7 @@ public class SearchServerRepository {
             cancelQueryCall();
         } else {
             cancelQueryCall();
-            queryCall = networkAPI.searchProductQuery(query, "1555641157245");
+            queryCall = mServiceHelper.getNetworkAPI().searchProductQuery(query, "1555641157245");
             queryCall.enqueue(callQueryHandle);
         }
     }

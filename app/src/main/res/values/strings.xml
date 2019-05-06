@@ -26,4 +26,8 @@
     <string name="region_language">Region / Language</string>
     <string name="app_version">App Version</string>
     <string name="permission_settings">App Permission</string>
+    <string name="article_number">Article Number</string>
+    <string name="article_number_note">Please enter a 10-digit article number</string>
+    <string name="look_up_article">Look up article</string>
+    <string name="look_up_title">Catalogue Lookup</string>
 </resources>
