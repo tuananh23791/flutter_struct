@@ -16,6 +16,7 @@ import com.beyondedge.hm.base.BaseActivity;
 import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
+import com.beyondedge.hm.config.TemplateMessage;
 
 import static com.beyondedge.hm.ui.page.ViewPagerAdapter.MENU_HOME;
 
@@ -108,6 +109,9 @@ public class PageFragment extends WebFragment implements PageInterface {
             //update template cache
 
             if (activity instanceof BaseTemplateActivity) {
+                if (templateMessage == null) {
+                    templateMessage = TemplateMessage.fromJson("");
+                }
                 ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
             }
         }

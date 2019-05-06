@@ -141,6 +141,10 @@ public class MainActivity extends BaseTemplateActivity {
 
             //TODO
 //            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
+
+            if (position == ViewPagerAdapter.MENU_MORE) {
+                setSearchType(SEARCH_TYPE_HIDE_ALL);
+            }
             return true;
         });
 

@@ -60,7 +60,7 @@ public class TemplateMessage {
 
     public static TemplateMessage fromJson(String json) {
         if (TextUtils.isEmpty(json)) {
-            return new TemplateMessage(HOME.toUpperCase(), HOME, CART_COUNT_UNDEFINE, "");
+            return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");
         }
 
         try {
@@ -69,7 +69,11 @@ public class TemplateMessage {
             Toast.makeText(HMApplication.getInstance(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        return new TemplateMessage(HOME.toUpperCase(), HOME, CART_COUNT_UNDEFINE, "");
+        return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");
+    }
+
+    public boolean isHome() {
+        return HOME.equals(this.pageTemplate);
     }
 
     @NonNull

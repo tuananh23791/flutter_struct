@@ -95,7 +95,11 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         isCanShare = mTemplateMessage != null && !TextUtils.isEmpty(templateMessage.getSharePageUrl());
         updateToolbarByTemplate(tempString);
 
-        setTitleToolbar(templateMessage.getPageTitle());
+        if (mTemplateMessage.isHome()) {
+            setTitleToolbar("");
+        } else {
+            setTitleToolbar(templateMessage.getPageTitle());
+        }
     }
 
     protected void updateToolbarByTemplate(String template) {
