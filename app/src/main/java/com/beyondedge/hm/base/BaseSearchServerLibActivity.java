@@ -341,11 +341,11 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         if (type == MaterialSearchView.ActionSearch.Picture) {
             takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
-            if (BuildConfig.DEBUG && BuildConfig.LOG) {
-                showTestPopup();
-            } else {
+//            if (BuildConfig.DEBUG && BuildConfig.LOG) {
+//                showTestPopup();
+//            } else {
                 takeScanWithPermission(900);
-            }
+//            }
         }
     }
 

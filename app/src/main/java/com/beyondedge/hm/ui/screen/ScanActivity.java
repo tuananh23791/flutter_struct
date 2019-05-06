@@ -2,10 +2,10 @@ package com.beyondedge.hm.ui.screen;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.config.HMConfig;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -16,6 +16,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView mScannerView;
+    private ImageView btFlash;
+    private boolean mFlash = false;
 
     @Override
     public void onCreate(Bundle state) {
@@ -25,8 +27,21 @@ public class ScanActivity extends BaseActivity implements ZXingScannerView.Resul
         enableBackButtonToolbar();
 
         ViewGroup contentFrame = findViewById(R.id.content_frame);
+        btFlash = findViewById(R.id.btFlash);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
+        mScannerView.setFlash(mFlash);
+
+        btFlash.setOnClickListener(v -> {
+            mFlash = !mFlash;
+
+            if (mFlash) {
+                btFlash.setImageResource(R.mipmap.ic_flash_deactive);
+            } else {
+                btFlash.setImageResource(R.mipmap.ic_flash_active);
+            }
+            mScannerView.setFlash(mFlash);
+        });
     }
 
     @Override

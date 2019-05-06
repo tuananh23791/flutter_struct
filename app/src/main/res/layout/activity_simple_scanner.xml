@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,4 +18,22 @@
 
         <include layout="@layout/toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ImageButton
+        android:id="@+id/btFlash"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerInside"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_flash_active"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAppVersionInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvAppVersion" />
+
 </FrameLayout>
