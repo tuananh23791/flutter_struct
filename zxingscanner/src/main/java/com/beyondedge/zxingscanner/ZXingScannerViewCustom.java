@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.NotFoundException;
@@ -17,6 +18,9 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
 import me.dm7.barcodescanner.core.DisplayUtils;
@@ -29,17 +33,25 @@ public class ZXingScannerViewCustom extends BarcodeScannerView {
 
     private HM_ITFReader mHM_itfReader = new HM_ITFReader();
     private ResultHandler mResultHandler;
+    private Map<DecodeHintType, Object> hints;
 
     public ZXingScannerViewCustom(Context context) {
         super(context);
+        init();
     }
 
     public ZXingScannerViewCustom(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        init();
     }
 
     public void setResultHandler(ResultHandler resultHandler) {
         mResultHandler = resultHandler;
+    }
+
+    private void init() {
+        hints = new HashMap<>();
+        hints.put(DecodeHintType.TRY_HARDER, Void.TYPE);
     }
 
     @Override
@@ -70,7 +82,7 @@ public class ZXingScannerViewCustom extends BarcodeScannerView {
             if (source != null) {
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
                 try {
-                    rawResult = mHM_itfReader.decode(bitmap);
+                    rawResult = mHM_itfReader.decode(bitmap, hints);
                 } catch (ReaderException re) {
                     // continue
                 } catch (NullPointerException npe) {
@@ -85,7 +97,7 @@ public class ZXingScannerViewCustom extends BarcodeScannerView {
                     LuminanceSource invertedSource = source.invert();
                     bitmap = new BinaryBitmap(new HybridBinarizer(invertedSource));
                     try {
-                        rawResult =  mHM_itfReader.decode(bitmap);
+                        rawResult = mHM_itfReader.decode(bitmap, hints);
                     } catch (NotFoundException e) {
                         // continue
                     } catch (FormatException e) {

@@ -15,9 +15,9 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitArray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -25,8 +25,6 @@ import java.util.Map;
  * Custom for read multiRow
  */
 public abstract class MultiRowOneDReader implements Reader {
-    public static final int MAX_OVER = 15;
-    private int mMaxRow = MAX_OVER;
 
     /**
      * Records the size of successive runs of white and black pixels in a row, starting at a given point.
@@ -141,37 +139,49 @@ public abstract class MultiRowOneDReader implements Reader {
         Log.d("HMBarcode", mess);
     }
 
+    /**
+     * //only care about String result;
+     *
+     * @param results
+     * @return
+     */
+    private Result getResultFromHashSet(HashSet<String> results) {
+        StringBuilder textResult = new StringBuilder();
+
+        log("----------------------Decode--size " + results.size() + "-------");
+        for (String result : results) {
+            log(result);
+            if (!TextUtils.isEmpty(textResult)) {
+                textResult.append("\n");
+            }
+
+            textResult.append(result);
+        }
+
+        return new Result(textResult.toString(), null, null, null);
+    }
+
     // Note that we don't try rotation without the try harder flag, even if rotation was supported.
     @Override
     public Result decode(BinaryBitmap image,
                          Map<DecodeHintType, ?> hints) throws NotFoundException, FormatException {
-        ArrayList<Result> results;
+        HashSet<String> results;
         try {
             results = doDecode(image, hints);
-            Result finalResult = results.get(0);
-            StringBuilder textResult = new StringBuilder();
-
-            log("----------------------Decode--size " + results.size() + "-------");
-            for (Result result : results) {
-                log(result.toString());
-                if (!TextUtils.isEmpty(textResult)) {
-                    textResult.append("\n");
-                }
-
-                textResult.append(result.getText());
-            }
-
-            return new Result(textResult.toString(), finalResult.getRawBytes(), finalResult.getResultPoints(), finalResult.getBarcodeFormat());
+            //only care about String result;
+            return getResultFromHashSet(results);
         } catch (NotFoundException nfe) {
-            throw nfe;
+//            throw nfe;
 
             //HoaNguyen: not support try hard
-//            boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
-//            if (tryHarder && image.isRotateSupported()) {
-//                BinaryBitmap rotatedImage = image.rotateCounterClockwise();
-//                results = doDecode(rotatedImage, hints);
-//
-//                Result result = results.get(0);
+            boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
+            if (tryHarder && image.isRotateSupported()) {
+                BinaryBitmap rotatedImage = image.rotateCounterClockwise();
+                results = doDecode(rotatedImage, hints);
+
+                //only care about String result;
+                Result result = getResultFromHashSet(results);
+
 //                // Record that we found it rotated 90 degrees CCW / 270 degrees CW
 //                Map<ResultMetadataType, ?> metadata = result.getResultMetadata();
 //                int orientation = 270;
@@ -189,10 +199,12 @@ public abstract class MultiRowOneDReader implements Reader {
 //                        points[i] = new ResultPoint(height - points[i].getY() - 1, points[i].getX());
 //                    }
 //                }
-//                return result;
-//            } else {
-//                throw nfe;
-//            }
+
+                //only care about String result;
+                return result;
+            } else {
+                throw nfe;
+            }
         }
     }
 
@@ -215,23 +227,23 @@ public abstract class MultiRowOneDReader implements Reader {
      * @return The contents of the decoded barcode
      * @throws NotFoundException Any spontaneous errors which occur
      */
-    private ArrayList<Result> doDecode(BinaryBitmap image,
-                                       Map<DecodeHintType, ?> hints) throws NotFoundException {
-        ArrayList<Result> arrResult = new ArrayList<>();
+    private HashSet<String> doDecode(BinaryBitmap image,
+                                     Map<DecodeHintType, ?> hints) throws NotFoundException {
+        HashSet<String> arrResult = new HashSet<>();
 
         int width = image.getWidth();
         int height = image.getHeight();
         BitArray row = new BitArray(width);
 
         boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
+
         int rowStep = Math.max(1, height >> (tryHarder ? 8 : 5));
         int maxLines;
-        maxLines = height;
-//        if (tryHarder) {
-//            maxLines = height; // Look at the whole image, not just the center
-//        } else {
-//            maxLines = 15; // 15 rows spaced 1/32 apart is roughly the middle half of the image
-//        }
+        if (tryHarder) {
+            maxLines = height; // Look at the whole image, not just the center
+        } else {
+            maxLines = 15; // 15 rows spaced 1/32 apart is roughly the middle half of the image
+        }
 
         int middle = height / 2;
         for (int x = 0; x < maxLines; x++) {
@@ -284,7 +296,7 @@ public abstract class MultiRowOneDReader implements Reader {
                     }
 //                    return result;
 
-                    arrResult.add(result);
+                    arrResult.add(result.getText());
                 } catch (ReaderException re) {
                     // continue -- just couldn't decode this row
                 }

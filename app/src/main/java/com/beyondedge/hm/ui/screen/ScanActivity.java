@@ -93,7 +93,7 @@ public class ScanActivity extends BaseActivity implements ZXingScannerViewCustom
         barcode.setText(builder.toString());
 
         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 250);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 200);
 
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
 

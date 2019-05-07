@@ -25,7 +25,9 @@ public class HM_ITFReader extends MultiRowOneDReader {
     /**
      * Valid ITF lengths. Anything longer than the largest value is also allowed.
      */
-    private static final int[] DEFAULT_ALLOWED_LENGTHS = {6, 8, 10, 12, 14};
+//    private static final int[] DEFAULT_ALLOWED_LENGTHS = {6, 8, 10, 12, 14};
+    //HM barcode only 8 or 12
+    private static final int[] DEFAULT_ALLOWED_LENGTHS = {8, 12};
     /**
      * Start/end guard pattern.
      * <p>
