@@ -41,7 +41,7 @@ public class CatalogueLookupFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CatalogueLookupViewModel.class);
-        mViewModel.getSearchListLive().observe(this, value -> {
+        mViewModel.getSearchResultLiveData().observe(this, value -> {
             if (URLUtils.isURLValid(value)) {
                 PageWebActivity.startScreen(getActivity(), value, "");
             } else {

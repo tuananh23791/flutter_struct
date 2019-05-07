@@ -3,7 +3,6 @@ package com.beyondedge.hm.api;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import retrofit2.Call;
@@ -15,17 +14,18 @@ public class MainRepository {
     private static MainRepository instance;
     Call<String> queryCall;
 
-    private MutableLiveData<String> mListLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> mLiveData;
+
     private Callback<String> callQueryHandle = new Callback<String>() {
         @Override
         public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-            if (call.isCanceled() || mListLiveData == null)
+            if (call.isCanceled())
                 return;
 
             if (response.isSuccessful()) {
-                mListLiveData.postValue(response.body());
+                sendValue(response.body());
             } else {
-                mListLiveData.postValue("");
+                sendValue("");
             }
 
             queryCall = null;
@@ -35,7 +35,7 @@ public class MainRepository {
         public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
             if (call.isCanceled())
                 return;
-            mListLiveData.postValue("");
+            sendValue("");
             queryCall = null;
 
         }
@@ -58,15 +58,9 @@ public class MainRepository {
         return instance;
     }
 
-
-    public LiveData<String> getSearchListLive() {
-        return mListLiveData;
-    }
-
     public void clear() {
         cancelQueryCall();
-        //TODO ?!
-        mListLiveData = new MutableLiveData<>();
+        mLiveData = null;
     }
 
     private void cancelQueryCall() {
@@ -76,10 +70,11 @@ public class MainRepository {
         }
     }
 
-    public void catalogueLookup(String query) {
+    public void catalogueLookup(MutableLiveData<String> liveData, String query) {
         Timber.d("Lookup: " + query);
+        mLiveData = liveData;
         if (TextUtils.isEmpty(query)) {
-            mListLiveData.postValue("");
+            sendValue("");
             cancelQueryCall();
         } else {
             cancelQueryCall();
@@ -87,4 +82,10 @@ public class MainRepository {
             queryCall.enqueue(callQueryHandle);
         }
     }
+
+    private void sendValue(String value) {
+        if (mLiveData != null)
+            mLiveData.postValue(value);
+    }
+
 }
