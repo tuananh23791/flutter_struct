@@ -1,7 +1,6 @@
 package com.beyondedge.zxingscanner;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -136,7 +135,8 @@ public abstract class MultiRowOneDReader implements Reader {
     }
 
     private void log(String mess) {
-        Log.d("HMBarcode", mess);
+        //enable for Debug only
+//        Log.d("HMBarcode", mess);
     }
 
     /**
@@ -227,8 +227,8 @@ public abstract class MultiRowOneDReader implements Reader {
      * @return The contents of the decoded barcode
      * @throws NotFoundException Any spontaneous errors which occur
      */
-    private HashSet<String> doDecode(BinaryBitmap image,
-                                     Map<DecodeHintType, ?> hints) throws NotFoundException {
+    protected HashSet<String> doDecode(BinaryBitmap image,
+                                       Map<DecodeHintType, ?> hints) throws NotFoundException {
         HashSet<String> arrResult = new HashSet<>();
 
         int width = image.getWidth();

@@ -1,14 +1,19 @@
 package com.beyondedge.hm.ui.screen;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
@@ -20,13 +25,19 @@ import com.google.zxing.Result;
  * Created by Hoa Nguyen on Apr 25 2019.
  */
 public class ScanActivity extends BaseActivity implements ZXingScannerViewCustom.ResultHandler {
-
+    public static final String EXTRA_RESULT = "EXTRA_RESULT";
     int numScan = 0;
+    Handler handler = new Handler();
     private ZXingScannerViewCustom mScannerView;
     private TextView barcode;
     private ScrollView scrollView;
     private ImageView btFlash;
     private boolean mFlash = false;
+
+    public static void startScanActivity(Activity from, int requestCode) {
+        Intent intent = new Intent(from, ScanActivity.class);
+        from.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     public void onCreate(Bundle state) {
@@ -97,11 +108,32 @@ public class ScanActivity extends BaseActivity implements ZXingScannerViewCustom
 
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> mScannerView.resumeCameraPreview(ScanActivity.this), 1000);
+        resumeCamera(1000);
     }
 
-    public void showMessageDialog(String message) {
-        showAlertDialog(message, false, (dialog, which) -> mScannerView.resumeCameraPreview(ScanActivity.this));
+    private void resumeCamera(long delay) {
+        handler.postDelayed(() -> mScannerView.resumeCameraPreview(ScanActivity.this), delay);
     }
+
+
+
+    public void showMessageDialog(String message) {
+        showAlertDialog(message, false, (dialog, which) -> resumeCamera(0));
+
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> resumeCamera(0))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    Intent intentResult = new Intent();
+                    intentResult.putExtra(EXTRA_RESULT, message);
+                    setResult(Activity.RESULT_OK, intentResult);
+
+                    finish();
+
+                })
+                .show();
+    }
+
+
 }

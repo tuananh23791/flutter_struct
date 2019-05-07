@@ -1,6 +1,7 @@
 package com.beyondedge.zxingscanner;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
@@ -8,6 +9,7 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitArray;
 
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -195,6 +197,57 @@ public class HM_ITFReader extends MultiRowOneDReader {
         }
         if (bestMatch >= 0) {
             return bestMatch % 10;
+        } else {
+            throw NotFoundException.getNotFoundInstance();
+        }
+    }
+
+    /**
+     * get the decode from MultiRowOneDReader. only valid with 3 condition
+     * 1. contain8Barcode
+     * 2.contain12BarcodePrefix_3
+     * 3.contain12BarcodePrefix_4
+     * @param image The image to decode
+     * @param hints Any hints that were requested
+     * @return
+     * @throws NotFoundException
+     */
+    @Override
+    protected HashSet<String> doDecode(BinaryBitmap image, Map<DecodeHintType, ?> hints) throws NotFoundException {
+        HashSet<String> stringsDecode = super.doDecode(image, hints);
+
+        if (stringsDecode.size() < 3) {
+            throw NotFoundException.getNotFoundInstance();
+        }
+        HashSet<String> stringsResult = new HashSet<>();
+        boolean contain8Barcode = false;
+        boolean contain12BarcodePrefix_3 = false;
+        boolean contain12BarcodePrefix_4 = false;
+
+        for (String barString : stringsDecode) {
+            int length = barString.length();
+            if (length == 8) {
+                if (!contain8Barcode) {
+                    contain8Barcode = true;
+                    stringsResult.add(barString);
+                }
+            } else if (length == 12) {
+                if (barString.startsWith("3")) {
+                    if (!contain12BarcodePrefix_3) {
+                        contain12BarcodePrefix_3 = true;
+                        stringsResult.add(barString);
+                    }
+                } else if (barString.startsWith("4")) {
+                    if (!contain12BarcodePrefix_4) {
+                        contain12BarcodePrefix_4 = true;
+                        stringsResult.add(barString);
+                    }
+                }
+            }
+        }
+
+        if (contain8Barcode && contain12BarcodePrefix_3 && contain12BarcodePrefix_4) {
+            return stringsResult;
         } else {
             throw NotFoundException.getNotFoundInstance();
         }

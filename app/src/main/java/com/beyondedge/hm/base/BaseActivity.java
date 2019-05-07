@@ -69,4 +69,5 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.ok, OKlistener)
                 .show();
     }
+
 }
