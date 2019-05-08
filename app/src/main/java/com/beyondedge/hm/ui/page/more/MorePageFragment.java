@@ -143,12 +143,14 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
     }
 
     @Override
-    public Stack<String> getStackPage() {
+    public String defaultPage() {
         return null;
     }
 
     @Override
-    public String defaultPage() {
-        return null;
+    public boolean goBack() {
+        //nothing
+
+        return false;
     }
 }

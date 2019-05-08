@@ -1,8 +1,6 @@
 package com.beyondedge.hm.ui.page;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +18,6 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
 
-import java.util.Stack;
-
-import timber.log.Timber;
-
 import static com.beyondedge.hm.ui.page.ViewPagerAdapter.MENU_HOME;
 
 /**
@@ -33,9 +27,6 @@ public class PageFragment extends WebFragment implements PageInterface {
     private View fragmentContainer;
     private int mIndex;
     private HMConfig.Menu mMenu;
-
-    private Stack<String> stackPage = new Stack<>();
-    private String mCurrentPageUrl = "";
 
     /**
      * Create a new instance of the fragment
@@ -68,28 +59,6 @@ public class PageFragment extends WebFragment implements PageInterface {
         initView(view);
     }
 
-    private void clearStack() {
-        while (!stackPage.isEmpty()) {
-            stackPage.pop();
-        }
-    }
-
-    @Override
-    public void onPageStarted(String url, Bitmap favicon) {
-        if (url.equals(defaultPage())) {
-            clearStack();
-            mCurrentPageUrl = "";
-        } else {
-            if (!TextUtils.isEmpty(mCurrentPageUrl)) {
-                stackPage.push(mCurrentPageUrl);
-            }
-            mCurrentPageUrl = url;
-        }
-
-        Timber.d("StackSize: " + stackPage.size());
-
-        super.onPageStarted(url, favicon);
-    }
 
     /**
      * Init view
@@ -168,12 +137,12 @@ public class PageFragment extends WebFragment implements PageInterface {
     }
 
     @Override
-    public Stack<String> getStackPage() {
-        return stackPage;
+    public String defaultPage() {
+        return mMenu != null ? mMenu.getUrl() : "";
     }
 
     @Override
-    public String defaultPage() {
-        return mMenu != null ? mMenu.getUrl() : "";
+    public boolean goBack() {
+        return super.goBack();
     }
 }

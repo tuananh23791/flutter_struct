@@ -64,6 +64,24 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         initView(view);
     }
 
+    protected boolean goBack() {
+        if (myWebView != null && myWebView.canGoBack()) {
+            myWebView.goBack();
+            return true;
+        }
+
+        return false;
+    }
+
+    protected String getOriginalURL() {
+        if (myWebView != null) {
+            String originalUrl = myWebView.getOriginalUrl();
+            return originalUrl != null ? originalUrl : "";
+        }
+
+        return "";
+    }
+
     private void initView(View view) {
         myWebView = view.findViewById(R.id.webview);
         myWebView.setListener(getActivity(), this);

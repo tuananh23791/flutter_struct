@@ -23,7 +23,6 @@ import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
 import com.beyondedge.hm.utils.URLUtils;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -56,7 +55,7 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
         mAdapter = new FollowUsMenuAdapter();
         mAdapter.setOnItemClickListener(menu -> {
-             if (menu.isExternalURL()) {
+            if (menu.isExternalURL()) {
                 URLUtils.openInWebBrowser(getActivity(), menu.getUrl());
             } else {
                 //Open Web Page
@@ -125,12 +124,14 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
     }
 
     @Override
-    public Stack<String> getStackPage() {
+    public String defaultPage() {
         return null;
     }
 
     @Override
-    public String defaultPage() {
-        return null;
+    public boolean goBack() {
+        //nothing
+
+        return false;
     }
 }

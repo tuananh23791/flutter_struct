@@ -18,8 +18,6 @@ import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 
-import java.util.Stack;
-
 public class MainActivity extends BaseTemplateActivity {
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;
@@ -50,11 +48,16 @@ public class MainActivity extends BaseTemplateActivity {
     public void onBackPressed() {
         if (!isHandledHideSearchBarInBackPressed()) {
             if (currentFragment != null) {
-                Stack<String> stackPage = currentFragment.getStackPage();
-                if (stackPage != null && !stackPage.isEmpty()) {
-                    String previousURL = stackPage.pop();
+//                Stack<String> stackPage = currentFragment.getStackPage();
+//                if (stackPage != null && !stackPage.isEmpty()) {
+//                    String previousURL = stackPage.pop();
+//                    currentFragment.goBack();
+//
+//                    Toast.makeText(this, previousURL, Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
-                    Toast.makeText(this, previousURL, Toast.LENGTH_SHORT).show();
+                if (currentFragment.goBack()) {
                     return;
                 }
             }
