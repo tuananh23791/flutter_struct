@@ -3,6 +3,7 @@ package com.beyondedge.hm;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
@@ -16,6 +17,8 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
+
+import java.util.Stack;
 
 public class MainActivity extends BaseTemplateActivity {
     private PageInterface currentFragment;
@@ -35,10 +38,27 @@ public class MainActivity extends BaseTemplateActivity {
         settingBottomNavigation();
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isHandledHideSearchBarInBackPressed()) {
+            if (currentFragment != null) {
+                Stack<String> stackPage = currentFragment.getStackPage();
+                if (stackPage != null && !stackPage.isEmpty()) {
+                    String previousURL = stackPage.pop();
+
+                    Toast.makeText(this, previousURL, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            super.onBackPressed();
+        }
     }
 
     private void initViewPager() {
@@ -46,7 +66,7 @@ public class MainActivity extends BaseTemplateActivity {
         adapterViewPager = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapterViewPager);
 
-        currentFragment = adapterViewPager.getCurrentFragment();
+        viewPager.post(() -> currentFragment = adapterViewPager.getCurrentFragment());
 
         //TODO
         handler.postDelayed(() -> {

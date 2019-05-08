@@ -5,7 +5,6 @@ package com.beyondedge.hm.config;
  */
 
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +13,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Locale;
+
+import timber.log.Timber;
 
 /**
  * var message = {
@@ -66,7 +67,8 @@ public class TemplateMessage {
         try {
             return HMApplication.getGson().fromJson(json, TemplateMessage.class);
         } catch (JsonSyntaxException e) {
-            Toast.makeText(HMApplication.getInstance(), e.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(HMApplication.getInstance(), e.toString(), Toast.LENGTH_SHORT).show();
+            Timber.e(e.toString());
         }
 
         return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");

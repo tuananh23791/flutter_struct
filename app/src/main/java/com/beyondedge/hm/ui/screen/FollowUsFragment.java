@@ -23,6 +23,9 @@ import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
 import com.beyondedge.hm.utils.URLUtils;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 /**
  * Created by Hoa Nguyen on Apr 24 2019.
  */
@@ -119,5 +122,15 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
             Animation fadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
             fragmentContainer.startAnimation(fadeOut);
         }
+    }
+
+    @Override
+    public Stack<String> getStackPage() {
+        return null;
+    }
+
+    @Override
+    public String defaultPage() {
+        return null;
     }
 }

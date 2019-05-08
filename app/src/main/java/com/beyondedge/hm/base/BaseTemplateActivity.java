@@ -74,11 +74,18 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
+    protected boolean isHandledHideSearchBarInBackPressed() {
         if (isVisible() && searchType == SEARCH_TYPE_MENU) {
             hideSearch();
-        } else {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isHandledHideSearchBarInBackPressed()) {
             super.onBackPressed();
         }
     }
