@@ -53,7 +53,7 @@ public class PageFragment extends WebFragment implements PageInterface {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        mIndex = bundle.getInt("index", MENU_HOME);
+        mIndex = bundle != null ? bundle.getInt("index", MENU_HOME) : MENU_HOME;
     }
 
     @Nullable

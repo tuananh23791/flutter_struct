@@ -1,18 +1,15 @@
 package com.beyondedge.hm.ui.page;
 
-import java.util.Stack;
+import com.beyondedge.hm.ui.page.more.WebInterface;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
  */
-public interface PageInterface {
+public interface PageInterface extends WebInterface {
     void refresh();
 
     void willBeDisplayed();
 
     void willBeHidden();
 
-    Stack<String> getStackPage();
-
-    String defaultPage();
 }

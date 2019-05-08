@@ -26,6 +26,7 @@ public class MainActivity extends BaseTemplateActivity {
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationViewPager viewPager;
     private Handler handler = new Handler();
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,25 @@ public class MainActivity extends BaseTemplateActivity {
                     return;
                 }
             }
-            super.onBackPressed();
+//            super.onBackPressed();
+
+            handledDoubleBackWarning();
         }
+    }
+
+    private void handledDoubleBackWarning() {
+        if (doubleBackToExitPressedOnce) {
+            finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler()
+                .postDelayed(
+                        () -> doubleBackToExitPressedOnce = false,
+                        2000);
     }
 
     private void initViewPager() {
