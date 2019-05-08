@@ -58,20 +58,20 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     }
 
     @Override
-    protected void enableBackButtonToolbar() {
-//        super.enableBackButtonToolbar();
+    protected void enableBackButtonToolbar(View.OnClickListener listener) {
+//        View backBt = findViewById(R.id.btn_back);
+//        if (backBt != null) {
+//            backBt.setVisibility(View.VISIBLE);
+//            backBt.setOnClickListener(v -> {
+//                if (isCanBack() && isSearchVisible()) {
+//                    hideSearch();
+//                } else {
+//                    super.enableBackButtonToolbar(null);
+//                }
+//            });
+//        }
 
-        View backBt = findViewById(R.id.btn_back);
-        if (backBt != null) {
-            backBt.setVisibility(View.VISIBLE);
-            backBt.setOnClickListener(v -> {
-                if (isCanBack() && isSearchVisible()) {
-                    hideSearch();
-                } else {
-                    finish();
-                }
-            });
-        }
+        super.enableBackButtonToolbar(listener);
     }
 
     protected boolean isHandledHideSearchBarInBackPressed() {
@@ -93,7 +93,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     //* * logic code */
 
     public void updateTemplate(TemplateMessage templateMessage) {
-        if (templateMessage == null) return;
+        if (templateMessage == null || TextUtils.isEmpty(templateMessage.getPageTemplate())) return;
 
         mTemplateMessage = templateMessage;
 

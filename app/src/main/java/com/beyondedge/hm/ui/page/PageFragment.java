@@ -72,6 +72,15 @@ public class PageFragment extends WebFragment implements PageInterface {
         loadPage(mMenu.getUrl());
     }
 
+    @Override
+    public void onPageFinished(String url) {
+        super.onPageFinished(url);
+
+        if (isDisplaying && canGoBack()) {
+
+        }
+    }
+
     /**
      * Refresh
      */

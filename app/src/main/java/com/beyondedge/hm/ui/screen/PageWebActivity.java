@@ -33,7 +33,7 @@ public class PageWebActivity extends BaseActivitySingleFragment {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        enableBackButtonToolbar();
+        enableBackButtonToolbar(null/*default finish*/);
 
         Intent intent = getIntent();
         String stringExtra = intent.getStringExtra(EXTRA_TITLE);

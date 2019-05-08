@@ -5,6 +5,7 @@ package com.beyondedge.hm.config;
  */
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -36,8 +37,8 @@ import timber.log.Timber;
  * }
  */
 public class TemplateMessage {
-    public static final int CART_COUNT_UNDEFINE = -1;
-    public static final String HOME = "home";
+    public static final String CART_COUNT_UNDEFINE = "0";
+    public static final String HOME = "homepage";
     public static final String PROD_CAT = "prod_cat";
     public static final String PROD_DETAIL = "prod_detail";
     public static final String ACCOUNT = "account";
@@ -48,11 +49,11 @@ public class TemplateMessage {
     @SerializedName("page_template")
     private String pageTemplate;
     @SerializedName("cart_count")
-    private int cartCount;
+    private String cartCount;
     @SerializedName("share_page_url")
     private String sharePageUrl;
 
-    private TemplateMessage(String pageTitle, String pageTemplate, int cartCount, String sharePageUrl) {
+    private TemplateMessage(String pageTitle, String pageTemplate, String cartCount, String sharePageUrl) {
         this.pageTitle = pageTitle;
         this.pageTemplate = pageTemplate;
         this.cartCount = cartCount;
@@ -81,7 +82,7 @@ public class TemplateMessage {
     @NonNull
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "[title=%s \ntemplate=%s \ncart=%d \nshare=%s]", pageTitle, pageTemplate, cartCount, sharePageUrl);
+        return String.format(Locale.getDefault(), "[title=%s \ntemplate=%s \ncart=%s \nshare=%s]", pageTitle, pageTemplate, cartCount, sharePageUrl);
     }
 
     public String getPageTitle() {
@@ -93,7 +94,11 @@ public class TemplateMessage {
     }
 
     public int getCartCount() {
-        return cartCount;
+        try {
+            return Integer.valueOf(cartCount);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     public String getSharePageUrl() {

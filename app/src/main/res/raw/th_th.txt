@@ -2,52 +2,52 @@
     "version": {
       "versionAndroidCode": ["0.0.1","0.0.2"],
       "versioniOS": ["0.0.1","0.0.2"],
-      "MainDomain": "https://hmthuat.specom.io/",
+      "MainDomain": "https://hmthuat2.specom.io/",
       "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
       },
 
     "mainMenu": [
       {
         "url": "",
-        "name": "Home-Thai"
+        "name": "Home"
       },
       {
         "url": "customer/account/",
-        "name": "Profile-Thai"
+        "name": "Profile"
       },
       {
         "url": "wishlist/",
-        "name": "Wish List-Thai"
+        "name": "Wish List"
       },
       {
         "url": "checkout/cart/",
-        "name": "Shopping Cart-Thai"
+        "name": "Shopping Cart"
       },
       {
         "url": "subListMore",
-        "name": "More-Thai"
+        "name": "More"
       }      ],
 
 
     "subListMore": [
         {
-          "name": "Customer Service-Thai",
+          "name": "Customer Service",
           "url": "customer-service.html"
         },
         {
-          "name": "Store Locator-Thai",
+          "name": "Store Locator",
           "url": "store-locator/"
         },
         {
-          "name": "Catalogue Lookup-Thai",
+          "name": "Catalogue Lookup",
           "url": "rest/V1/getProductsBySearch/articlenumber"
         },
         {
-          "name": "Follow Us-Thai",
+          "name": "Follow Us",
           "url": "subListFolowUs"
         },
         {
-          "name": "App Setting-Thai",
+          "name": "App Setting",
           "url": "app_setting"
         }
       ],
@@ -56,32 +56,32 @@
           {
             "iconName": "newsletter.png",
             "url": "newsletter/",
-            "name": "Newsletter-Thai"
+            "name": "Newsletter"
           },
           {
             "iconName": "facebook.png",
             "url": "https://www.facebook.com/hm",
-            "name": "Facebook-Thai"
+            "name": "Facebook"
           },
           {
             "iconName": "twitter.png",
             "url": "https://twitter.com/hm",
-            "name": "Twitter-Thai"
+            "name": "Twitter"
           },
           {
             "iconName": "instagram.png",
             "url": "https://www.instagram.com/hm/",
-            "name": "Instagram-Thai"
+            "name": "Instagram"
           },
           {
             "iconName": "youtube.png",
             "url": "https://www.youtube.com/user/hennesandmauritz",
-            "name": "Youtube-Thai"
+            "name": "Youtube"
           },
           {
             "iconName": "pinterest.png",
             "url": "https://www.pinterest.com/hm/",
-            "name": "Pinterest-Thai"
+            "name": "Pinterest"
           }
           ]  ,
 
@@ -104,16 +104,16 @@
       }
     ],
 	"lang": {
-		"search_product": "ค้นหาผลิตภัณฑ์-Thai",
-		"shop": "Shop-Thai",
-		"bt_cancel": "ยกเลิก-Thai",
-		"app_setting_push_notification": "การอนุญาตแอป-Thai",
-		"app_setting_region_settings": "ภูมิภาค:-Thai",
-		"app_setting_app_version" : "App Version-Thai",
-		"scan_barcode": "บาร์โค้ด-Thai",
-		"scan_productImage": "รูปภาพผลิตภัณฑ์-Thai",
-		"AlertNewVersion": "แอปพลิเคชันมีเวอร์ชั่นใหม่-Thai",
-		"NewVersion_update": "อัปเดต-Thai",
-		"NewVersion_cancel": "ยกเลิก-Thai"
+		"search_product": "ค้นหาผลิตภัณฑ์",
+		"shop": "Shop",
+		"bt_cancel": "ยกเลิก",
+		"app_setting_push_notification": "การอนุญาตแอป",
+		"app_setting_region_settings": "ภูมิภาค:",
+		"app_setting_app_version" : "App Version",
+		"scan_barcode": "บาร์โค้ด",
+		"scan_productImage": "รูปภาพผลิตภัณฑ์",
+		"AlertNewVersion": "แอปพลิเคชันมีเวอร์ชั่นใหม่",
+		"NewVersion_update": "อัปเดต",
+		"NewVersion_cancel": "ยกเลิก"
 	}
 }

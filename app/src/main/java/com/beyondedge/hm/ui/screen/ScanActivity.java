@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -44,7 +43,7 @@ public class ScanActivity extends BaseActivity implements ZXingScannerViewCustom
         super.onCreate(state);
         setContentView(R.layout.activity_simple_scanner);
         setTitleToolbar(getString(R.string.product_barcode));
-        enableBackButtonToolbar();
+        enableBackButtonToolbar(null/*default finish*/);
 
         ViewGroup contentFrame = findViewById(R.id.content_frame);
         barcode = findViewById(R.id.barcode);
@@ -114,7 +113,6 @@ public class ScanActivity extends BaseActivity implements ZXingScannerViewCustom
     private void resumeCamera(long delay) {
         handler.postDelayed(() -> mScannerView.resumeCameraPreview(ScanActivity.this), delay);
     }
-
 
 
     public void showMessageDialog(String message) {

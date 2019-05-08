@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.TemplateMessage;
 
 import im.delight.android.webview.AdvancedWebView;
+import timber.log.Timber;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
@@ -71,6 +73,10 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         }
 
         return false;
+    }
+
+    protected boolean canGoBack() {
+        return myWebView != null && myWebView.canGoBack();
     }
 
     protected String getOriginalURL() {
@@ -132,7 +138,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //        myWebView.addHttpHeader("X-Requested-With", "");
 //        loadPage("https://www.hm.com/vn/");
 
-        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
+//        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
     }
 
@@ -178,15 +184,24 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
 //        testJavascript(myWebView);
-
-        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
-            textInfo.setVisibility(View.VISIBLE);
-            textInfo.setText(url);
-        }
     }
 
     @Override
     public void onPageFinished(String url) {
+        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+            textInfo.setVisibility(View.VISIBLE);
+            StringBuilder builder = new StringBuilder();
+            builder.append("URL = ");
+            builder.append(url);
+            builder.append("\n\n");
+            if (templateMessage != null) {
+                builder.append(templateMessage.toString());
+            }else {
+                builder.append("templateMessage [null]");
+            }
+
+            textInfo.setText(builder.toString());
+        }
     }
 
     @Override
@@ -249,24 +264,30 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             handleMessage(message);
         }
 
-        /**
-         * Show a toast from the web page
-         */
-        @JavascriptInterface
-        public void process(String message) {
-            handleMessage(message);
-        }
+//        /**
+//         * Show a toast from the web page
+//         */
+//        @JavascriptInterface
+//        public void process(String message) {
+//            handleMessage(message);
+//        }
 
         private void handleMessage(String message) {
-            templateMessage = TemplateMessage.fromJson(message);
+            TemplateMessage localTemplateMessage = TemplateMessage.fromJson(message);
 
+            if (localTemplateMessage == null || TextUtils.isEmpty(localTemplateMessage.getPageTemplate())) {
+                return;
+            }
+
+            templateMessage = localTemplateMessage;
+            Timber.i("TemplateMessage => \n%s", WebFragment.this.templateMessage.toString());
             if (isDisplaying) {
-                Toast.makeText(mContext, templateMessage.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, WebFragment.this.templateMessage.toString(), Toast.LENGTH_SHORT).show();
                 FragmentActivity activity = getActivity();
 
                 //update template for change Title/Search toolbar setting
                 if (activity instanceof BaseTemplateActivity) {
-                    ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+                    ((BaseTemplateActivity) activity).updateTemplate(WebFragment.this.templateMessage);
                 }
             } else {
                 //will handled in next active page
@@ -283,7 +304,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
          *         };
          *         try {
          *             // Android
-         *             nativeJs.process(message);
+         *             window.Android.postMessage(JSON.stringify(message));}
          *         }
          *         catch (e) {
          *         }

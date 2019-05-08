@@ -37,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
     }
 
-    public void setTitleToolbar(String title){
+    public void setTitleToolbar(String title) {
         TextView textTitle = findViewById(R.id.txt_title);
         if (textTitle != null) {
             textTitle.setVisibility(View.VISIBLE);
@@ -45,16 +45,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void enableBackButtonToolbar() {
+    protected void enableBackButtonToolbar(View.OnClickListener clickListener) {
         View backBt = findViewById(R.id.btn_back);
         if (backBt != null) {
             backBt.setVisibility(View.VISIBLE);
-            backBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            if (clickListener != null) {
+                backBt.setOnClickListener(clickListener);
+            } else {
+                backBt.setOnClickListener(v -> super.onBackPressed());
+            }
         }
     }
 

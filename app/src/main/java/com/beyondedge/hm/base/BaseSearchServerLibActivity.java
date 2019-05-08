@@ -112,6 +112,11 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
             searchHolder.hideKeyboard();
     }
 
+    @Override
+    protected void enableBackButtonToolbar(View.OnClickListener clickListener) {
+        super.enableBackButtonToolbar(clickListener);
+    }
+
     protected boolean isSearchVisible() {
         return searchHolder.isVisible();
     }

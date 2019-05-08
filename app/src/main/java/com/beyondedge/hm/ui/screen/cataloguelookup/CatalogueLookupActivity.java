@@ -23,7 +23,7 @@ public class CatalogueLookupActivity extends BaseActivitySingleFragment {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        enableBackButtonToolbar();
+        enableBackButtonToolbar(null/*default finish*/);
         setTitleToolbar(getString(R.string.look_up_title));
     }
 }
