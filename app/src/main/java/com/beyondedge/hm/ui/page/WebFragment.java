@@ -1,6 +1,7 @@
 package com.beyondedge.hm.ui.page;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +17,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,6 +86,16 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         }
 
         return "";
+    }
+
+    protected void handleTemplateUpdate() {
+        Activity activity = getActivity();
+        if (activity instanceof BaseTemplateActivity) {
+            if (templateMessage == null) {
+                templateMessage = TemplateMessage.fromJson("");
+            }
+            ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+        }
     }
 
     private void initView(View view) {
@@ -196,11 +206,15 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             builder.append("\n\n");
             if (templateMessage != null) {
                 builder.append(templateMessage.toString());
-            }else {
+            } else {
                 builder.append("templateMessage [null]");
             }
 
             textInfo.setText(builder.toString());
+        }
+
+        if (isDisplaying) {
+            handleTemplateUpdate();
         }
     }
 

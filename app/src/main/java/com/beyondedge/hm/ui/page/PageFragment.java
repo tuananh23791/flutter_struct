@@ -77,7 +77,7 @@ public class PageFragment extends WebFragment implements PageInterface {
         super.onPageFinished(url);
 
         if (isDisplaying && canGoBack()) {
-
+            //TODO
         }
     }
 
@@ -116,12 +116,7 @@ public class PageFragment extends WebFragment implements PageInterface {
 
             //update template cache
 
-            if (activity instanceof BaseTemplateActivity) {
-                if (templateMessage == null) {
-                    templateMessage = TemplateMessage.fromJson("");
-                }
-                ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
-            }
+            handleTemplateUpdate();
         }
 
         // Do what you want here, for example animate the content

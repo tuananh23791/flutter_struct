@@ -87,7 +87,10 @@ public class MainActivity extends BaseTemplateActivity {
         adapterViewPager = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapterViewPager);
 
-        viewPager.post(() -> currentFragment = adapterViewPager.getCurrentFragment());
+        viewPager.post(() -> {
+            currentFragment = adapterViewPager.getCurrentFragment();
+            currentFragment.willBeDisplayed();
+        });
 
         //TODO
         handler.postDelayed(() -> {
