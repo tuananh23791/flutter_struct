@@ -153,4 +153,9 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
 
         return false;
     }
+
+    @Override
+    public boolean canBack() {
+        return false;
+    }
 }

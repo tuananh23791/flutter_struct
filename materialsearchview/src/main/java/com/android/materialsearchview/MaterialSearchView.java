@@ -63,6 +63,8 @@ public class MaterialSearchView extends CardView {
                 hideKeyboard();
             } else if (v == b.imgBack) {
                 hideSearch();
+            } else if (v == b.imgSearch) {
+                b.editText.requestFocus();
             }
         }
     };
@@ -140,6 +142,8 @@ public class MaterialSearchView extends CardView {
         searchHint = a.getString(R.styleable.MaterialSearchView_search_hint);
         searchTextColor = a.getColor(R.styleable.MaterialSearchView_search_text_color, getResources().getColor(android.R.color.black));
         searchIconColor = a.getColor(R.styleable.MaterialSearchView_search_icon_color, getResources().getColor(android.R.color.black));
+
+        b.imgSearch.setOnClickListener(mOnClickListener);
 
         b.imgBack.setOnClickListener(mOnClickListener);
         b.imgClear.setOnClickListener(mOnClickListener);

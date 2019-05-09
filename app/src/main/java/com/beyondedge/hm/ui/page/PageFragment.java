@@ -145,4 +145,9 @@ public class PageFragment extends WebFragment implements PageInterface {
     public boolean goBack() {
         return super.goBack();
     }
+
+    @Override
+    public boolean canBack() {
+        return canGoBack();
+    }
 }

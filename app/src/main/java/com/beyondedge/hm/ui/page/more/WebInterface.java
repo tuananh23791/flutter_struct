@@ -7,4 +7,6 @@ public interface WebInterface {
     String defaultPage();
 
     boolean goBack();
+
+    boolean canBack();
 }

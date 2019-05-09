@@ -94,7 +94,9 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             if (templateMessage == null) {
                 templateMessage = TemplateMessage.fromJson("");
             }
-            ((BaseTemplateActivity) activity).updateTemplate(templateMessage);
+            BaseTemplateActivity baseTemplateActivity = (BaseTemplateActivity) activity;
+            baseTemplateActivity.setWebPageCanGoBack(canGoBack());
+            baseTemplateActivity.updateTemplate(templateMessage);
         }
     }
 
@@ -123,8 +125,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-//                Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
-
 //                FragmentActivity activity = getActivity();
 //
 //                if (activity != null && activity instanceof BaseActivity) {
@@ -153,10 +153,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     public void loadPage(String url) {
-//        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
-//            textInfo.setVisibility(View.VISIBLE);
-//            textInfo.setText(url);
-//        }
         myWebView.loadUrl(url);
     }
 
@@ -182,30 +178,25 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     public void onResume() {
         super.onResume();
         myWebView.onResume();
-        // ...
     }
 
     @SuppressLint("NewApi")
     @Override
     public void onPause() {
         myWebView.onPause();
-        // ...
         super.onPause();
     }
 
     @Override
     public void onDestroy() {
         myWebView.onDestroy();
-        // ...
         super.onDestroy();
     }
 
-    //TODO onActivityResult on Activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         myWebView.onActivityResult(requestCode, resultCode, intent);
-        // ...
     }
 
     @Override
@@ -214,11 +205,11 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
         Timber.d("TemplateMessage onPageStarted %s", url);
 
-        showDebugData(url);
     }
 
     @Override
     public void onPageFinished(String url) {
+        showDebugData(url);
         Timber.d("TemplateMessage onPageFinished %s", url);
         if (isDisplaying) {
             handleTemplateUpdate();

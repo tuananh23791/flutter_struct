@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (clickListener != null) {
                 backBt.setOnClickListener(clickListener);
             } else {
-                backBt.setOnClickListener(v -> super.onBackPressed());
+                backBt.setOnClickListener(v -> onBackPressed());
             }
         }
     }

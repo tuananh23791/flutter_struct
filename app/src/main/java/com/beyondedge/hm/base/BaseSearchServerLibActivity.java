@@ -98,6 +98,11 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         if (searchPaddingView != null) {
             searchPaddingView.setVisibility(can ? View.VISIBLE : View.GONE);
         }
+
+        View backBt = findViewById(R.id.btn_back);
+        if (backBt != null) {
+            backBt.setVisibility(can ? View.VISIBLE : View.GONE);
+        }
     }
 
     protected void showSearch() {
@@ -349,7 +354,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 //            if (BuildConfig.DEBUG && BuildConfig.LOG) {
 //                showTestPopup();
 //            } else {
-                takeScanWithPermission(900);
+            takeScanWithPermission(900);
 //            }
         }
     }

@@ -21,14 +21,17 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public static final String PROD_DETAIL = "prod_detail";
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
-
+    private boolean isWebPageCanGoBack = false;
     //    private boolean isFULLToolBarSearch = true;
     private int searchType = SEARCH_TYPE_HIDE_ALL;
     private boolean isCanShare = false;
     private View btSearch;
     private View btShare;
-
     private TemplateMessage mTemplateMessage;
+
+    public void setWebPageCanGoBack(boolean webPageCanGoBack) {
+        isWebPageCanGoBack = webPageCanGoBack;
+    }
 
     @Override
     protected void initSearchView() {
@@ -48,13 +51,11 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             showSearch();
         });
 
+        enableBackButtonToolbar(null/*default*/);
+
         super.settingBack(false);
 
         validateSearch();
-    }
-
-    protected boolean isCanBack() {
-        return searchType != SEARCH_TYPE_FULL_TOOLBAR;
     }
 
     @Override
@@ -144,15 +145,18 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             switch (searchType) {
 
                 case SEARCH_TYPE_FULL_TOOLBAR:
+                    settingBack(isWebPageCanGoBack);
                     toolBarSearch();
                     break;
 
                 case SEARCH_TYPE_MENU:
+                    settingBack(true);
                     menuSearch();
                     break;
 
                 case SEARCH_TYPE_HIDE_ALL:
                 default:
+                    settingBack(isWebPageCanGoBack);
                     hideAllSearch();
                     break;
             }
@@ -163,12 +167,15 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     private void toolBarSearch() {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
-        settingBack(false);
+        //TODO -------------
+//        settingBack(false);
+//        settingBack(isWebPageCanGoBack);
         showSearch();
     }
 
     private void menuSearch() {
         settingBack(true);
+//        settingBack(isWebPageCanGoBack);
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
         hideSearch();
