@@ -23,7 +23,11 @@ import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.screen.FollowUsActivity;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.ui.screen.SettingsActivity;
+import com.beyondedge.hm.ui.screen.cataloguelookup.CatalogueLookupActivity;
 import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
+
+import java.util.Stack;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
@@ -63,6 +67,11 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             String url = menu.getUrl();
             if (url != null && url.contains(Constant.FOLLOW_US_PATH)) {
                 startActivity(FollowUsActivity.class);
+            } else if (url != null && url.contains(Constant.APP_SETTING_PATH)) {
+                SettingsActivity.startScreen(getActivity(), menu.getName());
+            } else if (menu.isCatalogueLookupMenu()) {
+                Intent intent = new Intent(getActivity(), CatalogueLookupActivity.class);
+                startActivity(intent);
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);
@@ -131,5 +140,22 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             Animation fadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
             fragmentContainer.startAnimation(fadeOut);
         }
+    }
+
+    @Override
+    public String defaultPage() {
+        return null;
+    }
+
+    @Override
+    public boolean goBack() {
+        //nothing
+
+        return false;
+    }
+
+    @Override
+    public boolean canBack() {
+        return false;
     }
 }

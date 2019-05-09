@@ -25,7 +25,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.materialsearchview.databinding.ViewSearchBinding;
@@ -58,8 +60,11 @@ public class MaterialSearchView extends CardView {
         public void onClick(View v) {
             if (v == b.imgClear) {
                 setSearchText(null);
+                hideKeyboard();
             } else if (v == b.imgBack) {
                 hideSearch();
+            } else if (v == b.imgSearch) {
+                b.editText.requestFocus();
             }
         }
     };
@@ -80,7 +85,7 @@ public class MaterialSearchView extends CardView {
         public void afterTextChanged(Editable s) {
         }
     };
-
+    private boolean enableSearchPicture = false;
 
     public MaterialSearchView(@NonNull Context context) {
         super(context);
@@ -102,16 +107,43 @@ public class MaterialSearchView extends CardView {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    @BindingAdapter("dividerDirection")
+    public static void dividerDirection(RecyclerView recyclerView, boolean isDividerDirection) {
+        if (isDividerDirection) {
+            RecyclerView.ItemDecoration decoration =
+                    new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
+            recyclerView.addItemDecoration(decoration);
+        }
+    }
+
+    public void enableSearchPicture(boolean enableSearchPicture) {
+        this.enableSearchPicture = enableSearchPicture;
+
+        if (enableSearchPicture) {
+            b.imgPicture.setVisibility(VISIBLE);
+            b.imgPicture.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listenerQuery.onActionSearch(ActionSearch.Picture);
+                }
+            });
+        } else {
+            b.imgPicture.setVisibility(GONE);
+        }
+    }
+
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MaterialSearchView, 0, 0);
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         b = DataBindingUtil.inflate(inflater, R.layout.view_search, this, true);
-        animateSearchView = a.getBoolean(R.styleable.MaterialSearchView_search_animate, true);
+        animateSearchView = a.getBoolean(R.styleable.MaterialSearchView_search_animate, false);
         searchMenuPosition = a.getInteger(R.styleable.MaterialSearchView_search_menu_position, 0);
         searchHint = a.getString(R.styleable.MaterialSearchView_search_hint);
         searchTextColor = a.getColor(R.styleable.MaterialSearchView_search_text_color, getResources().getColor(android.R.color.black));
         searchIconColor = a.getColor(R.styleable.MaterialSearchView_search_icon_color, getResources().getColor(android.R.color.black));
+
+        b.imgSearch.setOnClickListener(mOnClickListener);
 
         b.imgBack.setOnClickListener(mOnClickListener);
         b.imgClear.setOnClickListener(mOnClickListener);
@@ -138,12 +170,7 @@ public class MaterialSearchView extends CardView {
         b.editText.setTextColor(getTextColor());
         setDrawableTint(b.imgBack.getDrawable(), searchIconColor);
         setDrawableTint(b.imgClear.getDrawable(), searchIconColor);
-        b.imgPicture.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listenerQuery.onActionSearch(ActionSearch.Picture);
-            }
-        });
+        enableSearchPicture(false);
 
         b.imgBarcode.setOnClickListener(new OnClickListener() {
             @Override
@@ -259,8 +286,7 @@ public class MaterialSearchView extends CardView {
     public void showSearch() {
         hideSearch = false;
         checkForAdapter();
-        setVisibility(View.VISIBLE);
-        if (animateSearchView)
+        if (animateSearchView) {
             if (Build.VERSION.SDK_INT >= 21) {
                 Animator animatorShow = ViewAnimationUtils.createCircularReveal(
                         this, // view
@@ -287,6 +313,19 @@ public class MaterialSearchView extends CardView {
                     b.linearItemsHolder.setVisibility(View.VISIBLE);
                 }
             }
+            setVisibility(VISIBLE);
+        } else {
+            postVisible(View.VISIBLE);
+        }
+    }
+
+    private void postVisible(final int visibleType) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setVisibility(visibleType);
+            }
+        });
     }
 
     public void hideKeyboard() {
@@ -323,6 +362,8 @@ public class MaterialSearchView extends CardView {
             } else {
                 setVisibility(GONE);
             }
+        } else {
+            postVisible(View.GONE);
         }
     }
 
@@ -340,10 +381,12 @@ public class MaterialSearchView extends CardView {
         return searchHint;
     }
 
-    public void setSearchHint(String searchHint) {
+    public void setSearchHint(String searchHint, boolean isFocus) {
         this.searchHint = searchHint;
+        b.editText.setHint(this.searchHint);
         invalidate();
-        requestFocus();
+        if (isFocus)
+            requestFocus();
     }
 
     public void setSearchIconColor(int searchIconColor) {

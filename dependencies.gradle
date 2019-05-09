@@ -1,6 +1,6 @@
 ext.version_app = [
         version_code: 1,
-        version_name: "0.0.1",
+        version_name: "0.0.4",
 ]
 
 ext.versions = [
@@ -24,6 +24,7 @@ ext.versions = [
         retrofit_gson_converter  : "2.5.0",
         retrofit_log             : "3.11.0",
         glide                    : "4.9.0",
+        power_preference         : "1.4.1",
 
 ]
 
@@ -51,6 +52,7 @@ ext.libraries = [
         timber                    : "com.jakewharton.timber:timber:$versions.timber",
         glide                     : "com.github.bumptech.glide:glide:$versions.glide",
         glide_compiler            : "com.github.bumptech.glide:compiler:$versions.glide",
+        power_preference          : "com.aliassadi:power-preference-lib:$versions.power_preference",
 
         ah_bottom_navigation      : "com.aurelhubert:ahbottomnavigation:$versions.ah_bottom_navigation",
         advanced_webview          : "com.github.delight-im:Android-AdvancedWebView:$versions.advanced_webview",

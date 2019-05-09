@@ -120,4 +120,21 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
             fragmentContainer.startAnimation(fadeOut);
         }
     }
+
+    @Override
+    public String defaultPage() {
+        return null;
+    }
+
+    @Override
+    public boolean goBack() {
+        //nothing
+
+        return false;
+    }
+
+    @Override
+    public boolean canBack() {
+        return false;
+    }
 }

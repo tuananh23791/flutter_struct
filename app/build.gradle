@@ -26,6 +26,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            ext.alwaysUpdateBuildId = false
+        }
     }
 
     dataBinding {
@@ -42,6 +46,10 @@ android {
         if (variant.buildType.name.contains('release')) {
             variant.setIgnore(true)
         }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     productFlavors {
@@ -69,8 +77,12 @@ static def releaseTime() {
 
 dependencies {
     api project(path: ':materialsearchview')
+    api project(path: ':zxingscanner')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
+
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
@@ -80,6 +92,7 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
+    implementation libraries.power_preference
     implementation libraries.glide
     annotationProcessor libraries.glide_compiler
 
@@ -91,9 +104,9 @@ dependencies {
     implementation libraries.androidx_room
     annotationProcessor libraries.androidx_room_compiler
 
-    implementation libraries.barcodescanner_zxing
+//    implementation libraries.barcodescanner_zxing
     implementation libraries.zxing_core
-//    implementation libraries.barcodescanner_core
+    implementation libraries.barcodescanner_core
 
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview

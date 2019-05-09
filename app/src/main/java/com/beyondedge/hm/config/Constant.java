@@ -7,14 +7,22 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
+import com.beyondedge.hm.utils.PrefManager;
+
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
  */
 public class Constant {
-    public static final boolean IS_FORCE_LOCAL_CONFIG = true;
-    public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/HM/setting/id_en.txt";
-    public static final String FOLLOW_US_PATH = "subListMenuFolowUs";
+    /*Cheat CODE*/
+    public static final boolean IS_FORCE_LOCAL_CONFIG = false;
+    public static final boolean IS_FORCE_LOCAL_THAI_CONFIG = false;
+
+    public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt";
+    public static final String FOLLOW_US_PATH = "subListFolowUs";
+    public static final String APP_SETTING_PATH = "app_setting";
     public static final String MENU_MORE_PATH = "subListMore";
+    public static final String MENU_CATALOGUE_LOOKUP_PATH = "rest/V1/getProductsBySearch/articlenumber";
+
 
     public static String getAuthorizationParam() {
         String username = "hm";
@@ -34,6 +42,7 @@ public class Constant {
 
     @NonNull
     public static String getLinkSavedFile() {
-        return getSaveDir() + Uri.parse(LINK_CONFIG).getLastPathSegment();
+        String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
+        return getSaveDir() + Uri.parse(currentLinkConfig).getLastPathSegment();
     }
 }

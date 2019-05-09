@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/content_frame"
-        android:background="@color/colorRedHM"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -18,4 +17,37 @@
 
         <include layout="@layout/toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
-</FrameLayout>
+
+
+    <ImageButton
+        android:id="@+id/btFlash"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_flash_active"
+        android:visibility="visible" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btFlash"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </ScrollView>
+
+</RelativeLayout>

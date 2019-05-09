@@ -1,9 +1,12 @@
 package com.beyondedge.hm.config;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
+import com.beyondedge.hm.BuildConfig;
+import com.beyondedge.hm.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -13,6 +16,7 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
+import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_THAI_CONFIG;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
@@ -73,19 +77,26 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
         String value;
 
         value = Utils.loadJSONFromDir(filePath);
-        try {
-            Timber.e("------------H&M------------- parse Server");
-            result = mGson.fromJson(value, HMConfig.class);
-        } catch (JsonSyntaxException e) {
-            Timber.e("------------H&M------------- parse Config error");
+
+        if (BuildConfig.DEBUG && BuildConfig.LOG && IS_FORCE_LOCAL_THAI_CONFIG
+                && "TH-TH.txt".equals(Uri.parse(filePath).getLastPathSegment())) {
+            return parseLocalFileTH_TH();
+        } else {
+
+            try {
+                Timber.e("------------H&M------------- parse Server");
+                result = mGson.fromJson(value, HMConfig.class);
+            } catch (JsonSyntaxException e) {
+                Timber.e("------------H&M------------- parse Config error");
 //                Timber.e(value);
-            Timber.e("------------------------- parse Config error");
-            Timber.e(e);
-        }catch (Exception e) {
-            Timber.e("------------H&M------------- parse Config error");
+                Timber.e("------------------------- parse Config error");
+                Timber.e(e);
+            } catch (Exception e) {
+                Timber.e("------------H&M------------- parse Config error");
 //                Timber.e(value);
-            Timber.e("------------------------- parse Config error");
-            Timber.e(e);
+                Timber.e("------------------------- parse Config error");
+                Timber.e(e);
+            }
         }
 
         return result;
@@ -98,6 +109,21 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
         value = Utils.loadJSONFromAsset(mContext);
         try {
             Timber.e("------------H&M------------- parse Local");
+            result = mGson.fromJson(value, HMConfig.class);
+        } catch (JsonSyntaxException e) {
+            Timber.e(e);
+        }
+
+        return result;
+    }
+
+    private HMConfig parseLocalFileTH_TH() {
+        HMConfig result = null;
+        String value;
+
+        value = Utils.loadJSONFromAsset(mContext, R.raw.th_th);
+        try {
+            Timber.e("------------H&M---TH_TH.txt---------- parse Local");
             result = mGson.fromJson(value, HMConfig.class);
         } catch (JsonSyntaxException e) {
             Timber.e(e);

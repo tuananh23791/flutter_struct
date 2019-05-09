@@ -3,6 +3,7 @@ package com.beyondedge.hm;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
@@ -11,50 +12,32 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.beyondedge.hm.base.BaseSearchServerLibActivity;
+import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
+import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
-import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends BaseSearchServerLibActivity {
-    //    private TextView mTextMessage;
+public class MainActivity extends BaseTemplateActivity {
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationViewPager viewPager;
     private Handler handler = new Handler();
-
-    @Override
-    protected QueryTextListener getQueryTextListener() {
-        return new QueryTextListener() {
-            @Override
-            public void onQueryTextSubmit(String query) {
-                //TODO query
-//        model.searchFood(query, 0);
-                Snackbar.make(bottomNavigation, "Search:[" + query + "]",
-                        Snackbar.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onQueryTextChange(String newText) {
-
-            }
-        };
-    }
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        mTextMessage = findViewById(R.id.message);
         viewPager = findViewById(R.id.view_pager);
 
-        settingBottomNavigation();
         initSearchView();
         initViewPager();
+        settingBottomNavigation();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -62,23 +45,69 @@ public class MainActivity extends BaseSearchServerLibActivity {
         handler.removeCallbacksAndMessages(null);
     }
 
-    private void initViewPager() {
-        viewPager.setOffscreenPageLimit(4);
-        adapterViewPager = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapterViewPager);
+    @Override
+    public void onBackPressed() {
+        if (!isHandledHideSearchBarInBackPressed()) {
+            if (currentFragment != null) {
+//                Stack<String> stackPage = currentFragment.getStackPage();
+//                if (stackPage != null && !stackPage.isEmpty()) {
+//                    String previousURL = stackPage.pop();
+//                    currentFragment.goBack();
+//
+//                    Toast.makeText(this, previousURL, Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
-        currentFragment = adapterViewPager.getCurrentFragment();
+                if (currentFragment.goBack()) {
+                    return;
+                }
+            }
+//            super.onBackPressed();
 
-        //TODO
+            handledDoubleBackWarning();
+        }
+    }
+
+    @Override
+    public void updateTemplate(TemplateMessage templateMessage) {
+        super.updateTemplate(templateMessage);
+
         handler.postDelayed(() -> {
+            String cartCount = templateMessage != null ? String.valueOf(templateMessage.getCartCount()) : "";
             AHNotification notification = new AHNotification.Builder()
-                    .setText("100")
+                    .setText(cartCount)
                     .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
                     .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
                     .build();
             bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
 
-        }, 2000);
+        }, 500);
+    }
+
+    private void handledDoubleBackWarning() {
+        if (doubleBackToExitPressedOnce) {
+            finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler()
+                .postDelayed(
+                        () -> doubleBackToExitPressedOnce = false,
+                        2000);
+    }
+
+    private void initViewPager() {
+        viewPager.setOffscreenPageLimit(4);
+        adapterViewPager = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapterViewPager);
+
+        viewPager.post(() -> {
+            currentFragment = adapterViewPager.getCurrentFragment();
+            currentFragment.willBeDisplayed();
+        });
     }
 
 
@@ -117,6 +146,8 @@ public class MainActivity extends BaseSearchServerLibActivity {
         bottomNavigation.setInactiveColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorInActive));
 
         bottomNavigation.setCurrentItem(0);
+        bottomNavigation.post(() -> setSearchType(SEARCH_TYPE_FULL_TOOLBAR));
+
         HMConfig config = LoadConfig.getInstance().load();
         setTitleToolbar(config.getMainMenuList().get(0).getName());
 
@@ -158,27 +189,15 @@ public class MainActivity extends BaseSearchServerLibActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
-            showHideSearchMenu(position != ViewPagerAdapter.MENU_MORE);
+            //TODO
+//            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
 
+            if (position == ViewPagerAdapter.MENU_MORE) {
+                setSearchType(SEARCH_TYPE_HIDE_ALL);
+            }
             return true;
         });
 
-//        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
-//            @Override
-//            public void onPositionChange(int pos) {
-//                switch (pos) {
-//                    case 0:
-//                        mTextMessage.setText(R.string.title_home);
-//                        break;
-//                    case 1:
-//                        mTextMessage.setText(R.string.title_dashboard);
-//                        break;
-//                    case 2:
-//                        mTextMessage.setText(R.string.title_notifications);
-//                        break;
-//                }
-//            }
-//        });
     }
 
     /**

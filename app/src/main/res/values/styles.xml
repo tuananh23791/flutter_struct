@@ -14,7 +14,6 @@
     </style>
 
     <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
@@ -25,6 +24,14 @@
 
     <style name="TextMenu" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/colorGrayTextMenu</item>
+    </style>
+
+    <style name="TextSettingTitle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorGrayTextTitle</item>
+    </style>
+
+    <style name="TextSettingInfo" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorGrayTextInfo</item>
     </style>
 
 </resources>

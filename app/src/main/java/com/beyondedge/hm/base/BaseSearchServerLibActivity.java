@@ -1,6 +1,7 @@
 package com.beyondedge.hm.base;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,9 +21,12 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.materialsearchview.MaterialSearchView;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.searchdb.SearchServerViewModel;
 import com.beyondedge.hm.searchdb.SearchSuggestRecyclerAdapter;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
+import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.ui.screen.ScanActivity;
 
 import java.io.File;
@@ -47,13 +51,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_TAKE_PICTURE = 2;
     private static final int ACTION_SCAN = 3;
     protected QueryTextListener mQueryTextListener;
-    boolean isToolBarSearch = true;
-    private View btSearch;
-    private View btShare;
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
     private MaterialSearchView searchHolder;
-    private boolean isShowSearchMenu = true;
+    private View searchPaddingView;
     private int mRequestCode;
     private int mImageAction;
     private String mCurrentPhotoPath;
@@ -65,10 +66,20 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         super.onCreate(savedInstanceState);
     }
 
+    boolean isSearchInit() {
+        return searchHolder != null;
+    }
+
     protected void initSearchView() {
+        HMConfig config = LoadConfig.getInstance().load();
         model = ViewModelProviders.of(this).get(SearchServerViewModel.class);
         observeSearchList(model);
         searchHolder = findViewById(R.id.searchHolder);
+        searchHolder.enableSearchPicture(false);
+        searchPaddingView = findViewById(R.id.viewTempPadding);
+        //Comment - All now using back in activity tool_bar
+        searchHolder.canBack(false);
+        searchHolder.setSearchHint(config.getLanguageBy("search_product"), false);
         adapterSearch = new SearchSuggestRecyclerAdapter(this);
         searchHolder.addQueryTextListener(this);
         searchHolder.setSearchRecyclerAdapter(adapterSearch);
@@ -78,34 +89,49 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         mQueryTextListener = getQueryTextListener();
 
-        btSearch = findViewById(R.id.btn_search);
-        btShare = findViewById(R.id.btn_share);
 
-        btShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO share
-            }
-        });
+    }
 
-        btSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchHolder.canBack(true);
-                searchHolder.showSearch();
-            }
-        });
-        searchHolder.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isShowSearchMenu) {
-                    toolBarSearch();
-                } else {
-                    menuSearch();
-                }
-            }
-        });
+    protected void settingBack(boolean can) {
+        //Comment - All now using back in activity tool_bar
+        //searchHolder.settingBack(can);
+        if (searchPaddingView != null) {
+            searchPaddingView.setVisibility(can ? View.VISIBLE : View.GONE);
+        }
 
+        View backBt = findViewById(R.id.btn_back);
+        if (backBt != null) {
+            backBt.setVisibility(can ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showSearch() {
+        if (!searchHolder.isVisible())
+            searchHolder.showSearch();
+    }
+
+    protected void hideSearch() {
+        if (searchHolder.isVisible())
+            searchHolder.hideSearch();
+        else
+            searchHolder.hideKeyboard();
+    }
+
+    @Override
+    protected void enableBackButtonToolbar(View.OnClickListener clickListener) {
+        super.enableBackButtonToolbar(clickListener);
+    }
+
+    protected boolean isSearchVisible() {
+        return searchHolder.isVisible();
+    }
+
+    protected void hideKeyboard() {
+        searchHolder.hideKeyboard();
+    }
+
+    protected boolean isVisible() {
+        return searchHolder.isVisible();
     }
 
 
@@ -116,62 +142,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         });
     }
 
-    protected void showHideSearchMenu(boolean isShow) {
-//        isShowSearchMenu = isShow;
-//        invalidateOptionsMenu();
-
-        if (!isShow) {
-            searchHolder.hideSearch();
-            btSearch.setVisibility(View.GONE);
-            btShare.setVisibility(View.GONE);
-        } else {
-            if (isToolBarSearch) {
-                toolBarSearch();
-            } else {
-                menuSearch();
-            }
-        }
-    }
-
-    protected void toolBarSearch() {
-        isToolBarSearch = true;
-        btSearch.setVisibility(View.GONE);
-        btShare.setVisibility(View.GONE);
-        searchHolder.canBack(false);
-        searchHolder.showSearch();
-    }
-
-    protected void menuSearch() {
-        searchHolder.canBack(true);
-        isToolBarSearch = false;
-        btSearch.setVisibility(View.VISIBLE);
-        //TODO
-        btShare.setVisibility(View.GONE);
-        if (!isToolBarSearch) {
-            searchHolder.hideSearch();
-        } else {
-            searchHolder.hideKeyboard();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (searchHolder.isVisible() && !isToolBarSearch) {
-            searchHolder.hideSearch();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     // MaterialSearchView listeners
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
-        if (!isToolBarSearch)
-            searchHolder.hideSearch();
-        else {
-            searchHolder.hideKeyboard();
-        }
 
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
@@ -183,9 +157,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public boolean onQueryTextChange(String newText) {
         searchHolder.showRecycler();
 
-//        if (mQueryTextListener != null) {
-//            mQueryTextListener.onQueryTextChange(newText);
-//        }
+        //TODO improve here
         searchHolder.showLoading();
         model.searchQuery(newText);
         return true;
@@ -203,24 +175,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public void onSearchDeleteClicked(SearchEntity searchEntity) {
         //TODO
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        menu.findItem(R.id.action_search).setVisible(isShowSearchMenu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_search) {
-//            searchHolder.showSearch();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
     //--Search Take Picture
 
@@ -397,7 +351,31 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         if (type == MaterialSearchView.ActionSearch.Picture) {
             takePictureWithPermission(589);
         } else if (type == MaterialSearchView.ActionSearch.Barcode) {
+//            if (BuildConfig.DEBUG && BuildConfig.LOG) {
+//                showTestPopup();
+//            } else {
             takeScanWithPermission(900);
+//            }
+        }
+    }
+
+    private void showTestPopup() {
+        if (BuildConfig.DEBUG && BuildConfig.LOG) {
+            final String[] data = {
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCate.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/productCateShare.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/product%20detail.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/checkout.html",
+                    "http://sharefile.beyondedge.com.sg/hm/id/profile.html",
+            };
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(data, 0, (dialog, which) -> {
+                        PageWebActivity.startScreen(BaseSearchServerLibActivity.this,
+                                data[which], "");
+                        dialog.dismiss();
+                    })
+                    .show();
         }
     }
 
