@@ -15,6 +15,7 @@ import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
+import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 
@@ -67,6 +68,22 @@ public class MainActivity extends BaseTemplateActivity {
         }
     }
 
+    @Override
+    public void updateTemplate(TemplateMessage templateMessage) {
+        super.updateTemplate(templateMessage);
+
+        handler.postDelayed(() -> {
+            String cartCount = templateMessage != null ? String.valueOf(templateMessage.getCartCount()) : "";
+            AHNotification notification = new AHNotification.Builder()
+                    .setText(cartCount)
+                    .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
+                    .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
+                    .build();
+            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
+
+        }, 500);
+    }
+
     private void handledDoubleBackWarning() {
         if (doubleBackToExitPressedOnce) {
             finish();
@@ -91,17 +108,6 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
         });
-
-        //TODO
-        handler.postDelayed(() -> {
-            AHNotification notification = new AHNotification.Builder()
-                    .setText("100")
-                    .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
-                    .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
-                    .build();
-            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
-
-        }, 2000);
     }
 
 
