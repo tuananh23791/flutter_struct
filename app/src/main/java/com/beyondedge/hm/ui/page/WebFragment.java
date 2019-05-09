@@ -160,6 +160,23 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         myWebView.loadUrl(url);
     }
 
+    private void showDebugData(String url) {
+        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+            textInfo.setVisibility(View.VISIBLE);
+            StringBuilder builder = new StringBuilder();
+            builder.append("URL = ");
+            builder.append(url);
+            builder.append("\n\n");
+            if (templateMessage != null) {
+                builder.append(templateMessage.toString());
+            } else {
+                builder.append("templateMessage [null]");
+            }
+
+            textInfo.setText(builder.toString());
+        }
+    }
+
     @SuppressLint("NewApi")
     @Override
     public void onResume() {
@@ -194,25 +211,15 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
 //        testJavascript(myWebView);
+
+        Timber.d("TemplateMessage onPageStarted %s", url);
+
+        showDebugData(url);
     }
 
     @Override
     public void onPageFinished(String url) {
-        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
-            textInfo.setVisibility(View.VISIBLE);
-            StringBuilder builder = new StringBuilder();
-            builder.append("URL = ");
-            builder.append(url);
-            builder.append("\n\n");
-            if (templateMessage != null) {
-                builder.append(templateMessage.toString());
-            } else {
-                builder.append("templateMessage [null]");
-            }
-
-            textInfo.setText(builder.toString());
-        }
-
+        Timber.d("TemplateMessage onPageFinished %s", url);
         if (isDisplaying) {
             handleTemplateUpdate();
         }
@@ -229,6 +236,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onExternalPageRequest(String url) {
     }
+
+    //-----
 
     private void testJavascript(WebView webView) {
         webView.loadUrl(
@@ -290,6 +299,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             TemplateMessage localTemplateMessage = TemplateMessage.fromJson(message);
 
             if (localTemplateMessage == null || TextUtils.isEmpty(localTemplateMessage.getPageTemplate())) {
+                Timber.i("TemplateMessage => null");
                 return;
             }
 

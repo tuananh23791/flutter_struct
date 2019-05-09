@@ -135,7 +135,7 @@ public class MaterialSearchView extends CardView {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         b = DataBindingUtil.inflate(inflater, R.layout.view_search, this, true);
-        animateSearchView = a.getBoolean(R.styleable.MaterialSearchView_search_animate, true);
+        animateSearchView = a.getBoolean(R.styleable.MaterialSearchView_search_animate, false);
         searchMenuPosition = a.getInteger(R.styleable.MaterialSearchView_search_menu_position, 0);
         searchHint = a.getString(R.styleable.MaterialSearchView_search_hint);
         searchTextColor = a.getColor(R.styleable.MaterialSearchView_search_text_color, getResources().getColor(android.R.color.black));
@@ -282,9 +282,7 @@ public class MaterialSearchView extends CardView {
     public void showSearch() {
         hideSearch = false;
         checkForAdapter();
-        setVisibility(View.VISIBLE);
-
-        if (animateSearchView)
+        if (animateSearchView) {
             if (Build.VERSION.SDK_INT >= 21) {
                 Animator animatorShow = ViewAnimationUtils.createCircularReveal(
                         this, // view
@@ -311,6 +309,19 @@ public class MaterialSearchView extends CardView {
                     b.linearItemsHolder.setVisibility(View.VISIBLE);
                 }
             }
+            setVisibility(VISIBLE);
+        } else {
+            postVisible(View.VISIBLE);
+        }
+    }
+
+    private void postVisible(final int visibleType) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setVisibility(visibleType);
+            }
+        });
     }
 
     public void hideKeyboard() {
@@ -347,6 +358,8 @@ public class MaterialSearchView extends CardView {
             } else {
                 setVisibility(GONE);
             }
+        } else {
+            postVisible(View.GONE);
         }
     }
 

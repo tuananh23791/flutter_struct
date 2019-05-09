@@ -13,10 +13,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.config.TemplateMessage;
 
 import static com.beyondedge.hm.ui.page.ViewPagerAdapter.MENU_HOME;
 
@@ -27,6 +25,7 @@ public class PageFragment extends WebFragment implements PageInterface {
     private View fragmentContainer;
     private int mIndex;
     private HMConfig.Menu mMenu;
+//    private boolean isInnitPage = false;
 
     /**
      * Create a new instance of the fragment
@@ -59,7 +58,6 @@ public class PageFragment extends WebFragment implements PageInterface {
         initView(view);
     }
 
-
     /**
      * Init view
      */
@@ -70,6 +68,7 @@ public class PageFragment extends WebFragment implements PageInterface {
         mMenu = config.getMainMenuList().get(mIndex);
 
         loadPage(mMenu.getUrl());
+
     }
 
     @Override
@@ -98,21 +97,20 @@ public class PageFragment extends WebFragment implements PageInterface {
     @Override
     public void willBeDisplayed() {
         setDisplaying(true);
+//        if (!isInnitPage) {
+//            isInnitPage = true;
+//            loadPage(mMenu.getUrl());
+//        }
         FragmentActivity activity = getActivity();
 
         if (activity instanceof BaseActivity) {
-//            if (Constant.MENU_MORE_PATH.equals(mMenu.getUrl())) {
-//                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
-//            } else {
-//                ((BaseActivity) activity).setTitleToolbar("");
-//            }
 
-            //TODO
-            if (mIndex == MENU_HOME) {
-                ((BaseActivity) activity).setTitleToolbar("");
-            } else {
-                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
-            }
+            //TODO now ignore name from menu, using in template
+//            if (mIndex == MENU_HOME) {
+//                ((BaseActivity) activity).setTitleToolbar("");
+//            } else {
+//                ((BaseActivity) activity).setTitleToolbar(mMenu.getName());
+//            }
 
             //update template cache
 
@@ -124,8 +122,6 @@ public class PageFragment extends WebFragment implements PageInterface {
             Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
             fragmentContainer.startAnimation(fadeIn);
         }
-
-        //TODO handle category here
     }
 
     /**
