@@ -26,7 +26,13 @@ import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
 import com.beyondedge.hm.base.BaseTemplateActivity;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
+import com.beyondedge.hm.utils.URLUtils;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import im.delight.android.webview.AdvancedWebView;
 import timber.log.Timber;
@@ -111,6 +117,19 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         WebSettings settings = myWebView.getSettings();
         settings.setAppCacheEnabled(false);
         settings.setJavaScriptEnabled(true);
+
+        HMConfig config = LoadConfig.getInstance().load();
+        String mainDomain = config.getVersion().getMainDomain();
+
+        URL url = null;
+        try {
+            url = new URL(mainDomain);
+            String host = url.getHost();
+            myWebView.addPermittedHostname(host);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
 
         myWebView.setWebViewClient(new WebViewClient() {
 
@@ -226,6 +245,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     @Override
     public void onExternalPageRequest(String url) {
+        URLUtils.openInWebBrowser(myWebView.getContext(), url);
     }
 
     //-----
