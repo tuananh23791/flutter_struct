@@ -88,9 +88,25 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         }
 
         mQueryTextListener = getQueryTextListener();
-
-
     }
+
+//    private void settingRxSearch() {
+//        Disposable subscribe = RxSearchObservable.fromView(searchHolder)
+//                .debounce(300, TimeUnit.MILLISECONDS)
+//                .filter(s -> {
+//                    if (s.isEmpty()) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                })
+//                .distinctUntilChanged()
+//                .switchMap((Function<String, ObservableSource<String>>) query ->
+//                        dataFromNetwork(query))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(result -> textViewResult.setText(result));
+//    }
 
     protected void settingBack(boolean can) {
         //Comment - All now using back in activity tool_bar
@@ -147,6 +163,8 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
 
+//        model.onQueryTextSubmit();
+
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
         }
@@ -159,7 +177,8 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
         //TODO improve here
         searchHolder.showLoading();
-        model.searchQuery(newText);
+        model.onQueryTextChange(newText);
+//        model.searchQuery(newText);
         return true;
     }
 

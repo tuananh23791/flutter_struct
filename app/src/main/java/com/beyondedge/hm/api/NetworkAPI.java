@@ -4,6 +4,8 @@ import com.beyondedge.hm.searchdb.server.SearchEntity;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -17,6 +19,12 @@ public interface NetworkAPI {
     Call<ArrayList<SearchEntity>> searchProductQuery(
             @Query("q") String query,
             @Query("_") String token);
+
+    @GET("search/ajax/suggest")
+    Observable<ArrayList<SearchEntity>> searchProductQueryRx(
+            @Query("q") String query,
+            @Query("_") String token);
+
     @GET("rest/V1/getProductsBySearch/articlenumber/{article}")
     Call<String> catagolueLookupArticle(
             @Path("article") String article);
