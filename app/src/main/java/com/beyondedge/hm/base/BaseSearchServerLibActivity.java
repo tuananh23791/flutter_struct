@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -173,12 +174,17 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        searchHolder.showRecycler();
+        if (TextUtils.isEmpty(newText)) {
+            searchHolder.hideLoading();
+            searchHolder.hideRecycler();
+        } else {
+            searchHolder.showRecycler();
 
-        //TODO improve here
-        searchHolder.showLoading();
-        model.onQueryTextChange(newText);
+            //TODO improve here
+            searchHolder.showLoading();
+            model.onQueryTextChange(newText);
 //        model.searchQuery(newText);
+        }
         return true;
     }
 

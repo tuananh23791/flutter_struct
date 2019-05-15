@@ -25,6 +25,7 @@ import timber.log.Timber;
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
+
     final PublishSubject<String> subject = PublishSubject.create();
     private SearchServerRepository repository;
     private Disposable subscribe;
@@ -49,10 +50,26 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .filter(s -> !s.isEmpty())
                 .distinctUntilChanged()
-                .switchMap((Function<String, Observable<ArrayList<SearchEntity>>>) query ->
-                        repository.searchQuery(query))
+
+                .switchMap((Function<String, Observable<ArrayList<SearchEntity>>>) query -> {
+                    Timber.d(query);
+                    return repository.searchQuery(query).onErrorReturnItem(new ArrayList<>());
+                })
+//                .onErrorResumeNext(new ObservableSource<ArrayList<SearchEntity>>() {
+//                    @Override
+//                    public void subscribe(Observer<? super ArrayList<SearchEntity>> throwable) {
+//                        Timber.d("onErrorResumeNext %s", throwable.toString());
+////                    subject.onNext("");
+//                        Observable<ArrayList<Object>> just = Observable.just(new ArrayList<>());
+//                    }
+//                })
+//                .doOnError(throwable -> {
+//                    Timber.d("doOnError %s", throwable.toString());
+//                })
+//                .onErrorReturnItem(new ArrayList<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+
                 .subscribe(result -> {
                     Timber.d(result.toString());
                     getMainLiveData().postValue(result);
@@ -63,17 +80,21 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
         ;
     }
 
+    public void onQueryTextChange(String text) {
+        if (subscribe != null && !subscribe.isDisposed())
+            subject.onNext(text);
+        else
+            Timber.d("Edittext: %s subscribe isDisposed", text);
+    }
+
     public void onQueryTextSubmit() {
         if (subscribe != null && !subscribe.isDisposed()) {
             subject.onComplete();
             subscribe.dispose();
-        }
+        } else
+            Timber.d("Edittext: subscribe isDisposed");
     }
 
-    public void onQueryTextChange(String text) {
-        if (subscribe != null && !subscribe.isDisposed())
-            subject.onNext(text);
-    }
 
     @Override
     protected void onCleared() {
