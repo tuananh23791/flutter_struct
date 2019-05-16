@@ -1,5 +1,6 @@
 package com.beyondedge.hm.config;
 
+import com.beyondedge.hm.utils.PrefManager;
 import com.google.gson.Gson;
 
 /**
@@ -30,6 +31,10 @@ public class LoadConfig {
 
     public HMConfig load() {
         if (mHMConfig == null) {
+            mHMConfig = PrefManager.getInstance().getCurrentHMConfigJson();
+        }
+
+        if (mHMConfig == null) {
             throw new RuntimeException("mHMConfig null now");
         }
         return mHMConfig;
@@ -39,6 +44,8 @@ public class LoadConfig {
         if (config == null) {
             throw new RuntimeException("setHMConfig must be != null");
         }
+
+        PrefManager.getInstance().putCurrentHMConfigJson(config);
         mHMConfig = config;
     }
 }

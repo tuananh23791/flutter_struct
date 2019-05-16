@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -43,6 +44,7 @@ public class PageWebActivity extends BaseActivitySingleFragment {
         setTitleToolbar(stringExtra);
     }
 
+    @NonNull
     @Override
     protected Fragment createFragment() {
         String url = getIntent().getStringExtra(EXTRA_URL);

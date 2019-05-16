@@ -16,6 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:onClick="@{itemClickListener}"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
