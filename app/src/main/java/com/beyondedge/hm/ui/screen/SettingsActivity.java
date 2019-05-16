@@ -40,6 +40,6 @@ public class SettingsActivity extends BaseActivitySingleFragment {
 
     @Override
     protected Fragment createFragment() {
-        return SettingsFragment.newInstance();
+        return SettingsFragment.Companion.newInstance();
     }
 }

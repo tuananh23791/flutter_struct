@@ -41,7 +41,8 @@
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@null"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp"
             tools:visibility="visible" />
@@ -52,7 +53,8 @@
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/btn_search"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@null"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_share"
             tools:visibility="visible" />
@@ -63,7 +65,8 @@
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@null"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search"
             tools:visibility="visible" />

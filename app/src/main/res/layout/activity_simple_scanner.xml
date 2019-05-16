@@ -27,7 +27,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="64dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@mipmap/ic_flash_active"
