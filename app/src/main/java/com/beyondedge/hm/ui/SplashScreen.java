@@ -92,39 +92,42 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
         if (doingTask <= 0) {
             HMConfig config = LoadConfig.getInstance().load();
             if (config != null) {
+                //TODO check later
                 //show popup force update app
-                boolean isShowDialog = AppVersion.isForceUpdate(this,
-                        config.getVersion().getVersionAndroidForceUpdate());
-                boolean isForceUpdate = false;
-                if (isShowDialog) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
-                            .setMessage(config.getLanguageBy("AlertNewVersion"))
-                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
-                                    (dialog, which) -> {
-                                        dialog.dismiss();
-                                        SplashScreen.this.finish();
-                                        URLUtils.openInWebBrowser(SplashScreen.this,
-                                                "https://play.google.com/store/apps?hl=en");
-                                    });
+//                boolean isShowDialog = AppVersion.isForceUpdate(this,
+//                        config.getVersion().getVersionAndroidForceUpdate());
+//                boolean isForceUpdate = false;
+//                if (isShowDialog) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
+//                            .setMessage(config.getLanguageBy("AlertNewVersion"))
+//                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
+//                                    (dialog, which) -> {
+//                                        dialog.dismiss();
+//                                        SplashScreen.this.finish();
+//                                        URLUtils.openInWebBrowser(SplashScreen.this,
+//                                                "https://play.google.com/store/apps?hl=en");
+//                                    });
+//
+//                    if (!isForceUpdate) {
+//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+//                            dialog.dismiss();
+//                            directToMainScreen();
+//                        });
+//                        builder.setCancelable(true);
+//                    } else {
+//                        builder.setCancelable(false);
+//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+//                            dialog.dismiss();
+//                            SplashScreen.this.finish();
+//                        });
+//                    }
+//
+//                    builder.show();
+//                } else {
+//                    directToMainScreen();
+//                }
 
-                    if (!isForceUpdate) {
-                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-                            dialog.dismiss();
-                            directToMainScreen();
-                        });
-                        builder.setCancelable(true);
-                    } else {
-                        builder.setCancelable(false);
-                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-                            dialog.dismiss();
-                            SplashScreen.this.finish();
-                        });
-                    }
-
-                    builder.show();
-                } else {
-                    directToMainScreen();
-                }
+                directToMainScreen();
             } else {
                 directToMainScreen();
             }
