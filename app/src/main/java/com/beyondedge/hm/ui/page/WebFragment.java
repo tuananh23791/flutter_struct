@@ -316,6 +316,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
             templateMessage = localTemplateMessage;
             Timber.i("TemplateMessage => \n%s", WebFragment.this.templateMessage.toString());
+            //TODO comment code to test
+
             if (isDisplaying) {
 //                Toast.makeText(mContext, WebFragment.this.templateMessage.toString(), Toast.LENGTH_SHORT).show();
                 FragmentActivity activity = getActivity();

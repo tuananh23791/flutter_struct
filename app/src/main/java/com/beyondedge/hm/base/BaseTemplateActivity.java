@@ -2,6 +2,8 @@ package com.beyondedge.hm.base;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.config.LoadConfig;
@@ -14,19 +16,22 @@ import com.beyondedge.hm.utils.URLUtils;
  */
 public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public static final int SEARCH_TYPE_HIDE_ALL = 0;
-    public static final int SEARCH_TYPE_FULL_TOOLBAR = 1;
-    public static final int SEARCH_TYPE_MENU = 2;
-    public static final String HOME = "home";
-    public static final String PROD_CAT = "prod_cat";
-    public static final String PROD_DETAIL = "prod_detail";
-    public static final String ACCOUNT = "account";
-    public static final String CHECKOUT = "checkout";
+    public static final int SEARCH_TYPE_FULL_TOOLBAR = 10;
+    public static final int SEARCH_TYPE_MENU_DETAIL = 20;
+    public static final int SEARCH_TYPE_MENU_CART = 25;
+    //    public static final String HOME = "home";
+//    public static final String PROD_CAT = "prod_cat";
+//    public static final String PROD_DETAIL = "prod_detail";
+//    public static final String ACCOUNT = "account";
+//    public static final String CHECKOUT = "checkout";
     private boolean isWebPageCanGoBack = false;
     //    private boolean isFULLToolBarSearch = true;
     private int searchType = SEARCH_TYPE_HIDE_ALL;
     private boolean isCanShare = false;
     private View btSearch;
     private View btShare;
+    private View btCart;
+    private TextView cartNumber;
     private TemplateMessage mTemplateMessage;
 
     public void setWebPageCanGoBack(boolean webPageCanGoBack) {
@@ -39,6 +44,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
         btSearch = findViewById(R.id.btn_search);
         btShare = findViewById(R.id.btn_share);
+        btCart = findViewById(R.id.btn_cart);
+        cartNumber = findViewById(R.id.cartNumber);
 
         btShare.setOnClickListener(v -> {
             if (mTemplateMessage != null && URLUtils.isURLValid(mTemplateMessage.getSharePageUrl())) {
@@ -49,6 +56,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setOnClickListener(v -> {
             settingBack(true);
             showSearch();
+        });
+
+        btCart.setOnClickListener(v -> {
+            Toast.makeText(this, "Not implement yet!", Toast.LENGTH_SHORT).show();
         });
 
         enableBackButtonToolbar(null/*default*/);
@@ -76,7 +87,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     }
 
     protected boolean isHandledHideSearchBarInBackPressed() {
-        if (isVisible() && searchType == SEARCH_TYPE_MENU) {
+        if (isVisible() && (searchType == SEARCH_TYPE_MENU_DETAIL || searchType == SEARCH_TYPE_MENU_CART)) {
             hideSearch();
             return true;
         }
@@ -96,18 +107,30 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public void updateTemplate(TemplateMessage templateMessage) {
         if (templateMessage == null || TextUtils.isEmpty(templateMessage.getPageTemplate())) return;
 
-        mTemplateMessage = templateMessage;
+        btSearch.post(new Runnable() {
+            @Override
+            public void run() {
+                mTemplateMessage = templateMessage;
+                String tempString = templateMessage.getPageTemplate();
 
-        String tempString = templateMessage.getPageTemplate();
+                isCanShare = mTemplateMessage != null && !TextUtils.isEmpty(templateMessage.getSharePageUrl());
+//        updateToolbarByTemplate(tempString);
+//        if (cartNumber != null) {
+//            cartNumber.setText(String.valueOf(mTemplateMessage.getCartCount()));
+//        }
 
-        isCanShare = mTemplateMessage != null && !TextUtils.isEmpty(templateMessage.getSharePageUrl());
-        updateToolbarByTemplate(tempString);
+                if (mTemplateMessage != null && mTemplateMessage.isHome()) {
+                    setTitleToolbar("");
+                } else {
+                    setTitleToolbar(templateMessage.getPageTitle());
+                }
 
-        if (mTemplateMessage.isHome()) {
-            setTitleToolbar("");
-        } else {
-            setTitleToolbar(templateMessage.getPageTitle());
-        }
+                updateToolbarByTemplate(tempString);
+                if (cartNumber != null) {
+                    cartNumber.setText(String.valueOf(mTemplateMessage.getCartCount()));
+                }
+            }
+        });
     }
 
     protected void updateToolbarByTemplate(String template) {
@@ -116,10 +139,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             searchType = SEARCH_TYPE_FULL_TOOLBAR;
         } else if (TemplateMessage.PROD_CAT.equals(template)) {
             //PROD_CAT
-            searchType = SEARCH_TYPE_MENU;
+            searchType = SEARCH_TYPE_MENU_CART;
         } else if (TemplateMessage.PROD_DETAIL.equals(template)) {
             //PROD_DETAIL
-            searchType = SEARCH_TYPE_MENU;
+            searchType = SEARCH_TYPE_MENU_DETAIL;
         } else if (TemplateMessage.ACCOUNT.equals(template)) {
             //ACCOUNT
             searchType = SEARCH_TYPE_HIDE_ALL;
@@ -149,9 +172,14 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     toolBarSearch();
                     break;
 
-                case SEARCH_TYPE_MENU:
+                case SEARCH_TYPE_MENU_DETAIL:
                     settingBack(true);
-                    menuSearch();
+                    menuSearchDetail();
+                    break;
+
+                case SEARCH_TYPE_MENU_CART:
+                    settingBack(true);
+                    menuSearchCart();
                     break;
 
                 case SEARCH_TYPE_HIDE_ALL:
@@ -160,30 +188,84 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     hideAllSearch();
                     break;
             }
+        } else {
+            Toast.makeText(this, "Something Error!Please try again!", Toast.LENGTH_SHORT).show();
         }
     }
 
 
     private void toolBarSearch() {
+//        btSearch.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                btSearch.setVisibility(View.GONE);
+//                btShare.setVisibility(View.GONE);
+//                //TODO -------------
+////        settingBack(false);
+////        settingBack(isWebPageCanGoBack);
+//                showSearch();
+//            }
+//        });
+
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
+        btCart.setVisibility(View.GONE);
         //TODO -------------
 //        settingBack(false);
 //        settingBack(isWebPageCanGoBack);
         showSearch();
+
     }
 
-    private void menuSearch() {
+    private void menuSearchDetail() {
+//        btCart.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                settingBack(true);
+//                btCart.setVisibility(View.GONE);
+//                //        settingBack(isWebPageCanGoBack);
+//                btSearch.setVisibility(View.VISIBLE);
+//                btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
+//                hideSearch();
+//            }
+//        });
+
         settingBack(true);
-//        settingBack(isWebPageCanGoBack);
+        btCart.setVisibility(View.GONE);
+        //        settingBack(isWebPageCanGoBack);
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
         hideSearch();
+
+
+    }
+
+
+    private void menuSearchCart() {
+////        settingBack(isWebPageCanGoBack);
+//        btCart.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                settingBack(true);
+//                btSearch.setVisibility(View.GONE);
+//                btShare.setVisibility(View.GONE);
+//                btCart.setVisibility(View.VISIBLE);
+//                hideSearch();
+//            }
+//        });
+
+        settingBack(true);
+        btSearch.setVisibility(View.GONE);
+        btShare.setVisibility(View.GONE);
+        btCart.setVisibility(View.VISIBLE);
+        hideSearch();
+
     }
 
     private void hideAllSearch() {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
+        btCart.setVisibility(View.GONE);
         hideSearch();
     }
 
