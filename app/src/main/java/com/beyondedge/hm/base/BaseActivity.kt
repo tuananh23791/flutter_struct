@@ -43,6 +43,17 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun validateTitle(isShow: Boolean) {
+        val textTitle = findViewById<TextView>(R.id.txt_title)
+        textTitle?.let {
+            if (isShow) {
+                textTitle.visibility = View.VISIBLE
+            } else {
+                textTitle.visibility = View.GONE
+            }
+        }
+    }
+
     protected open fun enableBackButtonToolbar(clickListener: View.OnClickListener?) {
         val backBt = findViewById<View>(R.id.btn_back)
         backBt?.let {
@@ -83,6 +94,7 @@ abstract class BaseActivity : AppCompatActivity() {
         layoutFrame.layoutParams = layoutParams
 
         toolbar?.let {
+            validateTitle(isMargin)
             if (isMargin) {
                 appBarLayout.background = ContextCompat.getDrawable(this, R.color.colorBackground)
                 toolbar.background = ContextCompat.getDrawable(this, R.color.colorBackground)
