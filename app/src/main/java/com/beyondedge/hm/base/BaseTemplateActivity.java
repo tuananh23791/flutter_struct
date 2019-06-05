@@ -1,7 +1,9 @@
 package com.beyondedge.hm.base;
 
+import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -215,6 +217,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         //TODO -------------
 //        settingBack(false);
 //        settingBack(isWebPageCanGoBack);
+        marginTopFrame(true);
         showSearch();
 
     }
@@ -244,6 +247,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             TextView middleTitle = findViewById(R.id.txt_title);
             middleTitle.setPadding(0, 0, 0, 0);
         }
+        marginTopFrame(true);
         hideSearch();
     }
 
@@ -267,6 +271,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         TextView middleTitle = findViewById(R.id.txt_title);
         middleTitle.setPadding(0, 0, 0, 0);
         btCart.setVisibility(View.VISIBLE);
+        marginTopFrame(false);
         hideSearch();
 
     }
@@ -275,6 +280,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         btCart.setVisibility(View.GONE);
+        marginTopFrame(true);
         hideSearch();
     }
 

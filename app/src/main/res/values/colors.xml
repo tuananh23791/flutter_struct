@@ -25,4 +25,5 @@
     <color name="colorGrayTextInfo">#B0B0B0</color>
 
     <color name="colorBGTrans">#0FFFFFFF</color>
+    <color name="semi_transparent">#66FFFFFF</color>
 </resources>

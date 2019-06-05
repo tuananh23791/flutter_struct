@@ -3,11 +3,14 @@ package com.beyondedge.hm.base
 import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.beyondedge.hm.R
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * Created by Hoa Nguyen on Apr 20 2019.
@@ -31,8 +34,12 @@ abstract class BaseActivity : AppCompatActivity() {
     fun setTitleToolbar(title: String) {
         val textTitle = findViewById<TextView>(R.id.txt_title)
         textTitle?.let {
-            textTitle.visibility = View.VISIBLE
-            textTitle.text = title
+            if (title.isNotEmpty()) {
+                textTitle.visibility = View.VISIBLE
+                textTitle.text = title
+            } else {
+                textTitle.visibility = View.GONE
+            }
         }
     }
 
@@ -59,6 +66,31 @@ abstract class BaseActivity : AppCompatActivity() {
                 .setCancelable(canCancel)
                 .setPositiveButton(android.R.string.ok, btListener)
                 .show()
+    }
+
+    protected fun marginTopFrame(isMargin: Boolean) {
+        val appBarLayout = findViewById<AppBarLayout>(R.id.appBarLayout)
+        val toolbar = findViewById<Toolbar>(R.id.tool_bar)
+
+        val layoutFrame = findViewById<View>(R.id.frame_content)
+        val layoutParams = layoutFrame.layoutParams as RelativeLayout.LayoutParams
+        val styledAttributes = theme.obtainStyledAttributes(
+                intArrayOf(android.R.attr.actionBarSize))
+        val actionBarSize = styledAttributes.getDimension(0, 0f).toInt()
+        styledAttributes.recycle()
+        layoutParams.topMargin = if (isMargin) actionBarSize else 0
+
+        layoutFrame.layoutParams = layoutParams
+
+        toolbar?.let {
+            if (isMargin) {
+                appBarLayout.background = ContextCompat.getDrawable(this, R.color.colorBackground)
+                toolbar.background = ContextCompat.getDrawable(this, R.color.colorBackground)
+            } else {
+                appBarLayout.background = ContextCompat.getDrawable(this, android.R.color.transparent)
+                toolbar.background = ContextCompat.getDrawable(this, android.R.color.transparent)
+            }
+        }
     }
 
 }
