@@ -174,12 +174,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
                 case SEARCH_TYPE_MENU_DETAIL:
                     settingBack(true);
-                    menuSearchDetail();
+                    menuSearchProdDetail();
                     break;
 
                 case SEARCH_TYPE_MENU_CART:
                     settingBack(true);
-                    menuSearchCart();
+                    menuSearchProCat();
                     break;
 
                 case SEARCH_TYPE_HIDE_ALL:
@@ -210,6 +210,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         btCart.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
         //TODO -------------
 //        settingBack(false);
 //        settingBack(isWebPageCanGoBack);
@@ -217,7 +219,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     }
 
-    private void menuSearchDetail() {
+    private void menuSearchProCat() {
 //        btCart.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -235,13 +237,18 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         //        settingBack(isWebPageCanGoBack);
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
+        if (isCanShare) {
+            TextView middleTitle = findViewById(R.id.txt_title);
+            middleTitle.setPadding(0, 0, getResources().getDimensionPixelOffset(android.R.dimen.app_icon_size), 0);
+        } else {
+            TextView middleTitle = findViewById(R.id.txt_title);
+            middleTitle.setPadding(0, 0, 0, 0);
+        }
         hideSearch();
-
-
     }
 
 
-    private void menuSearchCart() {
+    private void menuSearchProdDetail() {
 ////        settingBack(isWebPageCanGoBack);
 //        btCart.post(new Runnable() {
 //            @Override
@@ -257,6 +264,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         settingBack(true);
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
         btCart.setVisibility(View.VISIBLE);
         hideSearch();
 
