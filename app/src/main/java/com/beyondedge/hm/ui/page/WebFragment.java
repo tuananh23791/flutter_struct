@@ -29,6 +29,7 @@ import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
+import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.utils.URLUtils;
 
 import java.net.MalformedURLException;
@@ -82,6 +83,10 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     protected boolean canGoBack() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof PageWebActivity) {
+            return true;
+        }
         return myWebView != null && myWebView.canGoBack();
     }
 

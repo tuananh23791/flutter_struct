@@ -1,15 +1,15 @@
 package com.beyondedge.hm.base;
 
-import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
+import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.utils.URLUtils;
 
@@ -62,6 +62,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
         btCart.setOnClickListener(v -> {
             Toast.makeText(this, "Not implement yet!", Toast.LENGTH_SHORT).show();
+            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CART);
+            PageWebActivity.startScreen(this, mMenu.getUrl(), mMenu.getName());
+
         });
 
         enableBackButtonToolbar(null/*default*/);
