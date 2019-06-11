@@ -181,7 +181,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     private void showDebugData(String url) {
-        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
+        if (BuildConfig.DEBUG && BuildConfig.TEMPLATE && textInfo != null) {
             textInfo.setVisibility(View.VISIBLE);
             StringBuilder builder = new StringBuilder();
             builder.append("URL = ");
@@ -190,7 +190,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             if (templateMessage != null) {
                 builder.append(templateMessage.toString());
             } else {
-                builder.append("templateMessage [null]");
+                builder.append("TemplateMessage [null]");
             }
 
             textInfo.setText(builder.toString());

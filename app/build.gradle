@@ -63,13 +63,16 @@ android {
         def FALSE = "false"
 
         def LOG = "LOG"
+        def TEMPLATE = "TEMPLATE"
 
         dev {
             buildConfigField BOOLEAN, LOG, TRUE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
         }
 
         stable {
             buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
         }
     }
 }
