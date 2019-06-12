@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
@@ -46,6 +47,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     protected TemplateMessage templateMessage;
 
     private AdvancedWebView myWebView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
 
@@ -113,6 +115,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     private void initView(View view) {
         myWebView = view.findViewById(R.id.webview);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myWebView.reload();
+            }
+        });
         myWebView.setListener(getActivity(), this);
 //        myWebView.setGeolocationEnabled(false);
         myWebView.setMixedContentAllowed(true);
@@ -141,6 +150,10 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             @Override
             public void onPageFinished(WebView view, String url) {
 //                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
         });

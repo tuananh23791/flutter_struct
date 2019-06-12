@@ -64,7 +64,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
         btCart.setOnClickListener(v -> {
             HMConfig config = LoadConfig.getInstance().load();
-            HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CART);
+            HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CHECKOUT);
             PageWebActivity.startScreen(this, mMenu.getUrl(), mMenu.getName());
 
         });
@@ -196,7 +196,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     settingBack(true);
                     menuSearchProCat();
                     if (this instanceof MainActivity) {
-                        ((MainActivity) (this)).showOrHideBottomNavigation(true);
+                        MainActivity mainActivity = (MainActivity) (this);
+                        mainActivity.showOrHideBottomNavigation(true);
                     }
                     break;
                 case SEARCH_TYPE_MENU_CHECKOUT:
@@ -204,7 +205,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     hideAllSearch();
 
                     if (this instanceof MainActivity) {
-                        ((MainActivity) (this)).showOrHideBottomNavigation(false);
+                        MainActivity mainActivity = (MainActivity) (this);
+                        if (!mainActivity.isCheckOutTab()) {
+                            mainActivity.showOrHideBottomNavigation(false);
+                        } else {
+                            mainActivity.showOrHideBottomNavigation(true);
+                        }
                     }
                     break;
 

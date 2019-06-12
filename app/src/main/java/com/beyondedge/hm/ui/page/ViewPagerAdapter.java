@@ -18,7 +18,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public static final int MENU_HOME = 0;
     public static final int MENU_PROFILE = 1;
     public static final int MENU_FAVORITE = 2;
-    public static final int MENU_CART = 3;
+    public static final int MENU_CHECKOUT = 3;
     public static final int MENU_MORE = 4;
 
     private ArrayList<PageInterface> fragments = new ArrayList<>();
@@ -31,7 +31,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         fragments.add(PageFragment.newInstance(MENU_HOME));
         fragments.add(PageFragment.newInstance(MENU_PROFILE));
         fragments.add(PageFragment.newInstance(MENU_FAVORITE));
-        fragments.add(PageFragment.newInstance(MENU_CART));
+        fragments.add(PageFragment.newInstance(MENU_CHECKOUT));
         fragments.add(MorePageFragment.newInstance());
     }
 

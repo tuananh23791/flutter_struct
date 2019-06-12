@@ -79,7 +79,7 @@ public class MainActivity extends BaseTemplateActivity {
                     .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
                     .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
                     .build();
-            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
+            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CHECKOUT);
 
         }, 500);
     }
@@ -198,6 +198,10 @@ public class MainActivity extends BaseTemplateActivity {
             return true;
         });
 
+    }
+
+    public boolean isCheckOutTab() {
+        return bottomNavigation != null && bottomNavigation.getCurrentItem() == ViewPagerAdapter.MENU_CHECKOUT;
     }
 
     /**
