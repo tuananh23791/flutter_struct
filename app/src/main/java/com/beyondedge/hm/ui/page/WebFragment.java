@@ -31,6 +31,7 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.utils.PrefManager;
 import com.beyondedge.hm.utils.URLUtils;
 
 import java.net.MalformedURLException;
@@ -45,7 +46,7 @@ import timber.log.Timber;
 public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     protected boolean isDisplaying = false;
     protected TemplateMessage templateMessage;
-
+    Boolean isShowTemplate;
     private AdvancedWebView myWebView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
@@ -195,18 +196,24 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     private void showDebugData(String url) {
         if (BuildConfig.DEBUG && BuildConfig.TEMPLATE && textInfo != null) {
-            textInfo.setVisibility(View.VISIBLE);
-            StringBuilder builder = new StringBuilder();
-            builder.append("URL = ");
-            builder.append(url);
-            builder.append("\n\n");
-            if (templateMessage != null) {
-                builder.append(templateMessage.toString());
-            } else {
-                builder.append("TemplateMessage [null]");
+            if (isShowTemplate == null) {
+                isShowTemplate = PrefManager.getInstance().getCheatingShowHideTemplate();
             }
 
-            textInfo.setText(builder.toString());
+            if (isShowTemplate) {
+                textInfo.setVisibility(View.VISIBLE);
+                StringBuilder builder = new StringBuilder();
+                builder.append("URL = ");
+                builder.append(url);
+                builder.append("\n\n");
+                if (templateMessage != null) {
+                    builder.append(templateMessage.toString());
+                } else {
+                    builder.append("TemplateMessage [null]");
+                }
+
+                textInfo.setText(builder.toString());
+            }
         }
     }
 

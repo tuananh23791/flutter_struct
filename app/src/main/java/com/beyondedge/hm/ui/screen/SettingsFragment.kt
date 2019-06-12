@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.beyondedge.hm.BuildConfig
 import com.beyondedge.hm.HMApplication
 import com.beyondedge.hm.R
 import com.beyondedge.hm.base.BaseFragment
@@ -79,6 +80,20 @@ class SettingsFragment : BaseFragment() {
             val uri = Uri.fromParts("package", HMApplication.getInstance().packageName, null)
             intent.data = uri
             activity!!.startActivity(intent)
+        }
+
+        if (BuildConfig.DEBUG && BuildConfig.TEMPLATE) {
+            binding.groupCheating.visibility = View.VISIBLE
+
+            binding.checkboxTemplate.isChecked = PrefManager.getInstance().cheatingShowHideTemplate
+
+            binding.checkboxTemplate.setOnCheckedChangeListener { _, isChecked ->
+                PrefManager.getInstance().putCheatingShowHideTemplate(isChecked)
+                Handler().postDelayed({ this.restartApp() }, 200)
+            }
+
+        } else {
+            binding.groupCheating.visibility = View.GONE
         }
     }
 

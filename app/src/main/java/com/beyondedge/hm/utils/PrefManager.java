@@ -15,6 +15,7 @@ import com.preference.Preference;
 public class PrefManager {
     private static final String CURRENT_LINK_CONFIG = "CURRENT_LINK_CONFIG";
     private static final String CURRENT_HM_CONFIG_JSON = "CURRENT_HM_CONFIG_JSON";
+    private static final String CURRENT_HM_CHEATING_TEMPLATE = "CURRENT_HM_CHEATING_TEMPLATE";
     private static PrefManager instance;
     private Preference preference = PowerPreference.getDefaultFile();
 
@@ -66,5 +67,13 @@ public class PrefManager {
             }
         }
         return config;
+    }
+
+    public void putCheatingShowHideTemplate(boolean isShow) {
+        preference.put(CURRENT_HM_CHEATING_TEMPLATE, isShow);
+    }
+
+    public boolean getCheatingShowHideTemplate() {
+        return preference.getBoolean(CURRENT_HM_CHEATING_TEMPLATE, true);
     }
 }
