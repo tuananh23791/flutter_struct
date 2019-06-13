@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -157,6 +159,59 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                 }
             }
 
+//            @Override
+//            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+//                final WebView mView = view;
+//                final HttpAuthHandler mHandler = handler;
+//                final Context mActivity = view.getContext();
+//
+//                final EditText usernameInput = new EditText(mActivity);
+//                usernameInput.setHint("Username");
+//
+//                final EditText passwordInput = new EditText(mActivity);
+//                passwordInput.setHint("Password");
+//                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//
+//                LinearLayout ll = new LinearLayout(mActivity);
+//                ll.setOrientation(LinearLayout.VERTICAL);
+//                ll.addView(usernameInput);
+//                ll.addView(passwordInput);
+//
+//                AlertDialog.Builder authDialog = new AlertDialog
+//                        .Builder(mActivity)
+//                        .setTitle("Authentication to " + host)
+//                        .setView(ll)
+//                        .setCancelable(false)
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                mHandler.proceed(usernameInput.getText().toString(), passwordInput.getText().toString());
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                dialog.dismiss();
+//                                mView.stopLoading();
+//                                mHandler.cancel();
+//                            }
+//                        });
+//
+//                if (view != null)
+//                    authDialog.show();
+//
+//                super.onReceivedHttpAuthRequest(view, handler, host, realm);
+//
+//
+//            }
+
+
+            @Override
+            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+                if ("https://hmthdev4.specom.io".contains(host)) {
+                    handler.proceed("devenv", "dev@singpost");
+                }
+                super.onReceivedHttpAuthRequest(view, handler, host, realm);
+            }
         });
         myWebView.setWebChromeClient(new WebChromeClient() {
 
@@ -188,6 +243,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
 //        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
+
     }
 
     public void loadPage(String url) {
