@@ -5,9 +5,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
+import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
 import com.beyondedge.hm.utils.URLUtils;
 
@@ -19,6 +22,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public static final int SEARCH_TYPE_FULL_TOOLBAR = 10;
     public static final int SEARCH_TYPE_MENU_DETAIL = 20;
     public static final int SEARCH_TYPE_MENU_CART = 25;
+    public static final int SEARCH_TYPE_MENU_CHECKOUT = 30;
     //    public static final String HOME = "home";
 //    public static final String PROD_CAT = "prod_cat";
 //    public static final String PROD_DETAIL = "prod_detail";
@@ -59,7 +63,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         });
 
         btCart.setOnClickListener(v -> {
-            Toast.makeText(this, "Not implement yet!", Toast.LENGTH_SHORT).show();
+            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CHECKOUT);
+            PageWebActivity.startScreen(this, mMenu.getUrl(), mMenu.getName());
+
         });
 
         enableBackButtonToolbar(null/*default*/);
@@ -148,7 +155,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
             searchType = SEARCH_TYPE_HIDE_ALL;
         } else if (TemplateMessage.CHECKOUT.equals(template)) {
             //ACCOUNT
-            searchType = SEARCH_TYPE_HIDE_ALL;
+            searchType = SEARCH_TYPE_MENU_CHECKOUT;
         } else {
             //HOME
             searchType = SEARCH_TYPE_FULL_TOOLBAR;
@@ -170,22 +177,51 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                 case SEARCH_TYPE_FULL_TOOLBAR:
                     settingBack(isWebPageCanGoBack);
                     toolBarSearch();
+
+                    if (this instanceof MainActivity) {
+                        ((MainActivity) (this)).showOrHideBottomNavigation(true);
+                    }
                     break;
 
                 case SEARCH_TYPE_MENU_DETAIL:
                     settingBack(true);
-                    menuSearchDetail();
+                    menuSearchProdDetail();
+
+                    if (this instanceof MainActivity) {
+                        ((MainActivity) (this)).showOrHideBottomNavigation(false);
+                    }
                     break;
 
                 case SEARCH_TYPE_MENU_CART:
                     settingBack(true);
-                    menuSearchCart();
+                    menuSearchProCat();
+                    if (this instanceof MainActivity) {
+                        MainActivity mainActivity = (MainActivity) (this);
+                        mainActivity.showOrHideBottomNavigation(true);
+                    }
+                    break;
+                case SEARCH_TYPE_MENU_CHECKOUT:
+                    settingBack(isWebPageCanGoBack);
+                    hideAllSearch();
+
+                    if (this instanceof MainActivity) {
+                        MainActivity mainActivity = (MainActivity) (this);
+                        if (!mainActivity.isCheckOutTab()) {
+                            mainActivity.showOrHideBottomNavigation(false);
+                        } else {
+                            mainActivity.showOrHideBottomNavigation(true);
+                        }
+                    }
                     break;
 
                 case SEARCH_TYPE_HIDE_ALL:
                 default:
                     settingBack(isWebPageCanGoBack);
                     hideAllSearch();
+
+                    if (this instanceof MainActivity) {
+                        ((MainActivity) (this)).showOrHideBottomNavigation(true);
+                    }
                     break;
             }
         } else {
@@ -210,14 +246,17 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         btCart.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
         //TODO -------------
 //        settingBack(false);
 //        settingBack(isWebPageCanGoBack);
+        marginTopFrame(true);
         showSearch();
 
     }
 
-    private void menuSearchDetail() {
+    private void menuSearchProCat() {
 //        btCart.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -235,13 +274,19 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         //        settingBack(isWebPageCanGoBack);
         btSearch.setVisibility(View.VISIBLE);
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
+        if (isCanShare) {
+            TextView middleTitle = findViewById(R.id.txt_title);
+            middleTitle.setPadding(0, 0, getResources().getDimensionPixelOffset(android.R.dimen.app_icon_size), 0);
+        } else {
+            TextView middleTitle = findViewById(R.id.txt_title);
+            middleTitle.setPadding(0, 0, 0, 0);
+        }
+        marginTopFrame(true);
         hideSearch();
-
-
     }
 
 
-    private void menuSearchCart() {
+    private void menuSearchProdDetail() {
 ////        settingBack(isWebPageCanGoBack);
 //        btCart.post(new Runnable() {
 //            @Override
@@ -257,7 +302,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         settingBack(true);
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
         btCart.setVisibility(View.VISIBLE);
+        marginTopFrame(false);
         hideSearch();
 
     }
@@ -266,6 +314,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         btCart.setVisibility(View.GONE);
+        marginTopFrame(true);
         hideSearch();
     }
 

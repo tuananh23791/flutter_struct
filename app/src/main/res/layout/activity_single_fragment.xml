@@ -18,7 +18,7 @@
         android:id="@+id/frame_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appBarLayout"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:background="@color/colorBackground" />
 
     <View

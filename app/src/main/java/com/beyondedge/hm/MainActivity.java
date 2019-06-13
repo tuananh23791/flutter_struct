@@ -33,9 +33,9 @@ public class MainActivity extends BaseTemplateActivity {
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.view_pager);
 
+        settingBottomNavigation();
         initSearchView();
         initViewPager();
-        settingBottomNavigation();
     }
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends BaseTemplateActivity {
                     .setBackgroundColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotification))
                     .setTextColor(ContextCompat.getColor(bottomNavigation.getContext(), R.color.colorNotificationText))
                     .build();
-            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CART);
+            bottomNavigation.setNotification(notification, ViewPagerAdapter.MENU_CHECKOUT);
 
         }, 500);
     }
@@ -200,14 +200,21 @@ public class MainActivity extends BaseTemplateActivity {
 
     }
 
+    public boolean isCheckOutTab() {
+        return bottomNavigation != null && bottomNavigation.getCurrentItem() == ViewPagerAdapter.MENU_CHECKOUT;
+    }
+
     /**
      * Show or hide the bottom navigation with animation
      */
     public void showOrHideBottomNavigation(boolean show) {
-        if (show) {
-            bottomNavigation.restoreBottomNavigation(true);
-        } else {
-            bottomNavigation.hideBottomNavigation(true);
+
+        if (bottomNavigation != null) {
+            if (show) {
+                bottomNavigation.restoreBottomNavigation(true);
+            } else {
+                bottomNavigation.hideBottomNavigation(true);
+            }
         }
     }
 }

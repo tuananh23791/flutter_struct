@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,10 +18,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
@@ -29,6 +32,8 @@ import com.beyondedge.hm.base.BaseTemplateActivity;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
+import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.utils.PrefManager;
 import com.beyondedge.hm.utils.URLUtils;
 
 import java.net.MalformedURLException;
@@ -43,8 +48,9 @@ import timber.log.Timber;
 public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
     protected boolean isDisplaying = false;
     protected TemplateMessage templateMessage;
-
+    Boolean isShowTemplate;
     private AdvancedWebView myWebView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
 
@@ -82,6 +88,10 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     protected boolean canGoBack() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof PageWebActivity) {
+            return true;
+        }
         return myWebView != null && myWebView.canGoBack();
     }
 
@@ -108,6 +118,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     private void initView(View view) {
         myWebView = view.findViewById(R.id.webview);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myWebView.reload();
+            }
+        });
         myWebView.setListener(getActivity(), this);
 //        myWebView.setGeolocationEnabled(false);
         myWebView.setMixedContentAllowed(true);
@@ -136,8 +153,65 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             @Override
             public void onPageFinished(WebView view, String url) {
 //                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
+//            @Override
+//            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+//                final WebView mView = view;
+//                final HttpAuthHandler mHandler = handler;
+//                final Context mActivity = view.getContext();
+//
+//                final EditText usernameInput = new EditText(mActivity);
+//                usernameInput.setHint("Username");
+//
+//                final EditText passwordInput = new EditText(mActivity);
+//                passwordInput.setHint("Password");
+//                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//
+//                LinearLayout ll = new LinearLayout(mActivity);
+//                ll.setOrientation(LinearLayout.VERTICAL);
+//                ll.addView(usernameInput);
+//                ll.addView(passwordInput);
+//
+//                AlertDialog.Builder authDialog = new AlertDialog
+//                        .Builder(mActivity)
+//                        .setTitle("Authentication to " + host)
+//                        .setView(ll)
+//                        .setCancelable(false)
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                mHandler.proceed(usernameInput.getText().toString(), passwordInput.getText().toString());
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                dialog.dismiss();
+//                                mView.stopLoading();
+//                                mHandler.cancel();
+//                            }
+//                        });
+//
+//                if (view != null)
+//                    authDialog.show();
+//
+//                super.onReceivedHttpAuthRequest(view, handler, host, realm);
+//
+//
+//            }
+
+
+            @Override
+            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+                if ("https://hmthdev4.specom.io".contains(host)) {
+                    handler.proceed("devenv", "dev@singpost");
+                }
+                super.onReceivedHttpAuthRequest(view, handler, host, realm);
+            }
         });
         myWebView.setWebChromeClient(new WebChromeClient() {
 
@@ -169,6 +243,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
 //        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
+
     }
 
     public void loadPage(String url) {
@@ -176,19 +251,25 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     private void showDebugData(String url) {
-        if (BuildConfig.DEBUG && BuildConfig.LOG && textInfo != null) {
-            textInfo.setVisibility(View.VISIBLE);
-            StringBuilder builder = new StringBuilder();
-            builder.append("URL = ");
-            builder.append(url);
-            builder.append("\n\n");
-            if (templateMessage != null) {
-                builder.append(templateMessage.toString());
-            } else {
-                builder.append("templateMessage [null]");
+        if (BuildConfig.DEBUG && BuildConfig.TEMPLATE && textInfo != null) {
+            if (isShowTemplate == null) {
+                isShowTemplate = PrefManager.getInstance().getCheatingShowHideTemplate();
             }
 
-            textInfo.setText(builder.toString());
+            if (isShowTemplate) {
+                textInfo.setVisibility(View.VISIBLE);
+                StringBuilder builder = new StringBuilder();
+                builder.append("URL = ");
+                builder.append(url);
+                builder.append("\n\n");
+                if (templateMessage != null) {
+                    builder.append(templateMessage.toString());
+                } else {
+                    builder.append("TemplateMessage [null]");
+                }
+
+                textInfo.setText(builder.toString());
+            }
         }
     }
 

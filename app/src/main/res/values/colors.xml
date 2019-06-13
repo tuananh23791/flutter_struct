@@ -15,6 +15,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorNotification">#F63D2B</color>
     <color name="colorRedHM">#CF1B1D</color>
+    <color name="colorRedCheating">#3ACF1B1D</color>
     <color name="colorNotificationText">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSecondaryText">#C6C6C6</color>
@@ -25,4 +26,5 @@
     <color name="colorGrayTextInfo">#B0B0B0</color>
 
     <color name="colorBGTrans">#0FFFFFFF</color>
+    <color name="semi_transparent">#66FFFFFF</color>
 </resources>
