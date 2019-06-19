@@ -11,8 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="@color/colorBackground">
 
         <include layout="@layout/toolbar" />
     </com.google.android.material.appbar.AppBarLayout>

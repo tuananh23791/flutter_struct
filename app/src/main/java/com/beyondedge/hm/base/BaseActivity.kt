@@ -2,6 +2,9 @@ package com.beyondedge.hm.base
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -99,9 +102,15 @@ abstract class BaseActivity : AppCompatActivity() {
                 appBarLayout.background = ContextCompat.getDrawable(this, R.color.colorBackground)
                 toolbar.background = ContextCompat.getDrawable(this, R.color.colorBackground)
             } else {
-                appBarLayout.background = ContextCompat.getDrawable(this, android.R.color.transparent)
-                toolbar.background = ContextCompat.getDrawable(this, android.R.color.transparent)
+                appBarLayout.background = null
+                toolbar.background = null
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    appBarLayout.outlineProvider = null
+                }
             }
+
+
         }
     }
 
