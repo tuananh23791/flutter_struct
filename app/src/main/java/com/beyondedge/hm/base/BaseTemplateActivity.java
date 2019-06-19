@@ -276,7 +276,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btShare.setVisibility(isCanShare ? View.VISIBLE : View.GONE);
         if (isCanShare) {
             TextView middleTitle = findViewById(R.id.txt_title);
-            middleTitle.setPadding(0, 0, getResources().getDimensionPixelOffset(android.R.dimen.app_icon_size), 0);
+            int dimensionPixelOffset = getResources().getDimensionPixelOffset(android.R.dimen.app_icon_size);
+            middleTitle.setPadding(dimensionPixelOffset, 0, dimensionPixelOffset, 0);
         } else {
             TextView middleTitle = findViewById(R.id.txt_title);
             middleTitle.setPadding(0, 0, 0, 0);
@@ -314,6 +315,8 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
         btCart.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
         marginTopFrame(true);
         hideSearch();
     }
