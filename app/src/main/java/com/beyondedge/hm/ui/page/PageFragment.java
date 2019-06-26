@@ -88,6 +88,8 @@ public class PageFragment extends WebFragment implements PageInterface {
 //        if (getArguments().getInt("index", 0) > 0 && recyclerView != null) {
 //            recyclerView.smoothScrollToPosition(0);
 //        }
+
+//        loadPage(mMenu.getUrl());
     }
 
 
@@ -103,6 +105,7 @@ public class PageFragment extends WebFragment implements PageInterface {
 //        }
         FragmentActivity activity = getActivity();
 
+
         if (activity instanceof BaseActivity) {
 
             //TODO now ignore name from menu, using in template
@@ -114,7 +117,13 @@ public class PageFragment extends WebFragment implements PageInterface {
 
             //update template cache
 
-            handleTemplateUpdate();
+//            handleTemplateUpdate();
+
+            if (mIndex != MENU_HOME) {
+                loadPage(mMenu.getUrl());
+            } else {
+                handleTemplateUpdate();
+            }
         }
 
         // Do what you want here, for example animate the content
