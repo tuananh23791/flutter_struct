@@ -86,6 +86,7 @@ public class MaterialSearchView extends CardView {
         }
     };
     private boolean enableSearchPicture = false;
+    private boolean enableSearchScanBarcode = false;
 
     public MaterialSearchView(@NonNull Context context) {
         super(context);
@@ -134,6 +135,22 @@ public class MaterialSearchView extends CardView {
         }
     }
 
+    public void enableSearchScanBarcode(boolean enable) {
+        this.enableSearchScanBarcode = enable;
+
+        if (enable) {
+            b.imgBarcode.setVisibility(VISIBLE);
+            b.imgBarcode.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listenerQuery.onActionSearch(ActionSearch.Barcode);
+                }
+            });
+        } else {
+            b.imgBarcode.setVisibility(GONE);
+        }
+    }
+
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MaterialSearchView, 0, 0);
 
@@ -173,13 +190,7 @@ public class MaterialSearchView extends CardView {
         setDrawableTint(b.imgBack.getDrawable(), searchIconColor);
         setDrawableTint(b.imgClear.getDrawable(), searchIconColor);
         enableSearchPicture(false);
-
-        b.imgBarcode.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listenerQuery.onActionSearch(ActionSearch.Barcode);
-            }
-        });
+        enableSearchScanBarcode(false);
         checkForAdapter();
 
         canBack(canBack);
