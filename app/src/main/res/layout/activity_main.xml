@@ -34,6 +34,7 @@
         <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
+            android:background="@color/colorWhite"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp" />
 
