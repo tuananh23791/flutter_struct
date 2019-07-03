@@ -10,6 +10,7 @@ import com.beyondedge.hm.utils.AppExecutors;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.FetchConfiguration;
 import com.tonyodev.fetch2.HttpUrlConnectionDownloader;
@@ -23,7 +24,9 @@ import timber.log.Timber;
  */
 public class HMApplication extends Application {
     private static HMApplication instance;
-    private static Gson mGson = new Gson();
+    private static Gson mGson = new GsonBuilder()
+            .setLenient()
+            .create();
     private AppExecutors appExecutors;
 
     public static Gson getGson() {

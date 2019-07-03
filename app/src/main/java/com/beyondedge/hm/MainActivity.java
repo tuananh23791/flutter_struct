@@ -3,10 +3,13 @@ package com.beyondedge.hm;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -20,6 +23,10 @@ import com.beyondedge.hm.ui.page.PageInterface;
 import com.beyondedge.hm.ui.page.ViewPagerAdapter;
 
 public class MainActivity extends BaseTemplateActivity {
+    /**
+     * Show or hide the bottom navigation with animation
+     */
+    int height;
     private PageInterface currentFragment;
     private ViewPagerAdapter adapterViewPager;
     private AHBottomNavigation bottomNavigation;
@@ -37,7 +44,6 @@ public class MainActivity extends BaseTemplateActivity {
         initSearchView();
         initViewPager();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -109,7 +115,6 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment.willBeDisplayed();
         });
     }
-
 
     private void settingBottomNavigation() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -198,22 +203,50 @@ public class MainActivity extends BaseTemplateActivity {
             return true;
         });
 
+        bottomNavigation.post(new Runnable() {
+            @Override
+            public void run() {
+                height = bottomNavigation.getHeight();
+            }
+        });
+
     }
 
     public boolean isCheckOutTab() {
         return bottomNavigation != null && bottomNavigation.getCurrentItem() == ViewPagerAdapter.MENU_CHECKOUT;
     }
 
-    /**
-     * Show or hide the bottom navigation with animation
-     */
     public void showOrHideBottomNavigation(boolean show) {
-
         if (bottomNavigation != null) {
             if (show) {
-                bottomNavigation.restoreBottomNavigation(true);
+//                bottomNavigation.restoreBottomNavigation(true);
+
+                ViewCompat.animate(bottomNavigation)
+                        .translationY(0)
+                        .setInterpolator(new LinearOutSlowInInterpolator())
+                        .setDuration(300)
+                        .withStartAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                bottomNavigation.setVisibility(View.VISIBLE);
+                            }
+                        })
+                        .start();
+
             } else {
-                bottomNavigation.hideBottomNavigation(true);
+//                bottomNavigation.hideBottomNavigation(true);
+
+                ViewCompat.animate(bottomNavigation)
+                        .translationY(height)
+                        .setInterpolator(new LinearOutSlowInInterpolator())
+                        .setDuration(300)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                bottomNavigation.setVisibility(View.GONE);
+                            }
+                        })
+                        .start();
             }
         }
     }

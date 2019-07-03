@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
@@ -25,9 +26,13 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     final String filePath = Constant.getLinkSavedFile();
     final Context mContext;
     private boolean isValidSavedFile = false;
-    private Gson mGson = new Gson();
+    private Gson mGson = new GsonBuilder()
+            .setLenient()
+            .create();
     private WeakReference<TextView> textViewRef;
     private TaskListener mTaskListener;
+
+    private boolean isForceLocalJson = false;
 
     public ParseFileAsyncTask(Context context) {
         mContext = context.getApplicationContext();
@@ -43,6 +48,11 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
         return this;
     }
 
+    public ParseFileAsyncTask setForceLocalJson(boolean forceLocalJson) {
+        isForceLocalJson = forceLocalJson;
+        return this;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -54,7 +64,7 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     protected HMConfig doInBackground(Void... input) {
         HMConfig result = null;
 
-        if (IS_FORCE_LOCAL_CONFIG) {
+        if (isForceLocalJson || IS_FORCE_LOCAL_CONFIG) {
             result = parseLocalFile();
         } else {
             if (isValidSavedFile) {

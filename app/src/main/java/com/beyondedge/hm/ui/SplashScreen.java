@@ -2,7 +2,6 @@ package com.beyondedge.hm.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -13,13 +12,12 @@ import androidx.annotation.NonNull;
 
 import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.api.ServiceHelper;
 import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.ParseFileAsyncTask;
-import com.beyondedge.hm.utils.AppVersion;
 import com.beyondedge.hm.utils.PrefManager;
-import com.beyondedge.hm.utils.URLUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Fetch;
@@ -32,6 +30,9 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 import org.jetbrains.annotations.NotNull;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import timber.log.Timber;
 
 import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
@@ -188,14 +189,18 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         } else {
-            enqueueDownload();
+//            enqueueDownload();
+
+            enqueueLoadConfigByAPI();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            enqueueDownload();
+//            enqueueDownload();
+
+            enqueueLoadConfigByAPI();
         } else {
 //            Snackbar.make(mainView, R.string.permission_not_enabled, Snackbar.LENGTH_LONG).show();
 
@@ -220,6 +225,31 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
                 );
     }
 
+    private void enqueueLoadConfigByAPI() {
+        doingTask++;
+        final String url = PrefManager.getInstance().getCurrentLinkConfig();
+        ServiceHelper.getInstance().getNetworkAPI().loadConfig(url)
+                .enqueue(new Callback<HMConfig>() {
+                    @Override
+                    public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {
+                        //TODO
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            LoadConfig.getInstance().setHMConfig(response.body());
+                            doingTask--;
+                            postExecuteSplashScreen();
+                        } else {
+                            handleDownloadConfigError("");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HMConfig> call, Throwable t) {
+                        handleDownloadConfigError(t.getMessage());
+                    }
+                });
+    }
+
     private void updateViews(@NotNull Download download, Reason reason) {
         if (request.getId() == download.getId()) {
             Timber.d("updateViews : %1$s - %2$s", reason.toString(), download.getProgress());
@@ -242,10 +272,12 @@ public class SplashScreen extends AwesomeSplash implements FetchObserver<Downloa
     }
 
     private void readConfig() {
-        new ParseFileAsyncTask(this).setTaskListener(() -> {
-            doingTask--;
-            postExecuteSplashScreen();
-        }).execute();
+        new ParseFileAsyncTask(this)
+                .setForceLocalJson(true)
+                .setTaskListener(() -> {
+                    doingTask--;
+                    postExecuteSplashScreen();
+                }).execute();
     }
 
 

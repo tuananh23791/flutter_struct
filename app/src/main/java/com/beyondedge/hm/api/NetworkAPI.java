@@ -1,5 +1,6 @@
 package com.beyondedge.hm.api;
 
+import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
 
 import java.util.ArrayList;
@@ -8,15 +9,21 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.
  */
 public interface NetworkAPI {
+
+    @GET
+    Call<HMConfig> loadConfig(@Url String url);
+
     @GET("search/ajax/suggest")
     Call<ArrayList<SearchEntity>> searchProductQuery(
             @Query("q") String query,
             @Query("_") String token);
+
     @GET("rest/V1/getProductsBySearch/articlenumber/{article}")
     Call<String> catagolueLookupArticle(
             @Path("article") String article);
