@@ -2,7 +2,7 @@
      "version": {
       "versionAndroidCode": ["0.0.1","0.0.2"],
       "versioniOS": ["0.0.1","0.0.2"],
-      "MainDomain": "https://hmthuat2.specom.io/",
+      "MainDomain": "https://hmthuat100.specom.io/",
       "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
       },
 

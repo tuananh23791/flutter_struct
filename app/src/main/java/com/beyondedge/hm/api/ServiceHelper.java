@@ -69,8 +69,9 @@ public class ServiceHelper {
     }
 
     private NetworkAPI createNetworkAPI() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
         okHttpClient = createOKHttpClient();
         Retrofit retrofit = new Retrofit.Builder()

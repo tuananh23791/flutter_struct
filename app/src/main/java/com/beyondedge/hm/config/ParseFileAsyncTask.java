@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
@@ -25,7 +26,9 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     final String filePath = Constant.getLinkSavedFile();
     final Context mContext;
     private boolean isValidSavedFile = false;
-    private Gson mGson = new Gson();
+    private Gson mGson = new GsonBuilder()
+            .setLenient()
+            .create();
     private WeakReference<TextView> textViewRef;
     private TaskListener mTaskListener;
 

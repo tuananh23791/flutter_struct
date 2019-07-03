@@ -2,13 +2,16 @@ package com.beyondedge.hm.config;
 
 import com.beyondedge.hm.utils.PrefManager;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
 public class LoadConfig {
     private static LoadConfig sSoleInstance;
-    private Gson mGson = new Gson();
+    private Gson mGson = new GsonBuilder()
+            .setLenient()
+            .create();
     private HMConfig mHMConfig;
     private boolean forceLoadConfig = false;
 
