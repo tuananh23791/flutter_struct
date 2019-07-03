@@ -37,7 +37,8 @@ public class Constant {
 
     @NonNull
     private static String getSaveDir() {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/hm/";
+//        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/hm/";
+        return Environment.getExternalStorageDirectory().toString() + "/hm/";
     }
 
     @NonNull

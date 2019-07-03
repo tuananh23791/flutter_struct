@@ -32,6 +32,8 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     private WeakReference<TextView> textViewRef;
     private TaskListener mTaskListener;
 
+    private boolean isForceLocalJson = false;
+
     public ParseFileAsyncTask(Context context) {
         mContext = context.getApplicationContext();
     }
@@ -46,6 +48,11 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
         return this;
     }
 
+    public ParseFileAsyncTask setForceLocalJson(boolean forceLocalJson) {
+        isForceLocalJson = forceLocalJson;
+        return this;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -57,7 +64,7 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     protected HMConfig doInBackground(Void... input) {
         HMConfig result = null;
 
-        if (IS_FORCE_LOCAL_CONFIG) {
+        if (isForceLocalJson || IS_FORCE_LOCAL_CONFIG) {
             result = parseLocalFile();
         } else {
             if (isValidSavedFile) {
