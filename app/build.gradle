@@ -72,7 +72,7 @@ android {
 
         stable {
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE
         }
     }
 }
