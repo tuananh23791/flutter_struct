@@ -81,6 +81,7 @@ android {
         }
 
         stable_hm2 {
+            applicationId "com.beyondedge.hm2"
             resValue "string", "app_name", "H&M UAT2"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE//comment

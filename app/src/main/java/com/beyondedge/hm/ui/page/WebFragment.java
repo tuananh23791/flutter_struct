@@ -18,7 +18,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -133,6 +132,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
         WebSettings settings = myWebView.getSettings();
         settings.setAppCacheEnabled(false);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
 
         HMConfig config = LoadConfig.getInstance().load();
