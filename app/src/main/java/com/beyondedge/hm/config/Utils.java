@@ -7,6 +7,7 @@ import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
 
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.R;
 
 import java.io.File;
@@ -114,7 +115,7 @@ public final class Utils {
     public static String loadJSONFromAsset(Context context) {
         String json;
         try {
-            InputStream is = context.getResources().openRawResource(R.raw.id_en);
+            InputStream is = context.getResources().openRawResource(BuildConfig.HM2 ? R.raw.id_en_hm2 : R.raw.id_en);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

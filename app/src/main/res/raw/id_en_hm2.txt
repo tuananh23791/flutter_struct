@@ -2,8 +2,8 @@
      "version": {
       "versionAndroidCode": ["0.0.1","0.0.2"],
       "versioniOS": ["0.0.1","0.0.2"],
-      "MainDomain": "https://hmiduat.specom.io/",
-      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+      "MainDomain": "https://hmiduat2.specom.io/",
+      "iconUrl":"http://sharefile.beyondedge.com.sg/hm2/social/"
       },
 
     "mainMenu": [
@@ -89,19 +89,19 @@
     "region": [
       {
         "name": "Indonesia/Bahasa",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm2/setting/ID-ID.txt"
       },
       {
         "name": "Indonesia/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm2/setting/ID-EN.txt"
       },
       {
         "name": "Thailand/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm2/setting/TH-EN.txt"
       },
       {
         "name": "Thailand/Thai",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+        "propertyFile": "http://sharefile.beyondedge.com.sg/hm2/setting/TH-TH.txt"
       }
     ],
     "lang": {

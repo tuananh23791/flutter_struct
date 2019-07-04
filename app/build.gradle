@@ -64,15 +64,27 @@ android {
 
         def LOG = "LOG"
         def TEMPLATE = "TEMPLATE"
+        def HM2 = "HM2"
 
         dev {
+            resValue "string", "app_name", "H&M Debug"
             buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, HM2, FALSE
         }
 
         stable {
+            resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE//comment
+            buildConfigField BOOLEAN, HM2, FALSE
+        }
+
+        stable_hm2 {
+            resValue "string", "app_name", "H&M UAT2"
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE//comment
+            buildConfigField BOOLEAN, HM2, TRUE
         }
     }
 }
