@@ -105,7 +105,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation libraries.rxjava
     implementation libraries.rxandroid
     implementation libraries.retrofit
     implementation libraries.retrofit_gson_converter
