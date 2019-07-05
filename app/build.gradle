@@ -99,11 +99,11 @@ dependencies {
     api project(path: ':zxingscanner')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:2.27.0'
 
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation libraries.retrofit
     implementation libraries.retrofit_gson_converter
@@ -132,6 +132,8 @@ dependencies {
     implementation libraries.awesome_plash
     implementation libraries.fetch_download_file
 //    implementation libraries.fetch_download_file_plugin
+
+    implementation libraries.rxjava2
 
 
 }

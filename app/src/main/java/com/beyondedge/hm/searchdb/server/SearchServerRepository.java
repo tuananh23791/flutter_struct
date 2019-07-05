@@ -18,9 +18,10 @@ import timber.log.Timber;
 
 public class SearchServerRepository {
     private static SearchServerRepository instance;
-    Call<ArrayList<SearchEntity>> queryCall;
+  private   Call<ArrayList<SearchEntity>> queryCall;
 
     private MutableLiveData<List<SearchEntity>> mListLiveData = new MutableLiveData<>();
+//    private CompositeDisposable disposable = new CompositeDisposable();
     private Callback<ArrayList<SearchEntity>> callQueryHandle = new Callback<ArrayList<SearchEntity>>() {
         @Override
         public void onResponse(@NonNull Call<ArrayList<SearchEntity>> call, @NonNull Response<ArrayList<SearchEntity>> response) {

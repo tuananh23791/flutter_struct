@@ -77,7 +77,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         searchHolder = findViewById(R.id.searchHolder);
         //TODO enable later
         searchHolder.enableSearchPicture(false);
-        searchHolder.enableSearchPicture(false);
         searchPaddingView = findViewById(R.id.viewTempPadding);
         //Comment - All now using back in activity tool_bar
         searchHolder.canBack(false);
