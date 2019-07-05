@@ -3,43 +3,106 @@ package com.beyondedge.hm.searchdb;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.beyondedge.hm.base.BaseViewModel;
 import com.beyondedge.hm.searchdb.server.SearchEntity;
 import com.beyondedge.hm.searchdb.server.SearchServerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import timber.log.Timber;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
-public class SearchServerViewModel extends AndroidViewModel {
+public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
+
+    final PublishSubject<String> subject = PublishSubject.create();
     private SearchServerRepository repository;
-    private LiveData<List<SearchEntity>> getSearchListLive;
+    private Disposable subscribe;
 
     public SearchServerViewModel(@NonNull Application application) {
         super(application);
+        disableLoading();
         repository = SearchServerRepository.getInstance();
-        initSearch();
-    }
-
-    private void initSearch() {
-        getSearchListLive = repository.getSearchListLive();
+        settingRxSearch();
     }
 
     public LiveData<List<SearchEntity>> getSearchListLive() {
-        return getSearchListLive;
+        return getMainLiveData();
     }
 
     public void searchQuery(String query) {
-        repository.searchQuery(query);
+        repository.searchQuery(getMainLiveData(), query);
     }
+
+    private void settingRxSearch() {
+        subscribe = subject
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .filter(s -> !s.isEmpty())
+                .distinctUntilChanged()
+
+                .switchMap((Function<String, Observable<ArrayList<SearchEntity>>>) query -> {
+                    Timber.d(query);
+                    return repository.searchQuery(query).onErrorReturnItem(new ArrayList<>());
+                })
+//                .onErrorResumeNext(new ObservableSource<ArrayList<SearchEntity>>() {
+//                    @Override
+//                    public void subscribe(Observer<? super ArrayList<SearchEntity>> throwable) {
+//                        Timber.d("onErrorResumeNext %s", throwable.toString());
+////                    subject.onNext("");
+//                        Observable<ArrayList<Object>> just = Observable.just(new ArrayList<>());
+//                    }
+//                })
+//                .doOnError(throwable -> {
+//                    Timber.d("doOnError %s", throwable.toString());
+//                })
+//                .onErrorReturnItem(new ArrayList<>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+
+                .subscribe(result -> {
+                    Timber.d(result.toString());
+                    getMainLiveData().postValue(result);
+                }, throwable -> {
+                    Timber.d(throwable.toString());
+                    getMainLiveData().postValue(new ArrayList<>());
+                })
+        ;
+    }
+
+    public void onQueryTextChange(String text) {
+        if (subscribe != null && !subscribe.isDisposed())
+            subject.onNext(text);
+        else
+            Timber.d("Edittext: %s subscribe isDisposed", text);
+    }
+
+    public void onQueryTextSubmit() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subject.onComplete();
+            subscribe.dispose();
+        } else
+            Timber.d("Edittext: subscribe isDisposed");
+    }
+
 
     @Override
     protected void onCleared() {
         super.onCleared();
         repository.clear();
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -77,7 +78,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         searchHolder = findViewById(R.id.searchHolder);
         //TODO enable later
         searchHolder.enableSearchPicture(false);
-        searchHolder.enableSearchPicture(false);
         searchPaddingView = findViewById(R.id.viewTempPadding);
         //Comment - All now using back in activity tool_bar
         searchHolder.canBack(false);
@@ -90,9 +90,25 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         }
 
         mQueryTextListener = getQueryTextListener();
-
-
     }
+
+//    private void settingRxSearch() {
+//        Disposable subscribe = RxSearchObservable.fromView(searchHolder)
+//                .debounce(300, TimeUnit.MILLISECONDS)
+//                .filter(s -> {
+//                    if (s.isEmpty()) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                })
+//                .distinctUntilChanged()
+//                .switchMap((Function<String, ObservableSource<String>>) query ->
+//                        dataFromNetwork(query))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(result -> textViewResult.setText(result));
+//    }
 
     protected void settingBack(boolean can) {
         //Comment - All now using back in activity tool_bar
@@ -149,6 +165,8 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     public boolean onQueryTextSubmit(String query) {
         searchHolder.hideRecycler();
 
+//        model.onQueryTextSubmit();
+
         if (mQueryTextListener != null) {
             mQueryTextListener.onQueryTextSubmit(query);
         }
@@ -157,11 +175,17 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        searchHolder.showRecycler();
+        if (TextUtils.isEmpty(newText)) {
+            searchHolder.hideLoading();
+            searchHolder.hideRecycler();
+        } else {
+            searchHolder.showRecycler();
 
-        //TODO improve here
-        searchHolder.showLoading();
-        model.searchQuery(newText);
+            //TODO improve here
+            searchHolder.showLoading();
+            model.onQueryTextChange(newText);
+//        model.searchQuery(newText);
+        }
         return true;
     }
 
