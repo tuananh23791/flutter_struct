@@ -24,9 +24,7 @@ public class Constant {
 
     public static final String MENU_CATALOGUE_LOOKUP_PATH = "rest/V1/getProductsBySearch/articlenumber";
 
-    private static final String LINK_CONFIG_DEFAULT = "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt";
-    private static final String LINK_CONFIG_HM2 = "http://sharefile.beyondedge.com.sg/hm2/setting/ID-EN.txt";
-    public static final String LINK_CONFIG = BuildConfig.HM2 ? LINK_CONFIG_HM2 : LINK_CONFIG_DEFAULT;
+    public static final String LINK_CONFIG = BuildConfig.LINK_CONFIG;
 
     public static String getAuthorizationParam() {
         String username = "hm";

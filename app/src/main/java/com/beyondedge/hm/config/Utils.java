@@ -115,7 +115,15 @@ public final class Utils {
     public static String loadJSONFromAsset(Context context) {
         String json;
         try {
-            InputStream is = context.getResources().openRawResource(BuildConfig.HM2 ? R.raw.id_en_hm2 : R.raw.id_en);
+            int idRaw = 0;
+            if (BuildConfig.FLAVOR.equals("stable_qat") || BuildConfig.FLAVOR.equals("dev")) {
+                idRaw = R.raw.id_en_qat;
+            } else if (BuildConfig.FLAVOR.equals("stable_uat_hm2")) {
+                idRaw = R.raw.id_en_hm2;
+            } else {
+                idRaw = R.raw.id_en;
+            }
+            InputStream is = context.getResources().openRawResource(idRaw);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
