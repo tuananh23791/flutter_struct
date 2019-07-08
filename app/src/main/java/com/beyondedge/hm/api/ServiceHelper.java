@@ -1,13 +1,19 @@
 package com.beyondedge.hm.api;
 
+import android.text.TextUtils;
+
 import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.searchdb.server.SearchServerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -17,6 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Hoa Nguyen on May 06 2019.
  */
 public class ServiceHelper {
+    public static final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
+    public static final String READ_TIMEOUT = "READ_TIMEOUT";
+    public static final String WRITE_TIMEOUT = "WRITE_TIMEOUT";
 
     private static ServiceHelper instance;
     private NetworkAPI networkAPI;
@@ -44,9 +53,42 @@ public class ServiceHelper {
     private OkHttpClient createOKHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        builder.connectTimeout(60, TimeUnit.SECONDS);
-        builder.readTimeout(60, TimeUnit.SECONDS);
-        builder.writeTimeout(60, TimeUnit.SECONDS);
+        builder.connectTimeout(20, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+
+        Interceptor timeoutInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+
+                int connectTimeout = chain.connectTimeoutMillis();
+                int readTimeout = chain.readTimeoutMillis();
+                int writeTimeout = chain.writeTimeoutMillis();
+
+                String connectNew = request.header(CONNECT_TIMEOUT);
+                String readNew = request.header(READ_TIMEOUT);
+                String writeNew = request.header(WRITE_TIMEOUT);
+
+                if (!TextUtils.isEmpty(connectNew)) {
+                    connectTimeout = Integer.valueOf(connectNew);
+                }
+                if (!TextUtils.isEmpty(readNew)) {
+                    readTimeout = Integer.valueOf(readNew);
+                }
+                if (!TextUtils.isEmpty(writeNew)) {
+                    writeTimeout = Integer.valueOf(writeNew);
+                }
+
+                return chain
+                        .withConnectTimeout(connectTimeout, TimeUnit.SECONDS)
+                        .withReadTimeout(readTimeout, TimeUnit.SECONDS)
+                        .withWriteTimeout(writeTimeout, TimeUnit.SECONDS)
+                        .proceed(request);
+            }
+        };
+
+        builder.addInterceptor(timeoutInterceptor);
 
 //        builder.addInterceptor(new Interceptor() {
 //            @Override
@@ -86,6 +128,4 @@ public class ServiceHelper {
 
         return networkAPI;
     }
-
-
 }
