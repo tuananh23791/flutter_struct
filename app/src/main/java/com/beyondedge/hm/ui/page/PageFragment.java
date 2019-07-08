@@ -39,6 +39,15 @@ public class PageFragment extends WebFragment implements PageInterface {
     }
 
     @Override
+    public void refreshRootPage() {
+        if (mMenu == null) {
+            HMConfig config = LoadConfig.getInstance().load();
+            mMenu = config.getMainMenuList().get(mIndex);
+        }
+        loadPage(mMenu.getUrl());
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -64,11 +73,12 @@ public class PageFragment extends WebFragment implements PageInterface {
     private void initView(View view) {
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
 
-        HMConfig config = LoadConfig.getInstance().load();
-        mMenu = config.getMainMenuList().get(mIndex);
+//        HMConfig config = LoadConfig.getInstance().load();
+//        mMenu = config.getMainMenuList().get(mIndex);
+//
+//        loadPage(mMenu.getUrl());
 
-        loadPage(mMenu.getUrl());
-
+        refreshRootPage();
     }
 
     @Override

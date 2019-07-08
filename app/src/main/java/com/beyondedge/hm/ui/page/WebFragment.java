@@ -23,10 +23,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.beyondedge.hm.BuildConfig;
+import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.base.BaseFragment;
 import com.beyondedge.hm.base.BaseTemplateActivity;
@@ -54,6 +56,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
+
+   public abstract void refreshRootPage();
 
     protected void setDisplaying(boolean displaying) {
         isDisplaying = displaying;
@@ -399,6 +403,25 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
             if (localTemplateMessage == null || TextUtils.isEmpty(localTemplateMessage.getPageTemplate())) {
                 Timber.i("TemplateMessage => null");
+                return;
+            }
+
+//            if (BuildConfig.FLAVOR.equals("dev") && localTemplateMessage.getCartCount() == 2) {
+//                localTemplateMessage = TemplateMessage.fakeLogout();
+//            }
+
+            if (localTemplateMessage.isLogout()) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getContext(),
+                        android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+                startActivity(intent, bundle);
+                return;
+            }
+
+            if (localTemplateMessage.isCheckoutOK()) {
+                refreshRootPage();
                 return;
             }
 

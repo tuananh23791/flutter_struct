@@ -44,6 +44,9 @@ public class TemplateMessage {
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
 
+    public static final String LOGOUT = "logout";
+    public static final String CHECKOUT_OK = "checkout_ok";
+
     @SerializedName("page_title")
     private String pageTitle;
     @SerializedName("page_template")
@@ -75,8 +78,20 @@ public class TemplateMessage {
         return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");
     }
 
+    public static TemplateMessage fakeLogout(){
+        return new TemplateMessage("", LOGOUT, CART_COUNT_UNDEFINE, "");
+    }
+
     public boolean isHome() {
         return HOME.equals(this.pageTemplate);
+    }
+
+    public boolean isLogout() {
+        return LOGOUT.equals(this.pageTemplate);
+    }
+
+    public boolean isCheckoutOK() {
+        return CHECKOUT_OK.equals(this.pageTemplate);
     }
 
     @NonNull
