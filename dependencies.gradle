@@ -1,6 +1,6 @@
 ext.version_app = [
         version_code: 2,
-        version_name: "0.0.20",
+        version_name: "0.0.21",
 ]
 
 ext.versions = [

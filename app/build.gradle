@@ -77,7 +77,7 @@ android {
             resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
-            buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/ID-EN.txt\""
+            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
         }
 
         stable_uat_hm2 {
@@ -93,7 +93,7 @@ android {
             resValue "string", "app_name", "H&M QAT"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
-            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
+            buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/ID-EN.txt\""
         }
     }
 }
