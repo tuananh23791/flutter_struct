@@ -144,14 +144,18 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         HMConfig config = LoadConfig.getInstance().load();
         String mainDomain = config.getVersion().getMainDomain();
 
-        URL url = null;
-        try {
-            url = new URL(mainDomain);
-            String host = url.getHost();
-            myWebView.addPermittedHostname(host);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+//        URL url = null;
+//        try {
+//            url = new URL(mainDomain);
+//            String host = url.getHost();
+//            myWebView.addPermittedHostname(host);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+
+        addInternalHost(mainDomain);
+        addInternalHost("demo2.2c2p.com");
+        addInternalHost("http://2c2p.com");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (0 != (getActivity().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
@@ -259,6 +263,20 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
 
+    }
+
+    private void addInternalHost(String fullUrl) {
+        if (!fullUrl.startsWith("http")) {
+            fullUrl = "https://" + fullUrl;
+        }
+        URL url = null;
+        try {
+            url = new URL(fullUrl);
+            String host = url.getHost();
+            myWebView.addPermittedHostname(host);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadPage(String url) {
