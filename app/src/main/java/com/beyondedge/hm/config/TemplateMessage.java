@@ -5,7 +5,6 @@ package com.beyondedge.hm.config;
  */
 
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -78,7 +77,7 @@ public class TemplateMessage {
         return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");
     }
 
-    public static TemplateMessage fakeLogout(){
+    public static TemplateMessage fakeLogout() {
         return new TemplateMessage("", LOGOUT, CART_COUNT_UNDEFINE, "");
     }
 
@@ -97,7 +96,9 @@ public class TemplateMessage {
     @NonNull
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "[title=%s \ntemplate=%s \ncart=%s \nshare=%s]", pageTitle, pageTemplate, cartCount, sharePageUrl);
+        return String.format(Locale.getDefault(),
+                "[page_title=%s \npage_template=%s \ncart_count=%s \nshare_page_url=%s]",
+                pageTitle, pageTemplate, cartCount, sharePageUrl);
     }
 
     public String getPageTitle() {

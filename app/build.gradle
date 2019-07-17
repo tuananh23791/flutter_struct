@@ -76,7 +76,7 @@ android {
         prod {
             resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
             buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
         }
 
@@ -84,7 +84,7 @@ android {
             applicationId "com.beyondedge.hm2"
             resValue "string", "app_name", "H&M UAT2"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
             buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm2/setting/ID-EN.txt\""
         }
 
@@ -92,7 +92,7 @@ android {
             applicationId "com.beyondedge.qat"
             resValue "string", "app_name", "H&M QAT"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
             buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/ID-EN.txt\""
         }
     }

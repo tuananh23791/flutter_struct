@@ -57,7 +57,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     private TextView textInfo;
     private ProgressBar progressHorizontal;
 
-   public abstract void refreshRootPage();
+    public abstract void refreshRootPage();
 
     protected void setDisplaying(boolean displaying) {
         isDisplaying = displaying;
@@ -218,9 +218,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
             @Override
             public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-                if ("https://hmthdev4.specom.io".contains(host)) {
-                    handler.proceed("devenv", "dev@singpost");
-                }
+//                if ("https://hmthdev4.specom.io".contains(host)
+////                        || "http://hm-media.s3-ap-southeast-1.amazonaws.com".contains(host)
+//                ) {
+//                    handler.proceed("devenv", "dev@singpost");
+//                }
+
+                handler.proceed("devenv", "dev@singpost");
                 super.onReceivedHttpAuthRequest(view, handler, host, realm);
             }
         });
