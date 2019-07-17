@@ -27,6 +27,12 @@ public class ScreenWebFragment extends WebFragment {
     }
 
     @Override
+    public void refreshRootPage() {
+        setDisplaying(true);
+        loadPage(mURL);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
@@ -44,7 +50,6 @@ public class ScreenWebFragment extends WebFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setDisplaying(true);
-        loadPage(mURL);
+        refreshRootPage();
     }
 }

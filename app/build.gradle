@@ -64,15 +64,36 @@ android {
 
         def LOG = "LOG"
         def TEMPLATE = "TEMPLATE"
+        def LINK_CONFIG = "LINK_CONFIG"
 
         dev {
+            resValue "string", "app_name", "H&M Debug"
             buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField STRING, LINK_CONFIG,  "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
         }
 
-        stable {
+        prod {
+            resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
+        }
+
+        stable_uat_hm2 {
+            applicationId "com.beyondedge.hm2"
+            resValue "string", "app_name", "H&M UAT2"
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm2/setting/ID-EN.txt\""
+        }
+
+        stable_qat {
+            applicationId "com.beyondedge.qat"
+            resValue "string", "app_name", "H&M QAT"
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/ID-EN.txt\""
         }
     }
 }
@@ -86,15 +107,17 @@ dependencies {
     api project(path: ':zxingscanner')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:2.27.0'
 
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation libraries.rxandroid
     implementation libraries.retrofit
     implementation libraries.retrofit_gson_converter
     implementation libraries.retrofit_log
+    implementation libraries.retrofit_rx_adapter
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
@@ -119,6 +142,8 @@ dependencies {
     implementation libraries.awesome_plash
     implementation libraries.fetch_download_file
 //    implementation libraries.fetch_download_file_plugin
+
+    implementation libraries.rxjava2
 
 
 }

@@ -7,6 +7,7 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.utils.PrefManager;
 
 /**
@@ -17,12 +18,13 @@ public class Constant {
     public static final boolean IS_FORCE_LOCAL_CONFIG = false;
     public static final boolean IS_FORCE_LOCAL_THAI_CONFIG = false;
 
-    public static final String LINK_CONFIG = "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt";
     public static final String FOLLOW_US_PATH = "subListFolowUs";
     public static final String APP_SETTING_PATH = "app_setting";
     public static final String MENU_MORE_PATH = "subListMore";
+
     public static final String MENU_CATALOGUE_LOOKUP_PATH = "rest/V1/getProductsBySearch/articlenumber";
 
+    public static final String LINK_CONFIG = BuildConfig.LINK_CONFIG;
 
     public static String getAuthorizationParam() {
         String username = "hm";
