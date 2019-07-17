@@ -16,6 +16,18 @@ import static com.beyondedge.hm.config.Constant.MENU_MORE_PATH;
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
+
+/***
+ * Note from Jul 17 2019
+ * QAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt
+ * UAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt
+ * Pro:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt
+ *
+ * App name:
+ * HM QAT
+ * HM UAT
+ * HM
+ */
 public class HMConfig {
     @SerializedName("lang")
     public JsonElement jsonLanguage;
@@ -30,6 +42,9 @@ public class HMConfig {
     private ArrayList<Menu> subListMenuFolowUs;
     @SerializedName("region")
     private ArrayList<Region> region;
+
+    @SerializedName("PaymentUrlOpenInApp")
+    private ArrayList<String> paymentUrlOpenInApp;
 
     private JsonElement getLang() {
         return jsonLanguage;
@@ -99,6 +114,13 @@ public class HMConfig {
 
     boolean isValidConfig() {
         return version != null && !TextUtils.isEmpty(version.mainDomain) && CollectionUtils.isNotEmpty(mainMenu);
+    }
+
+    public ArrayList<String> getPaymentUrlOpenInApp() {
+        if (paymentUrlOpenInApp == null) {
+            return new ArrayList<>();
+        }
+        return paymentUrlOpenInApp;
     }
 
     public static class Version {

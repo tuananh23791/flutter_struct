@@ -36,11 +36,13 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
+import com.beyondedge.hm.utils.CollectionUtils;
 import com.beyondedge.hm.utils.PrefManager;
 import com.beyondedge.hm.utils.URLUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import im.delight.android.webview.AdvancedWebView;
 import timber.log.Timber;
@@ -142,6 +144,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         settings.setJavaScriptEnabled(true);
 
         HMConfig config = LoadConfig.getInstance().load();
+        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
         String mainDomain = config.getVersion().getMainDomain();
 
 //        URL url = null;
@@ -154,8 +157,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //        }
 
         addInternalHost(mainDomain);
-        addInternalHost("demo2.2c2p.com");
-        addInternalHost("http://2c2p.com");
+        if (CollectionUtils.isNotEmpty(innerHosts)) {
+            for (String innerHost : innerHosts) {
+                addInternalHost(innerHost);
+            }
+        }
+//        addInternalHost("demo2.2c2p.com");
+//        addInternalHost("http://2c2p.com");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (0 != (getActivity().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {

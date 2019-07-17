@@ -118,7 +118,7 @@ public final class Utils {
             int idRaw = 0;
             if (BuildConfig.FLAVOR.equals("stable_qat") || BuildConfig.FLAVOR.equals("dev")) {
                 idRaw = R.raw.id_en_qat;
-            } else if (BuildConfig.FLAVOR.equals("stable_uat_hm2")) {
+            } else if (BuildConfig.FLAVOR.equals("stable_uat")) {
                 idRaw = R.raw.id_en_hm2;
             } else {
                 idRaw = R.raw.id_en;
