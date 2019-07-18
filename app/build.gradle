@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -86,14 +86,14 @@ android {
             applicationId "com.beyondedge.hm.uat"
             resValue "string", "app_name", "H&M UAT"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt\""
         }
 
         prod {
             resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
         }
     }
