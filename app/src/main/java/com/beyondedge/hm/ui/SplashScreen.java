@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.api.ServiceHelper;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.ParseLocalConfigAsyncTask;
+import com.beyondedge.hm.utils.AppVersion;
 import com.beyondedge.hm.utils.PrefManager;
+import com.beyondedge.hm.utils.URLUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -78,40 +82,41 @@ public class SplashScreen extends AwesomeSplash {
             if (config != null) {
                 //TODO check later
                 //show popup force update app
-//                boolean isShowDialog = AppVersion.isForceUpdate(this,
-//                        config.getVersion().getVersionAndroidForceUpdate());
-//                boolean isForceUpdate = false;
-//                if (isShowDialog) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
-//                            .setMessage(config.getLanguageBy("AlertNewVersion"))
-//                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
-//                                    (dialog, which) -> {
-//                                        dialog.dismiss();
-//                                        SplashScreen.this.finish();
-//                                        URLUtils.openInWebBrowser(SplashScreen.this,
-//                                                "https://play.google.com/store/apps?hl=en");
-//                                    });
-//
-//                    if (!isForceUpdate) {
-//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-//                            dialog.dismiss();
-//                            directToMainScreen();
-//                        });
-//                        builder.setCancelable(true);
-//                    } else {
-//                        builder.setCancelable(false);
-//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-//                            dialog.dismiss();
-//                            SplashScreen.this.finish();
-//                        });
-//                    }
-//
-//                    builder.show();
-//                } else {
-//                    directToMainScreen();
-//                }
+                boolean isShowDialog = AppVersion.isLastVersion(this,
+                        config.getVersion().getVersionAndroidForceUpdate());
 
-                directToMainScreen();
+                boolean canSkip = AppVersion.versionContains(this,
+                        config.getVersion().getVersionAndroidForceUpdate());
+
+                if (isShowDialog) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
+                            .setMessage(config.getLanguageBy("AlertNewVersion"))
+                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
+                                    (dialog, which) -> {
+                                        dialog.dismiss();
+                                        SplashScreen.this.finish();
+                                        URLUtils.openInWebBrowser(SplashScreen.this,
+                                                "https://play.google.com/store/apps?hl=en");
+                                    });
+
+                    if (!canSkip) {
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            directToMainScreen();
+                        });
+                        builder.setCancelable(true);
+                    } else {
+                        builder.setCancelable(false);
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            SplashScreen.this.finish();
+                        });
+                    }
+
+                    builder.show();
+                } else {
+                    directToMainScreen();
+                }
             } else {
                 directToMainScreen();
             }

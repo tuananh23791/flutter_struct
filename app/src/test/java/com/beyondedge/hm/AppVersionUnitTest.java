@@ -197,7 +197,7 @@ public class AppVersionUnitTest {
         String input2 = "1.10.10";
         assertTrue(AppVersion.isLager(input1, input2));
     }
-    //----- isForceUpdate
+    //----- isLastVersion
 
     @Test
     public void isForceUpdate_true1() {
@@ -207,7 +207,7 @@ public class AppVersionUnitTest {
         list.add("0.0.2");
         list.add("0.0.3");
         list.add("0.0.4");
-        assertTrue(AppVersion.isForceUpdate(input1, list));
+        assertTrue(AppVersion.isLastVersion(input1, list));
     }
 
     @Test
@@ -218,7 +218,7 @@ public class AppVersionUnitTest {
         list.add("0.0.2");
         list.add("0.0.3");
         list.add("0.0.4");
-        assertTrue(AppVersion.isForceUpdate(input1, list));
+        assertTrue(AppVersion.isLastVersion(input1, list));
     }
 
     @Test
@@ -229,7 +229,7 @@ public class AppVersionUnitTest {
         list.add("0.0.22");
         list.add("0.0.33");
         list.add("0.0.44");
-        assertTrue(AppVersion.isForceUpdate(input1, list));
+        assertTrue(AppVersion.isLastVersion(input1, list));
     }
 
     //false
@@ -242,7 +242,7 @@ public class AppVersionUnitTest {
         list.add("0.0.2");
         list.add("0.0.3");
         list.add("0.0.4");
-        assertFalse(AppVersion.isForceUpdate(input1, list));
+        assertFalse(AppVersion.isLastVersion(input1, list));
     }
 
 }

@@ -95,9 +95,9 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
             if (config != null) {
                 //TODO check later
                 //show popup force update app
-//                boolean isShowDialog = AppVersion.isForceUpdate(this,
+//                boolean isShowDialog = AppVersion.isLastVersion(this,
 //                        config.getVersion().getVersionAndroidForceUpdate());
-//                boolean isForceUpdate = false;
+//                boolean isLastVersion = false;
 //                if (isShowDialog) {
 //                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
 //                            .setMessage(config.getLanguageBy("AlertNewVersion"))
@@ -109,7 +109,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
 //                                                "https://play.google.com/store/apps?hl=en");
 //                                    });
 //
-//                    if (!isForceUpdate) {
+//                    if (!isLastVersion) {
 //                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
 //                            dialog.dismiss();
 //                            directToMainScreen();
