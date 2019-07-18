@@ -65,12 +65,14 @@ android {
         def LOG = "LOG"
         def TEMPLATE = "TEMPLATE"
         def LINK_CONFIG = "LINK_CONFIG"
+        def ENABLE_CHECK_VERSION = "ENABLE_CHECK_VERSION"
 
         dev {
             applicationId "com.beyondedge.hm.qat"
             resValue "string", "app_name", "H&M Debug"
             buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt\""
         }
 
@@ -79,6 +81,7 @@ android {
             resValue "string", "app_name", "H&M QAT"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt\""
         }
 
@@ -87,6 +90,7 @@ android {
             resValue "string", "app_name", "H&M UAT"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt\""
         }
 
@@ -94,6 +98,7 @@ android {
             resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
         }
     }

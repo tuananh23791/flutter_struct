@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.api.ServiceHelper;
@@ -79,8 +80,8 @@ public class SplashScreen extends AwesomeSplash {
     private void postExecuteSplashScreen() {
         if (doingTask <= 0) {
             HMConfig config = LoadConfig.getInstance().load();
-            if (config != null) {
-                //TODO check later
+            //TODO enable when release
+            if (config != null && BuildConfig.ENABLE_CHECK_VERSION) {
                 //show popup force update app
                 boolean isShowDialog = AppVersion.isLastVersion(this,
                         config.getVersion().getVersionAndroidForceUpdate());

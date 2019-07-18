@@ -15,19 +15,21 @@ import static com.beyondedge.hm.config.Constant.MENU_MORE_PATH;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
- */
-
-/***
+ * <p>
  * Note from Jul 17 2019
  * QAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt
  * UAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt
  * Pro:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt
- *
+ * <p>
  * App name:
  * HM QAT
  * HM UAT
  * HM
+ * <p>
+ * Release Noted
+ * //TODO enable BuildConfig.ENABLE_CHECK_VERSION, when release
  */
+
 public class HMConfig {
     @SerializedName("lang")
     public JsonElement jsonLanguage;
