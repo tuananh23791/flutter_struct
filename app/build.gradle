@@ -99,7 +99,7 @@ android {
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
             buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
-            buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
+            buildConfigField STRING, LINK_CONFIG, "\"https://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
         }
     }
 }

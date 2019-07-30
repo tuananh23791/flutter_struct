@@ -3,12 +3,13 @@
       "versionAndroidCode": ["0.0.1","0.0.2"],
       "versioniOS": ["0.0.1","0.0.2"],
       "MainDomain": "https://hmiduat.specom.io/",
-      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
+      "iconUrl":"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/social/"
       },
+
 
     "mainMenu": [
       {
-	    "url": "",
+	      "url": "",
         "name": "Home"
       },
       {
@@ -24,10 +25,9 @@
         "name": "Shopping Cart"
       },
       {
-	    "url": "subListMore",
+	      "url": "subListMore",
         "name": "More"
-      }
-	  ],
+      }      ],
 
 
     "subListMore": [
@@ -89,19 +89,19 @@
     "region": [
       {
         "name": "Indonesia/Bahasa",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
+        "propertyFile": "https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/ID-ID.txt"
       },
       {
         "name": "Indonesia/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+        "propertyFile": "https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/ID-EN.txt"
       },
       {
         "name": "Thailand/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
+        "propertyFile": "https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt"
       },
       {
         "name": "Thailand/Thai",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+        "propertyFile": "https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-TH.txt"
       }
     ],
     "lang": {
@@ -116,6 +116,9 @@
         "AlertNewVersion" : "Application has new version",
 		"NewVersion_update" : "Update",
 		"NewVersion_cancel" : "Cancel"
-    }
-
+      },
+  "PaymentUrlOpenInApp": [
+    "demo2.2c2p.com",
+    "2c2p.com"
+  ]
 }

@@ -12,7 +12,8 @@
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-    app:theme="@style/myCustomAppBarTheme">
+    app:theme="@style/myCustomAppBarTheme"
+    tools:visibility="visible">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="Title Long Title Long Title Long Title Long "  />
+            android:text="Title Long Title Long Title Long Title Long " />
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -69,23 +70,23 @@
                     android:layout_height="@android:dimen/app_icon_size"
                     android:background="@android:color/transparent"
                     android:clickable="false"
-                    android:focusable="false"
                     android:contentDescription="@null"
-                    app:srcCompat="@drawable/ic_menu_cart"
-                    android:visibility="visible" />
+                    android:focusable="false"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_menu_cart" />
 
                 <TextView
                     android:id="@+id/cartNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|top"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="3dp"
                     android:background="@drawable/circle_textview_bg"
                     android:gravity="center"
                     android:minWidth="16dp"
                     android:minHeight="16dp"
                     android:paddingLeft="3dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginRight="3dp"
                     android:paddingRight="3dp"
                     android:textColor="@android:color/white"
                     android:textSize="9sp"

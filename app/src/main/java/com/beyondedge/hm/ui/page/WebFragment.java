@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -36,13 +37,13 @@ import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.TemplateMessage;
 import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.utils.CollectionUtils;
 import com.beyondedge.hm.utils.PrefManager;
 import com.beyondedge.hm.utils.URLUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import im.delight.android.webview.AdvancedWebView;
 import timber.log.Timber;
@@ -58,6 +59,27 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
+
+    private List<String> mExternalHostnames;
+
+    private static boolean isHostnameAllowed(final List<String> listHostNames, final String url) {
+        if (listHostNames.size() == 0) {
+            return true;
+        }
+
+        final String actualHost = Uri.parse(url).getHost();
+
+        if (!TextUtils.isEmpty(actualHost)) {
+            for (String expectedHost : listHostNames) {
+                assert actualHost != null;
+                if (actualHost.equals(expectedHost) || actualHost.endsWith("." + expectedHost)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public abstract void refreshRootPage();
 
@@ -124,6 +146,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     }
 
     private void initView(View view) {
+        mExternalHostnames = new ArrayList<>();
+        mExternalHostnames.add("facebook.com");
+        mExternalHostnames.add("line.me");
+        mExternalHostnames.add("twitter.com");
+        mExternalHostnames.add("instagram.com");
+        mExternalHostnames.add("youtube.com");
+
         myWebView = view.findViewById(R.id.webview);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -144,26 +173,15 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         settings.setJavaScriptEnabled(true);
 
         HMConfig config = LoadConfig.getInstance().load();
-        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
+//        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
         String mainDomain = config.getVersion().getMainDomain();
 
-//        URL url = null;
-//        try {
-//            url = new URL(mainDomain);
-//            String host = url.getHost();
-//            myWebView.addPermittedHostname(host);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-
         addInternalHost(mainDomain);
-        if (CollectionUtils.isNotEmpty(innerHosts)) {
-            for (String innerHost : innerHosts) {
-                addInternalHost(innerHost);
-            }
-        }
-//        addInternalHost("demo2.2c2p.com");
-//        addInternalHost("http://2c2p.com");
+//        if (CollectionUtils.isNotEmpty(innerHosts)) {
+//            for (String innerHost : innerHosts) {
+//                addInternalHost(innerHost);
+//            }
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (0 != (getActivity().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
@@ -173,6 +191,24 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
         myWebView.setWebViewClient(new WebViewClient() {
 
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                List<String> permittedHostnames = myWebView.getPermittedHostnames();
+//                if (isHostnameAllowed(permittedHostnames, url)) {
+//                    super.onPageStarted(view, url, favicon);
+//                } else {
+//                    //open external
+//
+//                    URLUtils.openInWebBrowser(myWebView.getContext(), url);
+//                }
+//            }
+
+
+            @Override
+            public void onPageCommitVisible(WebView view, String url) {
+                super.onPageCommitVisible(view, url);
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
 //                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
@@ -181,52 +217,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
-
-//            @Override
-//            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-//                final WebView mView = view;
-//                final HttpAuthHandler mHandler = handler;
-//                final Context mActivity = view.getContext();
-//
-//                final EditText usernameInput = new EditText(mActivity);
-//                usernameInput.setHint("Username");
-//
-//                final EditText passwordInput = new EditText(mActivity);
-//                passwordInput.setHint("Password");
-//                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//
-//                LinearLayout ll = new LinearLayout(mActivity);
-//                ll.setOrientation(LinearLayout.VERTICAL);
-//                ll.addView(usernameInput);
-//                ll.addView(passwordInput);
-//
-//                AlertDialog.Builder authDialog = new AlertDialog
-//                        .Builder(mActivity)
-//                        .setTitle("Authentication to " + host)
-//                        .setView(ll)
-//                        .setCancelable(false)
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                mHandler.proceed(usernameInput.getText().toString(), passwordInput.getText().toString());
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                dialog.dismiss();
-//                                mView.stopLoading();
-//                                mHandler.cancel();
-//                            }
-//                        });
-//
-//                if (view != null)
-//                    authDialog.show();
-//
-//                super.onReceivedHttpAuthRequest(view, handler, host, realm);
-//
-//
-//            }
-
 
             @Override
             public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
@@ -238,6 +228,11 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
                 handler.proceed("devenv", "dev@singpost");
                 super.onReceivedHttpAuthRequest(view, handler, host, realm);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return super.shouldOverrideUrlLoading(view, url);
             }
         });
         myWebView.setWebChromeClient(new WebChromeClient() {
@@ -365,12 +360,16 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
     }
 
+    //-----
+
     @Override
     public void onExternalPageRequest(String url) {
-        URLUtils.openInWebBrowser(myWebView.getContext(), url);
+        if (isHostnameAllowed(mExternalHostnames, url)) {
+            URLUtils.openInWebBrowser(myWebView.getContext(), url);
+        } else {
+            loadPage(url);
+        }
     }
-
-    //-----
 
     private void testJavascript(WebView webView) {
         webView.loadUrl(
@@ -396,7 +395,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                         "} ) ()"
         );
     }
-
 
     // Create an interface for validating int types
     public @interface WebTypeDef {
