@@ -40,6 +40,8 @@ public class PrefManager {
             string = Constant.LINK_CONFIG;
         }
         return string;
+
+//        return Constant.LINK_CONFIG;
     }
 
     public void putCurrentHMConfigJson(HMConfig config) {

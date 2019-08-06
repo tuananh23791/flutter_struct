@@ -3,6 +3,7 @@ package com.beyondedge.hm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +38,7 @@ import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
  * 3.check version app
  */
 public class SplashScreen extends AwesomeSplash {
+    public static final String TAG = "SplashScreen";
     private int doingTask = 0;
 
     public static void startActivity(Activity from) {
@@ -149,6 +151,10 @@ public class SplashScreen extends AwesomeSplash {
     private void enqueueLoadConfigByAPI() {
         doingTask++;
         final String url = PrefManager.getInstance().getCurrentLinkConfig();
+//        Toast.makeText(this, "url - " + url != null ? url : "empty", Toast.LENGTH_SHORT).show();
+
+//        Log.e(TAG, "url - " + url != null ? url : "empty");
+
         ServiceHelper.getInstance().getNetworkAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
@@ -165,14 +171,16 @@ public class SplashScreen extends AwesomeSplash {
                     @Override
                     public void onFailure(Call<HMConfig> call, Throwable t) {
                         handleLoadServerConfigError(t.getMessage());
+//                        Log.e(TAG, "Download Config Error: " + t.toString());
                     }
                 });
     }
 
     private void handleLoadServerConfigError(String serverError) {
         //TODO
-        Timber.d("Download Config Error: %1$s", serverError);
+//        Timber.d("Download Config Error: %1$s", serverError);
         Toast.makeText(this, "Default Config", Toast.LENGTH_SHORT).show();
+//        Log.e(TAG, "Default Config: " + serverError);
         readLocalConfig();
     }
 

@@ -45,8 +45,8 @@ public class HMConfig {
     @SerializedName("region")
     private ArrayList<Region> region;
 
-    @SerializedName("PaymentUrlOpenInApp")
-    private ArrayList<String> paymentUrlOpenInApp;
+//    @SerializedName("PaymentUrlOpenInApp")
+//    private ArrayList<String> paymentUrlOpenInApp;
 
     private JsonElement getLang() {
         return jsonLanguage;
@@ -118,12 +118,12 @@ public class HMConfig {
         return version != null && !TextUtils.isEmpty(version.mainDomain) && CollectionUtils.isNotEmpty(mainMenu);
     }
 
-    public ArrayList<String> getPaymentUrlOpenInApp() {
-        if (paymentUrlOpenInApp == null) {
-            return new ArrayList<>();
-        }
-        return paymentUrlOpenInApp;
-    }
+//    public ArrayList<String> getPaymentUrlOpenInApp() {
+//        if (paymentUrlOpenInApp == null) {
+//            return new ArrayList<>();
+//        }
+//        return paymentUrlOpenInApp;
+//    }
 
     public static class Version {
         @SerializedName("versionAndroidCode")

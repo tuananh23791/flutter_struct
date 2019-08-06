@@ -225,8 +225,12 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //                ) {
 //                    handler.proceed("devenv", "dev@singpost");
 //                }
+                if (host.contains("hmid")) {
+                    handler.proceed("WCiGosSjqWqcg", "uKM_WFNr-o-u1");
+                } else if (host.contains("hmth")) {
+                    handler.proceed("evjulzVRQrnA4", "YgNscTYNjw_E_23");
+                }
 
-                handler.proceed("devenv", "dev@singpost");
                 super.onReceivedHttpAuthRequest(view, handler, host, realm);
             }
 

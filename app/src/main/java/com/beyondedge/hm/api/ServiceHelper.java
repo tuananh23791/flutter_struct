@@ -88,7 +88,7 @@ public class ServiceHelper {
             }
         };
 
-        builder.addInterceptor(timeoutInterceptor);
+//        builder.addInterceptor(timeoutInterceptor);
 
 //        builder.addInterceptor(new Interceptor() {
 //            @Override
