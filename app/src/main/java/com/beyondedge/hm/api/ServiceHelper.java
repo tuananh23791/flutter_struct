@@ -3,6 +3,8 @@ package com.beyondedge.hm.api;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.BuildConfig;
+import com.beyondedge.hm.config.HMConfig;
+import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.searchdb.server.SearchServerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,10 +31,12 @@ public class ServiceHelper {
 
     private static ServiceHelper instance;
     private NetworkAPI networkAPI;
+    private NetworkConfigAPI networkConfigAPI;
     private OkHttpClient okHttpClient;
 
     public ServiceHelper() {
-        networkAPI = createNetworkAPI();
+//        networkAPI = createNetworkAPI();
+        networkConfigAPI = createNetworkConfigAPI();
     }
 
     public static ServiceHelper getInstance() {
@@ -47,7 +51,14 @@ public class ServiceHelper {
     }
 
     public NetworkAPI getNetworkAPI() {
+        if (networkAPI == null) {
+            networkAPI = createNetworkAPI();
+        }
         return networkAPI;
+    }
+
+    public NetworkConfigAPI getNetworkConfigAPI() {
+        return networkConfigAPI;
     }
 
     private OkHttpClient createOKHttpClient() {
@@ -112,13 +123,15 @@ public class ServiceHelper {
     }
 
     private NetworkAPI createNetworkAPI() {
+        HMConfig config = LoadConfig.getInstance().load();
+
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
         okHttpClient = createOKHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://hmthuat.specom.io/")
+                .baseUrl(config.getVersion().getMainDomain())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
@@ -127,5 +140,23 @@ public class ServiceHelper {
         networkAPI = retrofit.create(NetworkAPI.class);
 
         return networkAPI;
+    }
+
+    private NetworkConfigAPI createNetworkConfigAPI() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        okHttpClient = createOKHttpClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://hmthuat.specom.io/")// dont care
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        networkConfigAPI = retrofit.create(NetworkConfigAPI.class);
+
+        return networkConfigAPI;
     }
 }

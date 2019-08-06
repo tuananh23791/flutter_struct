@@ -228,7 +228,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
     private void enqueueLoadConfigByAPI() {
         doingTask++;
         final String url = PrefManager.getInstance().getCurrentLinkConfig();
-        ServiceHelper.getInstance().getNetworkAPI().loadConfig(url)
+        ServiceHelper.getInstance().getNetworkConfigAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
                     public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {

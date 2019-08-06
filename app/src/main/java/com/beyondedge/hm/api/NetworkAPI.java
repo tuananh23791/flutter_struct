@@ -18,10 +18,6 @@ import retrofit2.http.Url;
  */
 public interface NetworkAPI {
 
-//    @Headers({"CONNECT_TIMEOUT:10", "READ_TIMEOUT:5", "WRITE_TIMEOUT:5"})
-    @GET
-    Call<HMConfig> loadConfig(@Url String url);
-
     @GET("search/ajax/suggest")
     Call<ArrayList<SearchEntity>> searchProductQuery(
             @Query("q") String query,

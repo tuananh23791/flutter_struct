@@ -3,7 +3,6 @@ package com.beyondedge.hm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -26,7 +25,6 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
 
@@ -155,7 +153,7 @@ public class SplashScreen extends AwesomeSplash {
 
 //        Log.e(TAG, "url - " + url != null ? url : "empty");
 
-        ServiceHelper.getInstance().getNetworkAPI().loadConfig(url)
+        ServiceHelper.getInstance().getNetworkConfigAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
                     public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {
