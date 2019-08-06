@@ -91,7 +91,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
 
     private void postExecuteSplashScreen() {
         if (doingTask <= 0) {
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(this).load();
             if (config != null) {
                 //TODO check later
                 //show popup force update app
@@ -212,7 +212,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
 
     private void enqueueDownload() {
         doingTask++;
-        final String url = PrefManager.getInstance().getCurrentLinkConfig();
+        final String url = PrefManager.getInstance(this).getCurrentLinkConfig();
         final String filePath = Constant.getLinkSavedFile();
         request = new Request(url, filePath);
 //        request.addHeader("Authorization", Constant.getAuthorizationParam());
@@ -227,7 +227,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
 
     private void enqueueLoadConfigByAPI() {
         doingTask++;
-        final String url = PrefManager.getInstance().getCurrentLinkConfig();
+        final String url = PrefManager.getInstance(this).getCurrentLinkConfig();
         ServiceHelper.getInstance().getNetworkConfigAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
@@ -235,7 +235,7 @@ public class SplashScreenOLD extends AwesomeSplash implements FetchObserver<Down
                         //TODO
 
                         if (response.isSuccessful() && response.body() != null) {
-                            LoadConfig.getInstance().setHMConfig(response.body());
+                            LoadConfig.getInstance(SplashScreenOLD.this).setHMConfig(response.body());
                             doingTask--;
                             postExecuteSplashScreen();
                         } else {

@@ -1,5 +1,6 @@
 package com.beyondedge.hm.api;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.BuildConfig;
@@ -50,9 +51,9 @@ public class ServiceHelper {
         return instance;
     }
 
-    public NetworkAPI getNetworkAPI() {
+    public NetworkAPI getNetworkAPI(Context context) {
         if (networkAPI == null) {
-            networkAPI = createNetworkAPI();
+            networkAPI = createNetworkAPI(context);
         }
         return networkAPI;
     }
@@ -122,8 +123,8 @@ public class ServiceHelper {
         return builder.build();
     }
 
-    private NetworkAPI createNetworkAPI() {
-        HMConfig config = LoadConfig.getInstance().load();
+    private NetworkAPI createNetworkAPI(Context context) {
+        HMConfig config = LoadConfig.getInstance(context).load();
 
         Gson gson = new GsonBuilder()
                 .setLenient()

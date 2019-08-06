@@ -153,7 +153,7 @@ public class MainActivity extends BaseTemplateActivity {
         bottomNavigation.setCurrentItem(0);
         bottomNavigation.post(() -> setSearchType(SEARCH_TYPE_FULL_TOOLBAR));
 
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(this).load();
         setTitleToolbar(config.getMainMenuList().get(0).getName());
 
         // OR

@@ -97,7 +97,7 @@ android {
         prod {
             resValue "string", "app_name", "H&M"
             buildConfigField BOOLEAN, LOG, TRUE
-            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
             buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
 //            buildConfigField STRING, LINK_CONFIG, "\"https://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
             buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""

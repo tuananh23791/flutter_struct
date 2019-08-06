@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.beyondedge.hm.BR;
 import com.beyondedge.hm.R;
+import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.HMConfig.Menu;
+import com.beyondedge.hm.config.LoadConfig;
 import com.bumptech.glide.Glide;
 
 import timber.log.Timber;
@@ -45,10 +47,19 @@ public class FollowUsMenuAdapter extends ListAdapter<Menu, FollowUsMenuAdapter.M
 
     @BindingAdapter("imageNetworkUrl")
     public static void loadImage(ImageView imageView, String url) {
-        Timber.d("URL FollowUS: " + url);
+        HMConfig config = LoadConfig.getInstance(imageView.getContext()).load();
+        String fullPath = "";
+        if (config != null) {
+            try {
+                fullPath = config.getVersion().getIconUrl() + url;
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
+        Timber.d("URL FollowUS: " + fullPath);
         Glide
                 .with(imageView.getContext())
-                .load(url)
+                .load(fullPath)
                 .centerCrop()
 //                .placeholder(R.drawable.loading_spinner)
                 .into(imageView);

@@ -1,5 +1,6 @@
 package com.beyondedge.hm.config;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.utils.CollectionUtils;
@@ -158,11 +159,11 @@ public class HMConfig {
             return !TextUtils.isEmpty(url) && url.startsWith("http");
         }
 
-        public String getUrl() {
+        public String getUrl(Context context) {
             if (isExternalURL()) {
                 return url;
             }
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(context).load();
             if (config != null) {
                 try {
                     return config.version.getMainDomain() + url;
@@ -186,15 +187,15 @@ public class HMConfig {
 //            return iconName;
 //        }
         public String getIconFullUrl() {
-            HMConfig config = LoadConfig.getInstance().load();
-            if (config != null) {
-                try {
-                    return config.version.getIconUrl() + iconName;
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                return "";
-            }
+//            HMConfig config = LoadConfig.getInstance(context).load();
+//            if (config != null) {
+//                try {
+//                    return config.version.getIconUrl() + iconName;
+//                } catch (Exception e) {
+//                    Timber.e(e);
+//                }
+//                return "";
+//            }
             return iconName;
         }
 

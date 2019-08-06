@@ -64,9 +64,9 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         });
 
         btCart.setOnClickListener(v -> {
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(this).load();
             HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CHECKOUT);
-            PageWebActivity.startScreen(this, mMenu.getUrl(), mMenu.getName());
+            PageWebActivity.startScreen(this, mMenu.getUrl(this), mMenu.getName());
 
         });
 
@@ -364,7 +364,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     hideSearch();
                 }
 
-                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
+                String fullURL = LoadConfig.getInstance(BaseTemplateActivity.this).load().getVersion().getMainDomain() +
                         "catalogsearch/result/?q=" + query;
                 handleSearchLink(fullURL);
             }

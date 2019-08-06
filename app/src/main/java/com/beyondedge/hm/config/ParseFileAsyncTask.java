@@ -152,7 +152,7 @@ public class ParseFileAsyncTask extends AsyncTask<Void, Void, HMConfig> {
             }
         }
 
-        LoadConfig.getInstance().setHMConfig(hmConfig);
+        LoadConfig.getInstance(mContext).setHMConfig(hmConfig);
 
         if (mTaskListener != null) {
             mTaskListener.onDone();

@@ -1,5 +1,7 @@
 package com.beyondedge.hm.config;
 
+import android.content.Context;
+
 import com.beyondedge.hm.utils.PrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +16,7 @@ public class LoadConfig {
             .create();
     private HMConfig mHMConfig;
     private boolean forceLoadConfig = false;
+    private Context mContext;
 
     //private constructor.
     private LoadConfig() {
@@ -24,9 +27,13 @@ public class LoadConfig {
         }
     }
 
-    public synchronized static LoadConfig getInstance() {
+    private LoadConfig(Context context) {
+        mContext = context;
+    }
+
+    public synchronized static LoadConfig getInstance(Context context) {
         if (sSoleInstance == null) { //if there is no instance available... create new one
-            sSoleInstance = new LoadConfig();
+            sSoleInstance = new LoadConfig(context.getApplicationContext());
         }
 
         return sSoleInstance;
@@ -34,7 +41,7 @@ public class LoadConfig {
 
     public HMConfig load() {
         if (mHMConfig == null) {
-            mHMConfig = PrefManager.getInstance().getCurrentHMConfigJson();
+            mHMConfig = PrefManager.getInstance(mContext).getCurrentHMConfigJson();
         }
 
         if (mHMConfig == null) {
@@ -48,7 +55,7 @@ public class LoadConfig {
             throw new RuntimeException("setHMConfig must be != null");
         }
 
-        PrefManager.getInstance().putCurrentHMConfigJson(config);
+        PrefManager.getInstance(mContext).putCurrentHMConfigJson(config);
         mHMConfig = config;
     }
 }

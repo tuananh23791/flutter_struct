@@ -172,7 +172,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
 
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(getActivity()).load();
 //        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
         String mainDomain = config.getVersion().getMainDomain();
 
@@ -293,7 +293,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     private void showDebugData(String url) {
         if (BuildConfig.DEBUG && BuildConfig.TEMPLATE && textInfo != null) {
             if (isShowTemplate == null) {
-                isShowTemplate = PrefManager.getInstance().getCheatingShowHideTemplate();
+                isShowTemplate = PrefManager.getInstance(getActivity()).getCheatingShowHideTemplate();
             }
 
             if (isShowTemplate) {

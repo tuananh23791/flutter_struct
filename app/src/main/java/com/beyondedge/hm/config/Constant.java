@@ -1,6 +1,5 @@
 package com.beyondedge.hm.config;
 
-import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -8,7 +7,6 @@ import android.util.Base64;
 import androidx.annotation.NonNull;
 
 import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.utils.PrefManager;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.
@@ -45,7 +43,9 @@ public class Constant {
 
     @NonNull
     public static String getLinkSavedFile() {
-        String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
-        return getSaveDir() + Uri.parse(currentLinkConfig).getLastPathSegment();
+//        String currentLinkConfig = PrefManager.getInstance().getCurrentLinkConfig();
+//        return getSaveDir() + Uri.parse(currentLinkConfig).getLastPathSegment();
+
+        return "";
     }
 }

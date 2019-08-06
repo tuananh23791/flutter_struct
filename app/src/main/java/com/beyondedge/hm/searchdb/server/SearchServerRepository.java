@@ -1,5 +1,6 @@
 package com.beyondedge.hm.searchdb.server;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -77,7 +78,7 @@ public class SearchServerRepository {
         }
     }
 
-    public void searchQuery(MutableLiveData<List<SearchEntity>> liveData, String query) {
+    public void searchQuery(Context context, MutableLiveData<List<SearchEntity>> liveData, String query) {
         Timber.d("Query: " + query);
         mListLiveData = liveData;
         if (mListLiveData == null) {
@@ -88,13 +89,13 @@ public class SearchServerRepository {
             cancelQueryCall();
         } else {
             cancelQueryCall();
-            queryCall = mServiceHelper.getNetworkAPI().searchProductQuery(query, "1555641157245");
+            queryCall = mServiceHelper.getNetworkAPI(context).searchProductQuery(query, "1555641157245");
             queryCall.enqueue(callQueryHandle);
         }
     }
 
-    public Observable<ArrayList<SearchEntity>> searchQuery(String query) {
+    public Observable<ArrayList<SearchEntity>> searchQuery(Context context,String query) {
         Timber.d("Query: " + query);
-        return mServiceHelper.getNetworkAPI().searchProductQueryRx(query, "1555641157245");
+        return mServiceHelper.getNetworkAPI(context).searchProductQueryRx(query, "1555641157245");
     }
 }

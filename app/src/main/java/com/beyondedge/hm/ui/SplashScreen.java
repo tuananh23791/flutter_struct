@@ -3,6 +3,7 @@ package com.beyondedge.hm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -79,7 +80,7 @@ public class SplashScreen extends AwesomeSplash {
 
     private void postExecuteSplashScreen() {
         if (doingTask <= 0) {
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(this).load();
             //TODO enable when release
             if (config != null && BuildConfig.ENABLE_CHECK_VERSION) {
                 //show popup force update app
@@ -148,7 +149,7 @@ public class SplashScreen extends AwesomeSplash {
 
     private void enqueueLoadConfigByAPI() {
         doingTask++;
-        final String url = PrefManager.getInstance().getCurrentLinkConfig();
+        final String url = PrefManager.getInstance(this).getCurrentLinkConfig();
 //        Toast.makeText(this, "url - " + url != null ? url : "empty", Toast.LENGTH_SHORT).show();
 
 //        Log.e(TAG, "url - " + url != null ? url : "empty");
@@ -158,7 +159,7 @@ public class SplashScreen extends AwesomeSplash {
                     @Override
                     public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            LoadConfig.getInstance().setHMConfig(response.body());
+                            LoadConfig.getInstance(SplashScreen.this).setHMConfig(response.body());
                             doingTask--;
                             postExecuteSplashScreen();
                         } else {
@@ -177,8 +178,8 @@ public class SplashScreen extends AwesomeSplash {
     private void handleLoadServerConfigError(String serverError) {
         //TODO
 //        Timber.d("Download Config Error: %1$s", serverError);
-        Toast.makeText(this, "Default Config", Toast.LENGTH_SHORT).show();
-//        Log.e(TAG, "Default Config: " + serverError);
+        Toast.makeText(this, "Default Config" + serverError, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Default Config: " + serverError);
         readLocalConfig();
     }
 
