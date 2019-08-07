@@ -43,6 +43,8 @@ public class TemplateMessage {
     public static final String ACCOUNT = "account";
     public static final String CHECKOUT = "checkout";
 
+    public static final String BLANK = "blank";
+
     public static final String LOGOUT = "logout";
     public static final String CHECKOUT_OK = "checkout_ok";
 
@@ -63,6 +65,9 @@ public class TemplateMessage {
     }
 
     public static TemplateMessage fromJson(String json) {
+
+//        return new TemplateMessage("", BLANK, CART_COUNT_UNDEFINE, "");
+
         if (TextUtils.isEmpty(json)) {
             return new TemplateMessage("", HOME, CART_COUNT_UNDEFINE, "");
         }

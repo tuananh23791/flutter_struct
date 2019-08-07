@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -65,35 +65,42 @@ android {
         def LOG = "LOG"
         def TEMPLATE = "TEMPLATE"
         def LINK_CONFIG = "LINK_CONFIG"
+        def ENABLE_CHECK_VERSION = "ENABLE_CHECK_VERSION"
 
         dev {
+            applicationId "com.beyondedge.hm.qat"
             resValue "string", "app_name", "H&M Debug"
             buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
-            buildConfigField STRING, LINK_CONFIG,  "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
+            buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt\""
+        }
+
+        stable_qat {
+            applicationId "com.beyondedge.hm.qat"
+            resValue "string", "app_name", "H&M QAT"
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
+            buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt\""
+        }
+
+        stable_uat {
+            applicationId "com.beyondedge.hm.uat"
+            resValue "string", "app_name", "H&M UAT"
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
+            buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt\""
         }
 
         prod {
             resValue "string", "app_name", "H&M"
-            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
-            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt\""
-        }
-
-        stable_uat_hm2 {
-            applicationId "com.beyondedge.hm2"
-            resValue "string", "app_name", "H&M UAT2"
-            buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
-            buildConfigField STRING, LINK_CONFIG, "\"http://sharefile.beyondedge.com.sg/hm2/setting/ID-EN.txt\""
-        }
-
-        stable_qat {
-            applicationId "com.beyondedge.qat"
-            resValue "string", "app_name", "H&M QAT"
-            buildConfigField BOOLEAN, LOG, FALSE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
-            buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/ID-EN.txt\""
+            buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
+//            buildConfigField STRING, LINK_CONFIG, "\"https://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
+            buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
         }
     }
 }

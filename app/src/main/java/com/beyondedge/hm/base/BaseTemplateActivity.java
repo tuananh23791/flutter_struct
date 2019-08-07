@@ -23,6 +23,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
     public static final int SEARCH_TYPE_MENU_DETAIL = 20;
     public static final int SEARCH_TYPE_MENU_CART = 25;
     public static final int SEARCH_TYPE_MENU_CHECKOUT = 30;
+    public static final int SEARCH_TYPE_BLANK = 40;
     //    public static final String HOME = "home";
 //    public static final String PROD_CAT = "prod_cat";
 //    public static final String PROD_DETAIL = "prod_detail";
@@ -63,9 +64,9 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         });
 
         btCart.setOnClickListener(v -> {
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(this).load();
             HMConfig.Menu mMenu = config.getMainMenuList().get(ViewPagerAdapter.MENU_CHECKOUT);
-            PageWebActivity.startScreen(this, mMenu.getUrl(), mMenu.getName());
+            PageWebActivity.startScreen(this, mMenu.getUrl(this), mMenu.getName());
 
         });
 
@@ -113,10 +114,10 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     public void updateTemplate(TemplateMessage templateMessage) {
         if (templateMessage == null || TextUtils.isEmpty(templateMessage.getPageTemplate())) return;
-
         btSearch.post(new Runnable() {
             @Override
             public void run() {
+//                enableToolbar(true);
                 mTemplateMessage = templateMessage;
                 String tempString = templateMessage.getPageTemplate();
 
@@ -156,6 +157,9 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         } else if (TemplateMessage.CHECKOUT.equals(template)) {
             //ACCOUNT
             searchType = SEARCH_TYPE_MENU_CHECKOUT;
+        } else if (TemplateMessage.BLANK.equals(template)) {
+            //ACCOUNT
+            searchType = SEARCH_TYPE_BLANK;
         } else {
             //HOME
             searchType = SEARCH_TYPE_FULL_TOOLBAR;
@@ -186,6 +190,15 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                 case SEARCH_TYPE_MENU_DETAIL:
                     settingBack(true);
                     menuSearchProdDetail();
+
+                    if (this instanceof MainActivity) {
+                        ((MainActivity) (this)).showOrHideBottomNavigation(false);
+                    }
+                    break;
+
+                case SEARCH_TYPE_BLANK:
+                    settingBack(false);
+                    menuSearchBlank();
 
                     if (this instanceof MainActivity) {
                         ((MainActivity) (this)).showOrHideBottomNavigation(false);
@@ -311,6 +324,18 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     }
 
+    private void menuSearchBlank() {
+        settingBack(false);
+        btSearch.setVisibility(View.GONE);
+        btShare.setVisibility(View.GONE);
+        TextView middleTitle = findViewById(R.id.txt_title);
+        middleTitle.setPadding(0, 0, 0, 0);
+        btCart.setVisibility(View.GONE);
+        marginTopFrame(false);
+        hideSearch();
+
+    }
+
     private void hideAllSearch() {
         btSearch.setVisibility(View.GONE);
         btShare.setVisibility(View.GONE);
@@ -339,7 +364,7 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
                     hideSearch();
                 }
 
-                String fullURL = LoadConfig.getInstance().load().getVersion().getMainDomain() +
+                String fullURL = LoadConfig.getInstance(BaseTemplateActivity.this).load().getVersion().getMainDomain() +
                         "catalogsearch/result/?q=" + query;
                 handleSearchLink(fullURL);
             }

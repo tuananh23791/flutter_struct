@@ -64,7 +64,7 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
         fragmentContainer = view.findViewById(R.id.fragmentContainer);
         mMorePageAdapter = new MorePageAdapter();
         mMorePageAdapter.setOnItemClickListener(menu -> {
-            String url = menu.getUrl();
+            String url = menu.getUrl(getActivity());
             if (url != null && url.contains(Constant.FOLLOW_US_PATH)) {
                 startActivity(FollowUsActivity.class);
             } else if (url != null && url.contains(Constant.APP_SETTING_PATH)) {
@@ -81,7 +81,7 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
             }
         });
 
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(getActivity()).load();
 
         if (config != null) {
             mMorePageAdapter.submitList(config.getMoreSubListMenuList());
@@ -111,7 +111,7 @@ public class MorePageFragment extends BaseFragment implements PageInterface {
     @Override
     public void willBeDisplayed() {
         String title = "";
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(getActivity()).load();
 
         if (config != null) {
             HMConfig.Menu more = config.getMoreMenu();

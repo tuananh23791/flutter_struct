@@ -1,5 +1,6 @@
 package com.beyondedge.hm.config;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.utils.CollectionUtils;
@@ -15,7 +16,21 @@ import static com.beyondedge.hm.config.Constant.MENU_MORE_PATH;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
+ * <p>
+ * Note from Jul 17 2019
+ * QAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt
+ * UAT:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt
+ * Pro:  https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt
+ * <p>
+ * App name:
+ * HM QAT
+ * HM UAT
+ * HM
+ * <p>
+ * Release Noted
+ * //TODO enable BuildConfig.ENABLE_CHECK_VERSION, when release
  */
+
 public class HMConfig {
     @SerializedName("lang")
     public JsonElement jsonLanguage;
@@ -30,6 +45,9 @@ public class HMConfig {
     private ArrayList<Menu> subListMenuFolowUs;
     @SerializedName("region")
     private ArrayList<Region> region;
+
+//    @SerializedName("PaymentUrlOpenInApp")
+//    private ArrayList<String> paymentUrlOpenInApp;
 
     private JsonElement getLang() {
         return jsonLanguage;
@@ -101,6 +119,13 @@ public class HMConfig {
         return version != null && !TextUtils.isEmpty(version.mainDomain) && CollectionUtils.isNotEmpty(mainMenu);
     }
 
+//    public ArrayList<String> getPaymentUrlOpenInApp() {
+//        if (paymentUrlOpenInApp == null) {
+//            return new ArrayList<>();
+//        }
+//        return paymentUrlOpenInApp;
+//    }
+
     public static class Version {
         @SerializedName("versionAndroidCode")
         private ArrayList<String> versionAndroidForceUpdate;
@@ -134,11 +159,11 @@ public class HMConfig {
             return !TextUtils.isEmpty(url) && url.startsWith("http");
         }
 
-        public String getUrl() {
+        public String getUrl(Context context) {
             if (isExternalURL()) {
                 return url;
             }
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(context).load();
             if (config != null) {
                 try {
                     return config.version.getMainDomain() + url;
@@ -162,15 +187,15 @@ public class HMConfig {
 //            return iconName;
 //        }
         public String getIconFullUrl() {
-            HMConfig config = LoadConfig.getInstance().load();
-            if (config != null) {
-                try {
-                    return config.version.getIconUrl() + iconName;
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                return "";
-            }
+//            HMConfig config = LoadConfig.getInstance(context).load();
+//            if (config != null) {
+//                try {
+//                    return config.version.getIconUrl() + iconName;
+//                } catch (Exception e) {
+//                    Timber.e(e);
+//                }
+//                return "";
+//            }
             return iconName;
         }
 

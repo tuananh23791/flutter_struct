@@ -82,7 +82,7 @@ public class ParseLocalConfigAsyncTask extends AsyncTask<Void, Void, HMConfig> {
     protected void onPostExecute(HMConfig hmConfig) {
         super.onPostExecute(hmConfig);
 
-        LoadConfig.getInstance().setHMConfig(hmConfig);
+        LoadConfig.getInstance(mContext).setHMConfig(hmConfig);
 
         if (mTaskListener != null) {
             mTaskListener.onDone();

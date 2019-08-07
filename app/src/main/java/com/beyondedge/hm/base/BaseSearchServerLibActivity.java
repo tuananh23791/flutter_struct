@@ -72,7 +72,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     }
 
     protected void initSearchView() {
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(this).load();
         model = ViewModelProviders.of(this).get(SearchServerViewModel.class);
         observeSearchList(model);
         searchHolder = findViewById(R.id.searchHolder);

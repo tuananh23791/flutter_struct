@@ -41,10 +41,10 @@ public class PageFragment extends WebFragment implements PageInterface {
     @Override
     public void refreshRootPage() {
         if (mMenu == null) {
-            HMConfig config = LoadConfig.getInstance().load();
+            HMConfig config = LoadConfig.getInstance(getActivity()).load();
             mMenu = config.getMainMenuList().get(mIndex);
         }
-        loadPage(mMenu.getUrl());
+        loadPage(mMenu.getUrl(getActivity()));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class PageFragment extends WebFragment implements PageInterface {
 //            handleTemplateUpdate();
 
             if (mIndex != MENU_HOME) {
-                loadPage(mMenu.getUrl());
+                loadPage(mMenu.getUrl(getActivity()));
             } else {
                 handleTemplateUpdate();
             }
@@ -157,7 +157,7 @@ public class PageFragment extends WebFragment implements PageInterface {
 
     @Override
     public String defaultPage() {
-        return mMenu != null ? mMenu.getUrl() : "";
+        return mMenu != null ? mMenu.getUrl(getActivity()) : "";
     }
 
     @Override

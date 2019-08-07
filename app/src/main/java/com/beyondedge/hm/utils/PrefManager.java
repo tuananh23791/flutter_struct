@@ -1,41 +1,64 @@
 package com.beyondedge.hm.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.beyondedge.hm.HMApplication;
 import com.beyondedge.hm.config.Constant;
 import com.beyondedge.hm.config.HMConfig;
 import com.google.gson.JsonSyntaxException;
-import com.preference.PowerPreference;
-import com.preference.Preference;
 
 /**
  * Created by Hoa Nguyen on Apr 26 2019.
  */
 public class PrefManager {
+    public static final String SHARE_PRE_NAME = "SHARE_PRE_NAME2";
     private static final String CURRENT_LINK_CONFIG = "CURRENT_LINK_CONFIG";
     private static final String CURRENT_HM_CONFIG_JSON = "CURRENT_HM_CONFIG_JSON";
     private static final String CURRENT_HM_CHEATING_TEMPLATE = "CURRENT_HM_CHEATING_TEMPLATE";
     private static PrefManager instance;
-    private Preference preference = PowerPreference.getDefaultFile();
+    private Context mContext;
+//    private Preference preference = PowerPreference.getDefaultFile();
 
-    public static PrefManager getInstance() {
+    public PrefManager(Context context) {
+        mContext = context;
+    }
+
+    public static PrefManager getInstance(Context context) {
         if (instance == null) {
             synchronized (PrefManager.class) {
                 if (instance == null) {
-                    instance = new PrefManager();
+                    instance = new PrefManager(context.getApplicationContext());
                 }
             }
         }
         return instance;
     }
 
+//    public void putCurrentLinkConfig(String url) {
+//        preference.put(CURRENT_LINK_CONFIG, url);
+//    }
+//
+//    public String getCurrentLinkConfig() {
+//        String string = preference.getString(CURRENT_LINK_CONFIG);
+//        if (TextUtils.isEmpty(string)) {
+//            string = Constant.LINK_CONFIG;
+//        }
+//        return string;
+//    }
+
     public void putCurrentLinkConfig(String url) {
-        preference.put(CURRENT_LINK_CONFIG, url);
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        sharedPref.edit().putString(CURRENT_LINK_CONFIG, url).commit();
     }
 
     public String getCurrentLinkConfig() {
-        String string = preference.getString(CURRENT_LINK_CONFIG);
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        String string = sharedPref.getString(CURRENT_LINK_CONFIG, null);
+
         if (TextUtils.isEmpty(string)) {
             string = Constant.LINK_CONFIG;
         }
@@ -52,12 +75,17 @@ public class PrefManager {
 
             }
         }
-        preference.put(CURRENT_HM_CONFIG_JSON, json);
+
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        sharedPref.edit().putString(CURRENT_HM_CONFIG_JSON, json).commit();
     }
 
     public HMConfig getCurrentHMConfigJson() {
         HMConfig config = null;
-        String json = preference.getString(CURRENT_HM_CONFIG_JSON);
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        String json = sharedPref.getString(CURRENT_HM_CONFIG_JSON, "");
 
         if (json != null) {
             try {
@@ -70,10 +98,14 @@ public class PrefManager {
     }
 
     public void putCheatingShowHideTemplate(boolean isShow) {
-        preference.put(CURRENT_HM_CHEATING_TEMPLATE, isShow);
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        sharedPref.edit().putBoolean(CURRENT_HM_CHEATING_TEMPLATE, isShow).commit();
     }
 
     public boolean getCheatingShowHideTemplate() {
-        return preference.getBoolean(CURRENT_HM_CHEATING_TEMPLATE, true);
+        SharedPreferences sharedPref =
+                mContext.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(CURRENT_HM_CHEATING_TEMPLATE, true);
     }
 }

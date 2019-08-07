@@ -54,18 +54,18 @@ public class FollowUsFragment extends BaseFragment implements PageInterface {
         mAdapter = new FollowUsMenuAdapter();
         mAdapter.setOnItemClickListener(menu -> {
             if (menu.isExternalURL()) {
-                URLUtils.openInWebBrowser(getActivity(), menu.getUrl());
+                URLUtils.openInWebBrowser(getActivity(), menu.getUrl(getActivity()));
             } else {
                 //Open Web Page
                 Intent intent = new Intent(getActivity(), PageWebActivity.class);
-                intent.putExtra(PageWebActivity.EXTRA_URL, menu.getUrl());
+                intent.putExtra(PageWebActivity.EXTRA_URL, menu.getUrl(getActivity()));
                 intent.putExtra(PageWebActivity.EXTRA_TITLE, menu.getName());
                 startActivity(intent);
             }
         });
 
         String title = "";
-        HMConfig config = LoadConfig.getInstance().load();
+        HMConfig config = LoadConfig.getInstance(getActivity()).load();
 
         if (config != null) {
             HMConfig.Menu more = config.getFollowUsMenu();

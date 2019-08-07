@@ -1,121 +1,119 @@
 {
-     "version": {
-      "versionAndroidCode": ["0.0.1","0.0.2"],
-      "versioniOS": ["0.0.1","0.0.2"],
-      "MainDomain": "https://hmiduat.specom.io/",
-      "iconUrl":"http://sharefile.beyondedge.com.sg/hm/social/"
-      },
-
-    "mainMenu": [
-      {
-	    "url": "",
-        "name": "Home"
-      },
-      {
-        "url": "customer/account/",
-        "name": "Profile"
-      },
-      {
-        "url": "wishlist/",
-        "name": "Wish List"
-      },
-      {
-        "url": "checkout/cart/",
-        "name": "Shopping Cart"
-      },
-      {
-	    "url": "subListMore",
-        "name": "More"
-      }
-	  ],
-
-
-    "subListMore": [
-        {
-          "name": "Customer Service",
-          "url": "customer-service.html"
-        },
-        {
-          "name": "Store Locator",
-          "url": "store-locator/"
-        },
-        {
-          "name": "Catalogue Lookup",
-          "url": "rest/V1/getProductsBySearch/articlenumber"
-        },
-        {
-          "name": "Follow Us",
-          "url": "subListFolowUs"
-        },
-        {
-          "name": "App Setting",
-          "url": "app_setting"
-        }
-      ],
-
-     "subListFolowUs":  [
-          {
-            "iconName": "newsletter.png",
-            "url": "newsletter/",
-            "name": "Newsletter"
-          },
-          {
-            "iconName": "facebook.png",
-            "url": "https://www.facebook.com/hm",
-            "name": "Facebook"
-          },
-          {
-            "iconName": "twitter.png",
-            "url": "https://twitter.com/hm",
-            "name": "Twitter"
-          },
-          {
-            "iconName": "instagram.png",
-            "url": "https://www.instagram.com/hm/",
-            "name": "Instagram"
-          },
-          {
-            "iconName": "youtube.png",
-            "url": "https://www.youtube.com/user/hennesandmauritz",
-            "name": "Youtube"
-          },
-          {
-            "iconName": "pinterest.png",
-            "url": "https://www.pinterest.com/hm/",
-            "name": "Pinterest"
-          }
-          ]  ,
-
-    "region": [
-      {
-        "name": "Indonesia/Bahasa",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
-      },
-      {
-        "name": "Indonesia/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
-      },
-      {
-        "name": "Thailand/English",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
-      },
-      {
-        "name": "Thailand/Thai",
-        "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
-      }
+  "version": {
+    "versionAndroidCode": [
+      "0.0.1",
+      "0.0.2",
+      "0.0.18"
     ],
-    "lang": {
-        "search_product": "Search Product",
-        "shop": "Shop",
-        "cancel": "Cancel",
-        "app_setting_push_notification" : "App Permission",
-        "app_setting_region_settings" : "Region:",
-        "app_setting_app_version" : "App Version",
-        "scan_barcode" : "Barcode",
-        "scan_productImage" : "Product Image",
-        "AlertNewVersion" : "Application has new version",
-		"NewVersion_update" : "Update",
-		"NewVersion_cancel" : "Cancel"
+    "versioniOS": [
+      "0.0.1",
+      "0.0.2",
+      "0.0.18"
+    ],
+    "MainDomain": "https://hmth.spek-tek.com/",
+    "iconUrl": "http://hm-media.s3.amazonaws.com/mobileapp/hm/social/"
+  },
+  "mainMenu": [
+    {
+      "url": "",
+      "name": "Home"
+    },
+    {
+      "url": "customer/account/",
+      "name": "Profile"
+    },
+    {
+      "url": "wishlist/",
+      "name": "Wish List"
+    },
+    {
+      "url": "checkout/cart/",
+      "name": "Shopping Cart"
+    },
+    {
+      "url": "subListMore",
+      "name": "More"
     }
-
+  ],
+  "subListMore": [
+    {
+      "name": "Customer Service",
+      "url": "customer-service.html"
+    },
+    {
+      "name": "Store Locator",
+      "url": "store-locator/"
+    },
+    {
+      "name": "Catalogue Lookup",
+      "url": "rest/V1/getProductsBySearch/articlenumber"
+    },
+    {
+      "name": "Follow Us",
+      "url": "subListFolowUs"
+    },
+    {
+      "name": "App Setting",
+      "url": "app_setting"
+    }
+  ],
+  "subListFolowUs": [
+    {
+      "iconName": "newsletter.png",
+      "url": "newsletter/",
+      "name": "Newsletter"
+    },
+    {
+      "iconName": "facebook.png",
+      "url": "https://www.facebook.com/hm",
+      "name": "Facebook"
+    },
+    {
+      "iconName": "twitter.png",
+      "url": "https://twitter.com/hm",
+      "name": "Twitter"
+    },
+    {
+      "iconName": "instagram.png",
+      "url": "https://www.instagram.com/hm/",
+      "name": "Instagram"
+    },
+    {
+      "iconName": "youtube.png",
+      "url": "https://www.youtube.com/user/hennesandmauritz",
+      "name": "Youtube"
+    },
+    {
+      "iconName": "pinterest.png",
+      "url": "https://www.pinterest.com/hm/",
+      "name": "Pinterest"
+    }
+  ],
+  "region": [
+    {
+      "name": "Indonesia/English",
+      "propertyFile": "http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/ID-EN.txt"
+    },
+    {
+      "name": "Thailand/English",
+      "propertyFile": "http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/TH-EN.txt"
+    }
+  ],
+  "lang": {
+    "search_product": "Search Product",
+    "shop": "Shop",
+    "cancel": "Cancel",
+    "app_setting_push_notification": "App Permission",
+    "app_setting_region_settings": "Region:",
+    "app_setting_app_version": "App Version",
+    "scan_barcode": "Barcode",
+    "scan_productImage": "Product Image",
+    "AlertNewVersion": "Application has new version",
+    "NewVersion_update": "Update",
+    "NewVersion_cancel": "Cancel"
+  },
+  "PaymentUrlOpenInApp": [
+    "demo2.2c2p.com",
+    "2c2p.com"
+  ]
 }

@@ -11,24 +11,34 @@ import java.util.ArrayList;
  * Created by Hoa Nguyen on May 02 2019.
  */
 public class AppVersion {
-    public static boolean isForceUpdate(Context context, ArrayList<String> listForce) {
+    public static boolean isLastVersion(Context context, ArrayList<String> listAvailableVersions) {
         String currentAppVer = getCurrentAppVer(context);
-        return isForceUpdate(currentAppVer, listForce);
+        return isLastVersion(currentAppVer, listAvailableVersions);
     }
 
-    public static boolean isForceUpdate(String currentAppVer, ArrayList<String> listForce) {
-        if (CollectionUtils.isEmpty(listForce) || TextUtils.isEmpty(currentAppVer)) {
+    public static boolean isLastVersion(String currentAppVer, ArrayList<String> listAvailableVersions) {
+        if (CollectionUtils.isEmpty(listAvailableVersions) || TextUtils.isEmpty(currentAppVer)) {
             return false;
         }
         String largestVer = currentAppVer;
 
-        for (String ver : listForce) {
+        for (String ver : listAvailableVersions) {
             if (isLager(ver, largestVer)) {
                 largestVer = ver;
             }
         }
 
         return !largestVer.equals(currentAppVer);
+    }
+
+    public static boolean versionContains(Context context, ArrayList<String> listAvailableVersions) {
+        if (CollectionUtils.isEmpty(listAvailableVersions)) {
+            return false;
+        }
+
+        String currentAppVer = getCurrentAppVer(context);
+
+        return listAvailableVersions.contains(currentAppVer);
     }
 
     private static String getCurrentAppVer(Context context) {

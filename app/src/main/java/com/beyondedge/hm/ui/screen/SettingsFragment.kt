@@ -43,11 +43,11 @@ class SettingsFragment : BaseFragment() {
 
         updateUIRegion()
         binding.pressRegion.setOnClickListener {
-            val config = LoadConfig.getInstance().load()
+            val config = LoadConfig.getInstance(activity).load()
             val regions = config.region
             val arrs = arrayOfNulls<CharSequence>(regions.size)
             var region: HMConfig.Region
-            val currentLinkConfig = PrefManager.getInstance().currentLinkConfig
+            val currentLinkConfig = PrefManager.getInstance(activity).currentLinkConfig
             for (i in regions.indices) {
                 region = regions[i]
                 arrs[i] = region.name
@@ -59,7 +59,7 @@ class SettingsFragment : BaseFragment() {
             AlertDialog.Builder(view.context)
                     .setSingleChoiceItems(arrs, whichRegion) { dialog, which ->
                         val selectedRegion = regions[which]
-                        PrefManager.getInstance().putCurrentLinkConfig(selectedRegion.propertyFile)
+                        PrefManager.getInstance(activity).putCurrentLinkConfig(selectedRegion.propertyFile)
                         if (which != whichRegion) {
                             isForceRestartApp = true
                         }
@@ -85,10 +85,10 @@ class SettingsFragment : BaseFragment() {
         if (BuildConfig.DEBUG && BuildConfig.TEMPLATE) {
             binding.groupCheating.visibility = View.VISIBLE
 
-            binding.checkboxTemplate.isChecked = PrefManager.getInstance().cheatingShowHideTemplate
+            binding.checkboxTemplate.isChecked = PrefManager.getInstance(activity).cheatingShowHideTemplate
 
             binding.checkboxTemplate.setOnCheckedChangeListener { _, isChecked ->
-                PrefManager.getInstance().putCheatingShowHideTemplate(isChecked)
+                PrefManager.getInstance(activity).putCheatingShowHideTemplate(isChecked)
                 Handler().postDelayed({ this.restartApp() }, 200)
             }
 
@@ -126,10 +126,10 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun updateUIRegion() {
-        val config = LoadConfig.getInstance().load()
+        val config = LoadConfig.getInstance(activity).load()
         val regions = config.region
         var region: HMConfig.Region
-        val currentLinkConfig = PrefManager.getInstance().currentLinkConfig
+        val currentLinkConfig = PrefManager.getInstance(activity).currentLinkConfig
         for (i in regions.indices) {
             region = regions[i]
 

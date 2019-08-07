@@ -3,15 +3,21 @@ package com.beyondedge.hm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.beyondedge.hm.BuildConfig;
 import com.beyondedge.hm.MainActivity;
 import com.beyondedge.hm.R;
 import com.beyondedge.hm.api.ServiceHelper;
 import com.beyondedge.hm.config.HMConfig;
 import com.beyondedge.hm.config.LoadConfig;
 import com.beyondedge.hm.config.ParseLocalConfigAsyncTask;
+import com.beyondedge.hm.utils.AppVersion;
 import com.beyondedge.hm.utils.PrefManager;
+import com.beyondedge.hm.utils.URLUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -20,7 +26,6 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
 
@@ -32,6 +37,7 @@ import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
  * 3.check version app
  */
 public class SplashScreen extends AwesomeSplash {
+    public static final String TAG = "SplashScreen";
     private int doingTask = 0;
 
     public static void startActivity(Activity from) {
@@ -74,44 +80,45 @@ public class SplashScreen extends AwesomeSplash {
 
     private void postExecuteSplashScreen() {
         if (doingTask <= 0) {
-            HMConfig config = LoadConfig.getInstance().load();
-            if (config != null) {
-                //TODO check later
+            HMConfig config = LoadConfig.getInstance(this).load();
+            //TODO enable when release
+            if (config != null && BuildConfig.ENABLE_CHECK_VERSION) {
                 //show popup force update app
-//                boolean isShowDialog = AppVersion.isForceUpdate(this,
-//                        config.getVersion().getVersionAndroidForceUpdate());
-//                boolean isForceUpdate = false;
-//                if (isShowDialog) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
-//                            .setMessage(config.getLanguageBy("AlertNewVersion"))
-//                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
-//                                    (dialog, which) -> {
-//                                        dialog.dismiss();
-//                                        SplashScreen.this.finish();
-//                                        URLUtils.openInWebBrowser(SplashScreen.this,
-//                                                "https://play.google.com/store/apps?hl=en");
-//                                    });
-//
-//                    if (!isForceUpdate) {
-//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-//                            dialog.dismiss();
-//                            directToMainScreen();
-//                        });
-//                        builder.setCancelable(true);
-//                    } else {
-//                        builder.setCancelable(false);
-//                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
-//                            dialog.dismiss();
-//                            SplashScreen.this.finish();
-//                        });
-//                    }
-//
-//                    builder.show();
-//                } else {
-//                    directToMainScreen();
-//                }
+                boolean isShowDialog = AppVersion.isLastVersion(this,
+                        config.getVersion().getVersionAndroidForceUpdate());
 
-                directToMainScreen();
+                boolean canSkip = AppVersion.versionContains(this,
+                        config.getVersion().getVersionAndroidForceUpdate());
+
+                if (isShowDialog) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this)
+                            .setMessage(config.getLanguageBy("AlertNewVersion"))
+                            .setPositiveButton(config.getLanguageBy("NewVersion_update"),
+                                    (dialog, which) -> {
+                                        dialog.dismiss();
+                                        SplashScreen.this.finish();
+                                        URLUtils.openInWebBrowser(SplashScreen.this,
+                                                "https://play.google.com/store/apps?hl=en");
+                                    });
+
+                    if (!canSkip) {
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            directToMainScreen();
+                        });
+                        builder.setCancelable(true);
+                    } else {
+                        builder.setCancelable(false);
+                        builder.setNegativeButton(config.getLanguageBy("NewVersion_cancel"), (dialog, which) -> {
+                            dialog.dismiss();
+                            SplashScreen.this.finish();
+                        });
+                    }
+
+                    builder.show();
+                } else {
+                    directToMainScreen();
+                }
             } else {
                 directToMainScreen();
             }
@@ -142,13 +149,17 @@ public class SplashScreen extends AwesomeSplash {
 
     private void enqueueLoadConfigByAPI() {
         doingTask++;
-        final String url = PrefManager.getInstance().getCurrentLinkConfig();
-        ServiceHelper.getInstance().getNetworkAPI().loadConfig(url)
+        final String url = PrefManager.getInstance(this).getCurrentLinkConfig();
+//        Toast.makeText(this, "url - " + url != null ? url : "empty", Toast.LENGTH_SHORT).show();
+
+//        Log.e(TAG, "url - " + url != null ? url : "empty");
+
+        ServiceHelper.getInstance().getNetworkConfigAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
                     public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            LoadConfig.getInstance().setHMConfig(response.body());
+                            LoadConfig.getInstance(SplashScreen.this).setHMConfig(response.body());
                             doingTask--;
                             postExecuteSplashScreen();
                         } else {
@@ -159,14 +170,16 @@ public class SplashScreen extends AwesomeSplash {
                     @Override
                     public void onFailure(Call<HMConfig> call, Throwable t) {
                         handleLoadServerConfigError(t.getMessage());
+//                        Log.e(TAG, "Download Config Error: " + t.toString());
                     }
                 });
     }
 
     private void handleLoadServerConfigError(String serverError) {
         //TODO
-        Timber.d("Download Config Error: %1$s", serverError);
-        Toast.makeText(this, "Default Config", Toast.LENGTH_SHORT).show();
+//        Timber.d("Download Config Error: %1$s", serverError);
+        Toast.makeText(this, "Default Config" + serverError, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Default Config: " + serverError);
         readLocalConfig();
     }
 

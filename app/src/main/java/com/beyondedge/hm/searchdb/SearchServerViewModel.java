@@ -42,7 +42,7 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
     }
 
     public void searchQuery(String query) {
-        repository.searchQuery(getMainLiveData(), query);
+        repository.searchQuery(getApplication(),getMainLiveData(), query);
     }
 
     private void settingRxSearch() {
@@ -53,7 +53,7 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
 
                 .switchMap((Function<String, Observable<ArrayList<SearchEntity>>>) query -> {
                     Timber.d(query);
-                    return repository.searchQuery(query).onErrorReturnItem(new ArrayList<>());
+                    return repository.searchQuery(getApplication(),query).onErrorReturnItem(new ArrayList<>());
                 })
 //                .onErrorResumeNext(new ObservableSource<ArrayList<SearchEntity>>() {
 //                    @Override

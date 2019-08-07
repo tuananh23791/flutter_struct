@@ -27,7 +27,7 @@ public class CatalogueLookupViewModel extends BaseViewModel<String> {
 
     public void catalogueLookup(String query) {
         showLoading();
-        repository.catalogueLookup(getMainLiveData(), query);
+        repository.catalogueLookup(getApplication(), getMainLiveData(), query);
     }
 
     @Override

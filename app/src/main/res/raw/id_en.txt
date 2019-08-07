@@ -2,14 +2,16 @@
   "version": {
     "versionAndroidCode": [
       "0.0.1",
-      "0.0.2"
+      "0.0.2",
+      "0.0.18"
     ],
     "versioniOS": [
       "0.0.1",
-      "0.0.2"
+      "0.0.2",
+      "0.0.18"
     ],
-    "MainDomain": "https://hmthuat.specom.io/",
-    "iconUrl": "http://sharefile.beyondedge.com.sg/hm/social/"
+    "MainDomain": "https://hmth.spek-tek.com/",
+    "iconUrl": "http://hm-media.s3.amazonaws.com/mobileapp/hm/social/"
   },
   "mainMenu": [
     {
@@ -89,20 +91,12 @@
   ],
   "region": [
     {
-      "name": "Indonesia/Bahasa",
-      "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-ID.txt"
-    },
-    {
       "name": "Indonesia/English",
-      "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/ID-EN.txt"
+      "propertyFile": "http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/ID-EN.txt"
     },
     {
       "name": "Thailand/English",
-      "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-EN.txt"
-    },
-    {
-      "name": "Thailand/Thai",
-      "propertyFile": "http://sharefile.beyondedge.com.sg/hm/setting/TH-TH.txt"
+      "propertyFile": "http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/TH-EN.txt"
     }
   ],
   "lang": {
@@ -117,5 +111,9 @@
     "AlertNewVersion": "Application has new version",
     "NewVersion_update": "Update",
     "NewVersion_cancel": "Cancel"
-  }
+  },
+  "PaymentUrlOpenInApp": [
+    "demo2.2c2p.com",
+    "2c2p.com"
+  ]
 }

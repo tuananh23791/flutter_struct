@@ -1,5 +1,6 @@
 package com.beyondedge.hm.api;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -70,7 +71,7 @@ public class MainRepository {
         }
     }
 
-    public void catalogueLookup(MutableLiveData<String> liveData, String query) {
+    public void catalogueLookup(Context context,MutableLiveData<String> liveData, String query) {
         Timber.d("Lookup: " + query);
         mLiveData = liveData;
         if (TextUtils.isEmpty(query)) {
@@ -78,7 +79,7 @@ public class MainRepository {
             cancelQueryCall();
         } else {
             cancelQueryCall();
-            queryCall = mServiceHelper.getNetworkAPI().catagolueLookupArticle(query);
+            queryCall = mServiceHelper.getNetworkAPI(context).catagolueLookupArticle(query);
             queryCall.enqueue(callQueryHandle);
         }
     }
