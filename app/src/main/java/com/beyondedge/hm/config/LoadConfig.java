@@ -28,7 +28,7 @@ public class LoadConfig {
     }
 
     private LoadConfig(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
     }
 
     public synchronized static LoadConfig getInstance(Context context) {
