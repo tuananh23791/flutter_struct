@@ -128,8 +128,6 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
-    implementation libraries.power_preference
-    implementation libraries.glide
     annotationProcessor libraries.glide_compiler
 
     implementation libraries.androidx_appcompat
@@ -147,10 +145,13 @@ dependencies {
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview
     implementation libraries.awesome_plash
-    implementation libraries.fetch_download_file
-//    implementation libraries.fetch_download_file_plugin
-
+    implementation libraries.glide
     implementation libraries.rxjava2
+
+//    implementation libraries.fetch_download_file
+//    implementation libraries.fetch_download_file_plugin
+//    implementation libraries.power_preference
+
 
 
 }

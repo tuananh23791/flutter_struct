@@ -92,24 +92,6 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         mQueryTextListener = getQueryTextListener();
     }
 
-//    private void settingRxSearch() {
-//        Disposable subscribe = RxSearchObservable.fromView(searchHolder)
-//                .debounce(300, TimeUnit.MILLISECONDS)
-//                .filter(s -> {
-//                    if (s.isEmpty()) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//                })
-//                .distinctUntilChanged()
-//                .switchMap((Function<String, ObservableSource<String>>) query ->
-//                        dataFromNetwork(query))
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(result -> textViewResult.setText(result));
-//    }
-
     protected void settingBack(boolean can) {
         //Comment - All now using back in activity tool_bar
         //searchHolder.settingBack(can);
@@ -181,9 +163,11 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         } else {
             searchHolder.showRecycler();
 
-            //TODO improve here
             searchHolder.showLoading();
+            //search on RxJava
             model.onQueryTextChange(newText);
+
+            //no more use
 //        model.searchQuery(newText);
         }
         return true;

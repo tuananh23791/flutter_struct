@@ -172,6 +172,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
 
+        settingViewPort(true);
+
         HMConfig config = LoadConfig.getInstance(getActivity()).load();
 //        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
         String mainDomain = config.getVersion().getMainDomain();
@@ -270,6 +272,13 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 //        myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "nativeJs");
         myWebView.addJavascriptInterface(new WebAppInterface(myWebView.getContext()), "Android");
 
+    }
+
+    private void settingViewPort(boolean enable){
+        WebSettings settings = myWebView.getSettings();
+
+        settings.setLoadWithOverviewMode(enable);
+        settings.setUseWideViewPort(enable);
     }
 
     private void addInternalHost(String fullUrl) {

@@ -41,8 +41,9 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
         return getMainLiveData();
     }
 
+    //no more use| now is search by RxJava on onQueryTextChange(String text) function
     public void searchQuery(String query) {
-        repository.searchQuery(getApplication(),getMainLiveData(), query);
+        repository.searchQuery(getApplication(), getMainLiveData(), query);
     }
 
     private void settingRxSearch() {
@@ -53,20 +54,8 @@ public class SearchServerViewModel extends BaseViewModel<List<SearchEntity>> {
 
                 .switchMap((Function<String, Observable<ArrayList<SearchEntity>>>) query -> {
                     Timber.d(query);
-                    return repository.searchQuery(getApplication(),query).onErrorReturnItem(new ArrayList<>());
+                    return repository.searchQuery(getApplication(), query).onErrorReturnItem(new ArrayList<>());
                 })
-//                .onErrorResumeNext(new ObservableSource<ArrayList<SearchEntity>>() {
-//                    @Override
-//                    public void subscribe(Observer<? super ArrayList<SearchEntity>> throwable) {
-//                        Timber.d("onErrorResumeNext %s", throwable.toString());
-////                    subject.onNext("");
-//                        Observable<ArrayList<Object>> just = Observable.just(new ArrayList<>());
-//                    }
-//                })
-//                .doOnError(throwable -> {
-//                    Timber.d("doOnError %s", throwable.toString());
-//                })
-//                .onErrorReturnItem(new ArrayList<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 

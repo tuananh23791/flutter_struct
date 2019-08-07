@@ -11,10 +11,6 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tonyodev.fetch2.Fetch;
-import com.tonyodev.fetch2.FetchConfiguration;
-import com.tonyodev.fetch2.HttpUrlConnectionDownloader;
-import com.tonyodev.fetch2core.Downloader;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
@@ -57,15 +53,6 @@ public class HMApplication extends Application {
         if (isDEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-
-        //Fetch download config file
-        final FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(this)
-                .enableRetryOnNetworkGain(true)
-                .setDownloadConcurrentLimit(3)
-                .setHttpDownloader(new HttpUrlConnectionDownloader(getHttpUrlConnectionPreferences(),
-                        Downloader.FileDownloaderType.PARALLEL))
-                .build();
-        Fetch.Impl.setDefaultInstanceConfiguration(fetchConfiguration);
     }
 
     public SearchDatabase getDatabase() {
@@ -74,13 +61,6 @@ public class HMApplication extends Application {
 
     public SearchRepository getRepository() {
         return SearchRepository.getInstance(appExecutors, getDatabase());
-    }
-
-    private HttpUrlConnectionDownloader.HttpUrlConnectionPreferences getHttpUrlConnectionPreferences() {
-        HttpUrlConnectionDownloader.HttpUrlConnectionPreferences httpUrlConnectionPreferences = new HttpUrlConnectionDownloader.HttpUrlConnectionPreferences();
-        httpUrlConnectionPreferences.setConnectTimeout(5000);
-        httpUrlConnectionPreferences.setReadTimeout(5000);
-        return httpUrlConnectionPreferences;
     }
 
     public String getVersionName() {
@@ -93,7 +73,6 @@ public class HMApplication extends Application {
 
         return "";
     }
-
 
 }
 

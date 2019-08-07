@@ -3,8 +3,6 @@ package com.beyondedge.hm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -19,6 +17,7 @@ import com.beyondedge.hm.utils.AppVersion;
 import com.beyondedge.hm.utils.PrefManager;
 import com.beyondedge.hm.utils.URLUtils;
 import com.daimajia.androidanimations.library.Techniques;
+import com.google.android.material.snackbar.Snackbar;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
@@ -26,6 +25,7 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
 
@@ -150,16 +150,17 @@ public class SplashScreen extends AwesomeSplash {
     private void enqueueLoadConfigByAPI() {
         doingTask++;
         final String url = PrefManager.getInstance(this).getCurrentLinkConfig();
-//        Toast.makeText(this, "url - " + url != null ? url : "empty", Toast.LENGTH_SHORT).show();
-
-//        Log.e(TAG, "url - " + url != null ? url : "empty");
 
         ServiceHelper.getInstance().getNetworkConfigAPI().loadConfig(url)
                 .enqueue(new Callback<HMConfig>() {
                     @Override
                     public void onResponse(Call<HMConfig> call, Response<HMConfig> response) {
+                        if (isFinishing()) return;
+
                         if (response.isSuccessful() && response.body() != null) {
                             LoadConfig.getInstance(SplashScreen.this).setHMConfig(response.body());
+                            Timber.d("Config from " + url);
+//                            Snackbar.make(findViewById(R.id.rfParent), "Config from " + url, Snackbar.LENGTH_LONG).show();
                             doingTask--;
                             postExecuteSplashScreen();
                         } else {
@@ -169,6 +170,8 @@ public class SplashScreen extends AwesomeSplash {
 
                     @Override
                     public void onFailure(Call<HMConfig> call, Throwable t) {
+                        if (isFinishing()) return;
+
                         handleLoadServerConfigError(t.getMessage());
 //                        Log.e(TAG, "Download Config Error: " + t.toString());
                     }
@@ -176,10 +179,8 @@ public class SplashScreen extends AwesomeSplash {
     }
 
     private void handleLoadServerConfigError(String serverError) {
-        //TODO
-//        Timber.d("Download Config Error: %1$s", serverError);
-        Toast.makeText(this, "Default Config" + serverError, Toast.LENGTH_SHORT).show();
-        Log.e(TAG, "Default Config: " + serverError);
+        Timber.d("Download Config Error: %1$s", serverError);
+        Snackbar.make(findViewById(R.id.rfParent), "Default Config", Snackbar.LENGTH_LONG).show();
         readLocalConfig();
     }
 
