@@ -17,6 +17,7 @@ android {
         versionCode version_app.version_code
         versionName version_app.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -120,6 +121,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation libraries.multidex
+    implementation libraries.work_runtime
+
     implementation libraries.rxandroid
     implementation libraries.retrofit
     implementation libraries.retrofit_gson_converter
@@ -148,10 +152,12 @@ dependencies {
     implementation libraries.glide
     implementation libraries.rxjava2
 
+    implementation libraries.firebase_messaging
+    implementation libraries.firebase_core
+
 //    implementation libraries.fetch_download_file
 //    implementation libraries.fetch_download_file_plugin
 //    implementation libraries.power_preference
 
-
-
 }
+apply plugin: 'com.google.gms.google-services'

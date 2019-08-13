@@ -23,8 +23,9 @@ ext.versions = [
 
         fabric                   : "2.10.0",
         play_services_analytics  : "16.0.8",
-        firebase_messaging       : "18.0.0",
-        firebase_core            : "16.0.9",
+        firebase_messaging       : "19.0.1",//update
+        firebase_core            : "17.0.1",//update
+        work_runtime             : "1.0.1",//new
         timber                   : "4.7.1",
 
         glide                    : "4.9.0",
@@ -98,6 +99,7 @@ ext.libraries = [
         play_services_analytics   : "com.google.android.gms:play-services-analytics:$versions.play_services_analytics",
         firebase_messaging        : "com.google.firebase:firebase-messaging:$versions.firebase_messaging",
         firebase_core             : "com.google.firebase:firebase-core:$versions.firebase_core",
+        work_runtime              : "android.arch.work:work-runtime:$versions.work_runtime",
 
         eventbus                  : "org.greenrobot:eventbus:$versions.eventbus",
         butterknife               : "com.jakewharton:butterknife:$versions.butterknife",

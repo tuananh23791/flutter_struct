@@ -222,15 +222,15 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
             @Override
             public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-//                if ("https://hmthdev4.specom.io".contains(host)
-////                        || "http://hm-media.s3-ap-southeast-1.amazonaws.com".contains(host)
-//                ) {
-//                    handler.proceed("devenv", "dev@singpost");
-//                }
-                if (host.contains("hmid")) {
-                    handler.proceed("WCiGosSjqWqcg", "uKM_WFNr-o-u1");
-                } else if (host.contains("hmth")) {
-                    handler.proceed("evjulzVRQrnA4", "YgNscTYNjw_E_23");
+                if ("https://hmthdev4.specom.io".contains(host)
+                        && BuildConfig.FLAVOR.equals("dev")) {
+                    handler.proceed("devenv", "dev@singpost");
+                } else {
+                    if (host.contains("hmid")) {
+                        handler.proceed("WCiGosSjqWqcg", "uKM_WFNr-o-u1");
+                    } else if (host.contains("hmth")) {
+                        handler.proceed("evjulzVRQrnA4", "YgNscTYNjw_E_23");
+                    }
                 }
 
                 super.onReceivedHttpAuthRequest(view, handler, host, realm);
@@ -274,7 +274,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     }
 
-    private void settingViewPort(boolean enable){
+    private void settingViewPort(boolean enable) {
         WebSettings settings = myWebView.getSettings();
 
         settings.setLoadWithOverviewMode(enable);

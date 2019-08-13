@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import androidx.multidex.MultiDex;
+
 import com.beyondedge.hm.searchdb.db.SearchDatabase;
 import com.beyondedge.hm.searchdb.db.SearchRepository;
 import com.beyondedge.hm.utils.AppExecutors;
@@ -35,6 +37,7 @@ public class HMApplication extends Application {
 
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         instance = this;
         appExecutors = new AppExecutors();
 

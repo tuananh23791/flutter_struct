@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "141061490512",
+    "firebase_url": "https://hm-project-63069.firebaseio.com",
+    "project_id": "hm-project-63069",
+    "storage_bucket": "hm-project-63069.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141061490512:android:d63e463c72f73f47",
+        "android_client_info": {
+          "package_name": "com.beyondedge.hm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141061490512-0iub4p9se683ehuppdj4b8sio8mqg704.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyondedge.hm",
+            "certificate_hash": "f765cf3e38885a72939c22e1dc6ae1b7da736654"
+          }
+        },
+        {
+          "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAETaqNDxrFbqrkBATz3C7xX1epKRkyHfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141061490512:android:6fddf12b06f28585",
+        "android_client_info": {
+          "package_name": "com.beyondedge.hm.qat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141061490512-rj7gqqig6cvb59s6iqtvmqm0b7d5m896.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyondedge.hm.qat",
+            "certificate_hash": "f765cf3e38885a72939c22e1dc6ae1b7da736654"
+          }
+        },
+        {
+          "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAETaqNDxrFbqrkBATz3C7xX1epKRkyHfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141061490512:android:ef05f3f645c501e3",
+        "android_client_info": {
+          "package_name": "com.beyondedge.hm.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141061490512-l8bejti41kf35f8ia28vd51064480gms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyondedge.hm.uat",
+            "certificate_hash": "f765cf3e38885a72939c22e1dc6ae1b7da736654"
+          }
+        },
+        {
+          "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAETaqNDxrFbqrkBATz3C7xX1epKRkyHfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141061490512-3rr57e1bje17p15dvlovg8jp81hsdsdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
