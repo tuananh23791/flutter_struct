@@ -47,7 +47,7 @@ android {
     }
 
     android.variantFilter { variant ->
-        if (variant.buildType.name.contains('release')) {
+        if (variant.buildType.name.contains('release') && variant.getFlavors().get(0).name != 'prod') {
             variant.setIgnore(true)
         }
     }
