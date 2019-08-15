@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def keystorePropertiesFile = rootProject.file("./key/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
@@ -25,13 +29,31 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        debug {
+            storeFile rootProject.file('./hm_keystore/debug.keystore')
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
+            signingConfig signingConfigs.debug
             ext.alwaysUpdateBuildId = false
         }
     }
@@ -132,7 +154,7 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
-    annotationProcessor libraries.glide_compiler
+    kapt libraries.glide_compiler
 
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_recyclerview
@@ -140,7 +162,7 @@ dependencies {
     implementation libraries.androidx_constraintlayout
     implementation libraries.androidx_viewmodel
     implementation libraries.androidx_room
-    annotationProcessor libraries.androidx_room_compiler
+    kapt libraries.androidx_room_compiler
 
 //    implementation libraries.barcodescanner_zxing
     implementation libraries.zxing_core
