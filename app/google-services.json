@@ -15,19 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "18454626836-m7nq22es5uc0nagn0ijrvu828tj5bgln.apps.googleusercontent.com",
+          "client_id": "18454626836-46kcm6fbmvvcokafof7fipjl76mnk43q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.beyondedge.hm",
             "certificate_hash": "b778a2bbfcb2dcd918f7cfdbf10e1b782ece6224"
-          }
-        },
-        {
-          "client_id": "18454626836-hq9481n1bt9fhaa0mj6ct027pd1vadc9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.beyondedge.hm",
-            "certificate_hash": "a9d872ef1ebdf65615b188bcffd1d627397cfdbb"
           }
         },
         {
