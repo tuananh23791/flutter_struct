@@ -98,7 +98,7 @@ public class SplashScreen extends AwesomeSplash {
                                         dialog.dismiss();
                                         SplashScreen.this.finish();
                                         URLUtils.openInWebBrowser(SplashScreen.this,
-                                                "https://play.google.com/store/apps?hl=en");
+                                                "https://play.google.com/store/apps/details?id=com.beyondedge.hm");
                                     });
 
                     if (!canSkip) {
