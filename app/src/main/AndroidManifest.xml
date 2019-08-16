@@ -31,6 +31,12 @@
             android:name="io.fabric.ApiKey"
             android:value="8c9eb83d238f201cfbdc3b1529996c712747daee" />
 
+        <service android:name=".fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ui.SplashScreen"
             android:launchMode="singleTop"

@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def keystorePropertiesFile = rootProject.file("./hm_keystore/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
@@ -17,6 +21,7 @@ android {
         versionCode version_app.version_code
         versionName version_app.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -24,13 +29,31 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        debug {
+            storeFile rootProject.file('./hm_keystore/debug.keystore')
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
+            signingConfig signingConfigs.debug
             ext.alwaysUpdateBuildId = false
         }
     }
@@ -46,7 +69,7 @@ android {
     }
 
     android.variantFilter { variant ->
-        if (variant.buildType.name.contains('release')) {
+        if (variant.buildType.name.contains('release') && variant.getFlavors().get(0).name != 'prod') {
             variant.setIgnore(true)
         }
     }
@@ -96,8 +119,8 @@ android {
 
         prod {
             resValue "string", "app_name", "H&M"
-            buildConfigField BOOLEAN, LOG, TRUE
-            buildConfigField BOOLEAN, TEMPLATE, TRUE
+            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, TEMPLATE, FALSE
             buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
 //            buildConfigField STRING, LINK_CONFIG, "\"https://hm-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
             buildConfigField STRING, LINK_CONFIG, "\"http://hm-media.s3.amazonaws.com/mobileapp/hm/setting/TH-EN.txt\""
@@ -120,6 +143,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation libraries.multidex
+    implementation libraries.work_runtime
+
     implementation libraries.rxandroid
     implementation libraries.retrofit
     implementation libraries.retrofit_gson_converter
@@ -128,9 +154,7 @@ dependencies {
     implementation libraries.gson
     implementation libraries.fabric
     implementation libraries.timber
-    implementation libraries.power_preference
-    implementation libraries.glide
-    annotationProcessor libraries.glide_compiler
+    kapt libraries.glide_compiler
 
     implementation libraries.androidx_appcompat
     implementation libraries.androidx_recyclerview
@@ -138,7 +162,7 @@ dependencies {
     implementation libraries.androidx_constraintlayout
     implementation libraries.androidx_viewmodel
     implementation libraries.androidx_room
-    annotationProcessor libraries.androidx_room_compiler
+    kapt libraries.androidx_room_compiler
 
 //    implementation libraries.barcodescanner_zxing
     implementation libraries.zxing_core
@@ -147,10 +171,15 @@ dependencies {
     implementation libraries.ah_bottom_navigation
     implementation libraries.advanced_webview
     implementation libraries.awesome_plash
-    implementation libraries.fetch_download_file
-//    implementation libraries.fetch_download_file_plugin
-
+    implementation libraries.glide
     implementation libraries.rxjava2
 
+    implementation libraries.firebase_messaging
+    implementation libraries.firebase_core
+
+//    implementation libraries.fetch_download_file
+//    implementation libraries.fetch_download_file_plugin
+//    implementation libraries.power_preference
 
 }
+apply plugin: 'com.google.gms.google-services'

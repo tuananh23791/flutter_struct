@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,6 +77,7 @@ public class SearchServerRepository {
         }
     }
 
+    //Search with Basic Callback Retrofit back to MutableLiveData
     public void searchQuery(Context context, MutableLiveData<List<SearchEntity>> liveData, String query) {
         Timber.d("Query: " + query);
         mListLiveData = liveData;
@@ -94,7 +94,8 @@ public class SearchServerRepository {
         }
     }
 
-    public Observable<ArrayList<SearchEntity>> searchQuery(Context context,String query) {
+    //Search with RxJava Retrofit
+    public Observable<ArrayList<SearchEntity>> searchQuery(Context context, String query) {
         Timber.d("Query: " + query);
         return mServiceHelper.getNetworkAPI(context).searchProductQueryRx(query, "1555641157245");
     }
