@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page.more;
+package com.hm.gillcaptital.ui.page.more;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.beyondedge.hm.BR;
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.config.HMConfig.Menu;
+import com.hm.gillcaptital.BR;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.config.HMConfig.Menu;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

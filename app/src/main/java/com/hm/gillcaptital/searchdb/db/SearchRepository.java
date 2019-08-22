@@ -1,8 +1,8 @@
-package com.beyondedge.hm.searchdb.db;
+package com.hm.gillcaptital.searchdb.db;
 
 import androidx.lifecycle.LiveData;
 
-import com.beyondedge.hm.utils.AppExecutors;
+import com.hm.gillcaptital.utils.AppExecutors;
 
 import java.util.List;
 

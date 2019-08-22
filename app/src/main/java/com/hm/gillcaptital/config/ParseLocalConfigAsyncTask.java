@@ -1,23 +1,14 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.widget.TextView;
 
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.R;
+import com.hm.gillcaptital.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import java.io.File;
-import java.lang.ref.WeakReference;
-
 import timber.log.Timber;
-
-import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_CONFIG;
-import static com.beyondedge.hm.config.Constant.IS_FORCE_LOCAL_THAI_CONFIG;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

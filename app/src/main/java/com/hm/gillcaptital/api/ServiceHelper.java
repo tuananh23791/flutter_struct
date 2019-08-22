@@ -1,4 +1,4 @@
-package com.beyondedge.hm.api;
+package com.hm.gillcaptital.api;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,10 +6,10 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.searchdb.server.SearchServerRepository;
+import com.hm.gillcaptital.BuildConfig;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.searchdb.server.SearchServerRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

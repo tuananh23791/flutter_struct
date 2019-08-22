@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base
+package com.hm.gillcaptital.base
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.beyondedge.hm.R
+import com.hm.gillcaptital.R
 import com.google.android.material.appbar.AppBarLayout
 
 /**

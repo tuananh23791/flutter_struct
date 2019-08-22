@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page;
+package com.hm.gillcaptital.ui.page;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseActivity;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
 
-import static com.beyondedge.hm.ui.page.ViewPagerAdapter.MENU_HOME;
+import static com.hm.gillcaptital.ui.page.ViewPagerAdapter.MENU_HOME;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.

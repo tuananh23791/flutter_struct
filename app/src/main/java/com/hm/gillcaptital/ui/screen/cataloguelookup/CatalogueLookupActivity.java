@@ -1,13 +1,12 @@
-package com.beyondedge.hm.ui.screen.cataloguelookup;
+package com.hm.gillcaptital.ui.screen.cataloguelookup;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivitySingleFragment;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseActivitySingleFragment;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

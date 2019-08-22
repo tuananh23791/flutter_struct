@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen.cataloguelookup;
+package com.hm.gillcaptital.ui.screen.cataloguelookup;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.databinding.CatalogueLookupLayoutBinding;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.utils.URLUtils;
-import com.beyondedge.hm.utils.ViewUtils;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseFragment;
+import com.hm.gillcaptital.databinding.CatalogueLookupLayoutBinding;
+import com.hm.gillcaptital.ui.screen.PageWebActivity;
+import com.hm.gillcaptital.utils.URLUtils;
+import com.hm.gillcaptital.utils.ViewUtils;
 
 import timber.log.Timber;
 

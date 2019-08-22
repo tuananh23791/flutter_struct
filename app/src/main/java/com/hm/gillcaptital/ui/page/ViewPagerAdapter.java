@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page;
+package com.hm.gillcaptital.ui.page;
 
 import android.view.ViewGroup;
 
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.beyondedge.hm.ui.page.more.MorePageFragment;
+import com.hm.gillcaptital.ui.page.more.MorePageFragment;
 
 import java.util.ArrayList;
 

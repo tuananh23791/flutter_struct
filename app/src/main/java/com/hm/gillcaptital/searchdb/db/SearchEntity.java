@@ -1,11 +1,11 @@
-package com.beyondedge.hm.searchdb.db;
+package com.hm.gillcaptital.searchdb.db;
 
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.beyondedge.hm.searchdb.SearchInterface;
+import com.hm.gillcaptital.searchdb.SearchInterface;
 
 @Entity(tableName = "search_table")
 public class SearchEntity implements SearchInterface {

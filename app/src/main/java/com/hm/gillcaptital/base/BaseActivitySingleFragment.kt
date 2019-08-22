@@ -1,9 +1,9 @@
-package com.beyondedge.hm.base
+package com.hm.gillcaptital.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
-import com.beyondedge.hm.R
+import com.hm.gillcaptital.R
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

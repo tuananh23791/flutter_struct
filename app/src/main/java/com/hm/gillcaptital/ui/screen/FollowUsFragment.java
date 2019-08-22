@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen;
+package com.hm.gillcaptital.ui.screen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +14,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.ui.page.PageInterface;
-import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
-import com.beyondedge.hm.utils.URLUtils;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseActivity;
+import com.hm.gillcaptital.base.BaseFragment;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.ui.page.PageInterface;
+import com.hm.gillcaptital.ui.view.PaddingDividerItemDecoration;
+import com.hm.gillcaptital.utils.URLUtils;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

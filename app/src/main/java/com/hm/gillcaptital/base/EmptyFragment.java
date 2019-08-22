@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base;
+package com.hm.gillcaptital.base;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.beyondedge.hm.R;
+import com.hm.gillcaptital.R;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

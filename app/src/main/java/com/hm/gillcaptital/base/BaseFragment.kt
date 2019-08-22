@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base
+package com.hm.gillcaptital.base
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 
-import com.beyondedge.hm.R
-import com.beyondedge.hm.ui.view.LoadingDialogFragment
+import com.hm.gillcaptital.R
+import com.hm.gillcaptital.ui.view.LoadingDialogFragment
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

@@ -1,15 +1,9 @@
-package com.beyondedge.hm.api;
+package com.hm.gillcaptital.api;
 
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.searchdb.server.SearchEntity;
+import com.hm.gillcaptital.config.HMConfig;
 
-import java.util.ArrayList;
-
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**

@@ -1,9 +1,9 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.beyondedge.hm.utils.CollectionUtils;
+import com.hm.gillcaptital.utils.CollectionUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 import timber.log.Timber;
 
-import static com.beyondedge.hm.config.Constant.MENU_CATALOGUE_LOOKUP_PATH;
-import static com.beyondedge.hm.config.Constant.MENU_MORE_PATH;
+import static com.hm.gillcaptital.config.Constant.MENU_CATALOGUE_LOOKUP_PATH;
+import static com.hm.gillcaptital.config.Constant.MENU_MORE_PATH;
 
 /**
  * Created by Hoa Nguyen on Apr 22 2019.

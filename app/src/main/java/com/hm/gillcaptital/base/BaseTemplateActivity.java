@@ -1,18 +1,18 @@
-package com.beyondedge.hm.base;
+package com.hm.gillcaptital.base;
 
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyondedge.hm.MainActivity;
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.config.TemplateMessage;
-import com.beyondedge.hm.ui.page.ViewPagerAdapter;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.utils.URLUtils;
+import com.hm.gillcaptital.MainActivity;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.config.TemplateMessage;
+import com.hm.gillcaptital.ui.page.ViewPagerAdapter;
+import com.hm.gillcaptital.ui.screen.PageWebActivity;
+import com.hm.gillcaptital.utils.URLUtils;
 
 /**
  * Created by Hoa Nguyen on May 02 2019.

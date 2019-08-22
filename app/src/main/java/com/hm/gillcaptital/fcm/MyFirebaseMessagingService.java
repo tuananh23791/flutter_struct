@@ -1,4 +1,4 @@
-package com.beyondedge.hm.fcm;
+package com.hm.gillcaptital.fcm;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.ui.SplashScreen;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.ui.SplashScreen;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

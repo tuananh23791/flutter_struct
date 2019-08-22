@@ -1,4 +1,4 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 import android.os.Environment;
 import android.text.TextUtils;
@@ -6,7 +6,7 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
-import com.beyondedge.hm.BuildConfig;
+import com.hm.gillcaptital.BuildConfig;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

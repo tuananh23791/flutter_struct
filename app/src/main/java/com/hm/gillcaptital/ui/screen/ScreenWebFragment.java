@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen;
+package com.hm.gillcaptital.ui.screen;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.beyondedge.hm.ui.page.WebFragment;
+import com.hm.gillcaptital.ui.page.WebFragment;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

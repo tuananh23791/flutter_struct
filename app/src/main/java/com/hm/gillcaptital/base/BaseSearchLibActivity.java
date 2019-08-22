@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base;
+package com.hm.gillcaptital.base;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.materialsearchview.MaterialSearchView;
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.searchdb.SearchRecyclerAdapter;
-import com.beyondedge.hm.searchdb.SearchViewModel;
-import com.beyondedge.hm.searchdb.db.SearchEntity;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.searchdb.SearchRecyclerAdapter;
+import com.hm.gillcaptital.searchdb.SearchViewModel;
+import com.hm.gillcaptital.searchdb.db.SearchEntity;
 
 import java.util.List;
 

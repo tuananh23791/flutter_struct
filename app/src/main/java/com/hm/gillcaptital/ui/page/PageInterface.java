@@ -1,6 +1,6 @@
-package com.beyondedge.hm.ui.page;
+package com.hm.gillcaptital.ui.page;
 
-import com.beyondedge.hm.ui.page.more.WebInterface;
+import com.hm.gillcaptital.ui.page.more.WebInterface;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

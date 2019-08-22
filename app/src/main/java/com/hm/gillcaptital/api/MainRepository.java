@@ -1,4 +1,4 @@
-package com.beyondedge.hm.api;
+package com.hm.gillcaptital.api;
 
 import android.content.Context;
 import android.text.TextUtils;

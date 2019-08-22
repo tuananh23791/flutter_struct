@@ -1,4 +1,4 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -7,8 +7,7 @@ import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
 
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.R;
+import com.hm.gillcaptital.R;
 
 import java.io.File;
 import java.io.FileInputStream;

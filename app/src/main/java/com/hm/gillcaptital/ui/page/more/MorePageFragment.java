@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page.more;
+package com.hm.gillcaptital.ui.page.more;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,20 +14,18 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivity;
-import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.config.Constant;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.ui.page.PageInterface;
-import com.beyondedge.hm.ui.screen.FollowUsActivity;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.ui.screen.SettingsActivity;
-import com.beyondedge.hm.ui.screen.cataloguelookup.CatalogueLookupActivity;
-import com.beyondedge.hm.ui.view.PaddingDividerItemDecoration;
-
-import java.util.Stack;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseActivity;
+import com.hm.gillcaptital.base.BaseFragment;
+import com.hm.gillcaptital.config.Constant;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.ui.page.PageInterface;
+import com.hm.gillcaptital.ui.screen.FollowUsActivity;
+import com.hm.gillcaptital.ui.screen.PageWebActivity;
+import com.hm.gillcaptital.ui.screen.SettingsActivity;
+import com.hm.gillcaptital.ui.screen.cataloguelookup.CatalogueLookupActivity;
+import com.hm.gillcaptital.ui.view.PaddingDividerItemDecoration;
 
 /**
  * Created by Hoa Nguyen on Apr 23 2019.

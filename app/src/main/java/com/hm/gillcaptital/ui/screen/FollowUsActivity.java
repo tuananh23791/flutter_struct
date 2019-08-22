@@ -1,11 +1,11 @@
-package com.beyondedge.hm.ui.screen;
+package com.hm.gillcaptital.ui.screen;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.beyondedge.hm.base.BaseActivitySingleFragment;
+import com.hm.gillcaptital.base.BaseActivitySingleFragment;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen;
+package com.hm.gillcaptital.ui.screen;
 
 import android.app.Application;
 

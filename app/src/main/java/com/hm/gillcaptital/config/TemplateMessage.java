@@ -1,4 +1,4 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 /**
  * Created by Hoa Nguyen on May 02 2019.
@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.beyondedge.hm.HMApplication;
+import com.hm.gillcaptital.HMApplication;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 

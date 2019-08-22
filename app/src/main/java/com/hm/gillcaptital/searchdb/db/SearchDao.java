@@ -1,4 +1,4 @@
-package com.beyondedge.hm.searchdb.db;
+package com.hm.gillcaptital.searchdb.db;
 
 
 

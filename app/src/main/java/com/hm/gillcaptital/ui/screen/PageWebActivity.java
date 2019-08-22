@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen;
+package com.hm.gillcaptital.ui.screen;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseActivitySingleFragment;
-import com.beyondedge.hm.base.EmptyFragment;
-import com.beyondedge.hm.ui.page.WebFragment;
-import com.beyondedge.hm.utils.URLUtils;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseActivitySingleFragment;
+import com.hm.gillcaptital.base.EmptyFragment;
+import com.hm.gillcaptital.ui.page.WebFragment;
+import com.hm.gillcaptital.utils.URLUtils;
 
 /**
  * Created by Hoa Nguyen on Apr 24 2019.

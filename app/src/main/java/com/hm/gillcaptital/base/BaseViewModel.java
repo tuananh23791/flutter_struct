@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base;
+package com.hm.gillcaptital.base;
 
 import android.app.Application;
 

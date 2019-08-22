@@ -1,12 +1,12 @@
-package com.beyondedge.hm.ui.screen.cataloguelookup;
+package com.hm.gillcaptital.ui.screen.cataloguelookup;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.beyondedge.hm.api.MainRepository;
-import com.beyondedge.hm.base.BaseViewModel;
+import com.hm.gillcaptital.api.MainRepository;
+import com.hm.gillcaptital.base.BaseViewModel;
 
 /**
  * Created by Hoa Nguyen on Apr 25 2019.

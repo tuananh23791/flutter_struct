@@ -1,8 +1,8 @@
-package com.beyondedge.hm.config;
+package com.hm.gillcaptital.config;
 
 import android.content.Context;
 
-import com.beyondedge.hm.utils.PrefManager;
+import com.hm.gillcaptital.utils.PrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

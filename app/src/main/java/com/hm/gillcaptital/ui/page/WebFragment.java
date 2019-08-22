@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page;
+package com.hm.gillcaptital.ui.page;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,17 +28,17 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.MainActivity;
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.base.BaseFragment;
-import com.beyondedge.hm.base.BaseTemplateActivity;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.config.TemplateMessage;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.utils.PrefManager;
-import com.beyondedge.hm.utils.URLUtils;
+import com.hm.gillcaptital.BuildConfig;
+import com.hm.gillcaptital.MainActivity;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.base.BaseFragment;
+import com.hm.gillcaptital.base.BaseTemplateActivity;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.config.TemplateMessage;
+import com.hm.gillcaptital.ui.screen.PageWebActivity;
+import com.hm.gillcaptital.utils.PrefManager;
+import com.hm.gillcaptital.utils.URLUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;

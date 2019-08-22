@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.page.more;
+package com.hm.gillcaptital.ui.page.more;
 
 /**
  * Created by Hoa Nguyen on May 08 2019.

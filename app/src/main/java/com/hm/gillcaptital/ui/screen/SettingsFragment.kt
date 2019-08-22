@@ -1,4 +1,4 @@
-package com.beyondedge.hm.ui.screen
+package com.hm.gillcaptital.ui.screen
 
 import android.Manifest
 import android.content.Intent
@@ -14,15 +14,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.beyondedge.hm.BuildConfig
-import com.beyondedge.hm.HMApplication
-import com.beyondedge.hm.R
-import com.beyondedge.hm.base.BaseFragment
-import com.beyondedge.hm.config.HMConfig
-import com.beyondedge.hm.config.LoadConfig
-import com.beyondedge.hm.databinding.SettingsLayoutBinding
-import com.beyondedge.hm.ui.SplashScreen
-import com.beyondedge.hm.utils.PrefManager
+import com.hm.gillcaptital.BuildConfig
+import com.hm.gillcaptital.HMApplication
+import com.hm.gillcaptital.R
+import com.hm.gillcaptital.base.BaseFragment
+import com.hm.gillcaptital.config.HMConfig
+import com.hm.gillcaptital.config.LoadConfig
+import com.hm.gillcaptital.databinding.SettingsLayoutBinding
+import com.hm.gillcaptital.ui.SplashScreen
+import com.hm.gillcaptital.utils.PrefManager
 
 /**
  * Created by Hoa Nguyen on Apr 25 2019.

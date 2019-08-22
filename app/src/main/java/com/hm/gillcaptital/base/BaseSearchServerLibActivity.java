@@ -1,4 +1,4 @@
-package com.beyondedge.hm.base;
+package com.hm.gillcaptital.base;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -20,15 +20,15 @@ import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.materialsearchview.MaterialSearchView;
-import com.beyondedge.hm.BuildConfig;
-import com.beyondedge.hm.R;
-import com.beyondedge.hm.config.HMConfig;
-import com.beyondedge.hm.config.LoadConfig;
-import com.beyondedge.hm.searchdb.SearchServerViewModel;
-import com.beyondedge.hm.searchdb.SearchSuggestRecyclerAdapter;
-import com.beyondedge.hm.searchdb.server.SearchEntity;
-import com.beyondedge.hm.ui.screen.PageWebActivity;
-import com.beyondedge.hm.ui.screen.ScanActivity;
+import com.hm.gillcaptital.BuildConfig;
+import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.config.HMConfig;
+import com.hm.gillcaptital.config.LoadConfig;
+import com.hm.gillcaptital.searchdb.SearchServerViewModel;
+import com.hm.gillcaptital.searchdb.SearchSuggestRecyclerAdapter;
+import com.hm.gillcaptital.searchdb.server.SearchEntity;
+import com.hm.gillcaptital.ui.screen.PageWebActivity;
+import com.hm.gillcaptital.ui.screen.ScanActivity;
 
 import java.io.File;
 import java.io.IOException;
