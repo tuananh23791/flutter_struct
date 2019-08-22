@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.beyondedge.hm">
+    package="com.hm.gillcaptital">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name=".HMApplication"
+        android:name="com.hm.gillcaptital.HMApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,14 +31,14 @@
             android:name="io.fabric.ApiKey"
             android:value="8c9eb83d238f201cfbdc3b1529996c712747daee" />
 
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.hm.gillcaptital.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name=".ui.SplashScreen"
+            android:name="com.hm.gillcaptital.ui.SplashScreen"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -49,7 +49,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.hm.gillcaptital.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
@@ -60,19 +60,19 @@
         </activity>
 
         <activity
-            android:name=".ui.screen.PageWebActivity"
+            android:name="com.hm.gillcaptital.ui.screen.PageWebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.screen.FollowUsActivity"
+            android:name="com.hm.gillcaptital.ui.screen.FollowUsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.screen.ScanActivity"
+            android:name="com.hm.gillcaptital.ui.screen.ScanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.screen.SettingsActivity"
+            android:name="com.hm.gillcaptital.ui.screen.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.screen.cataloguelookup.CatalogueLookupActivity"
+            android:name="com.hm.gillcaptital.ui.screen.cataloguelookup.CatalogueLookupActivity"
             android:screenOrientation="portrait" />
     </application>
 

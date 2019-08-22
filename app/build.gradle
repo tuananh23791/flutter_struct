@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
-        applicationId "com.beyondedge.hm"
+        applicationId "com.hm.gillcaptital"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode version_app.version_code
@@ -91,7 +91,7 @@ android {
         def ENABLE_CHECK_VERSION = "ENABLE_CHECK_VERSION"
 
         dev {
-            applicationId "com.beyondedge.hm.qat"
+            applicationId "com.hm.gillcaptital.qat"
             resValue "string", "app_name", "H&M Debug"
             buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
@@ -100,7 +100,7 @@ android {
         }
 
         stable_qat {
-            applicationId "com.beyondedge.hm.qat"
+            applicationId "com.hm.gillcaptital.qat"
             resValue "string", "app_name", "H&M QAT"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
@@ -109,7 +109,7 @@ android {
         }
 
         stable_uat {
-            applicationId "com.beyondedge.hm.uat"
+            applicationId "com.hm.gillcaptital.uat"
             resValue "string", "app_name", "H&M UAT"
             buildConfigField BOOLEAN, LOG, FALSE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
