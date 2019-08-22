@@ -7,7 +7,7 @@
 
         <variable
             name="menu"
-            type="com.beyondedge.hm.config.HMConfig.Menu" />
+            type="com.hm.gillcaptital.config.HMConfig.Menu" />
 
         <variable
             name="itemClickListener"

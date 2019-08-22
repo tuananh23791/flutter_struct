@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:18454626836:android:d63e463c72f73f47",
+        "mobilesdk_app_id": "1:18454626836:android:adafbb8e649fccec",
         "android_client_info": {
-          "package_name": "com.beyondedge.hm"
+          "package_name": "com.hm.gillcaptital"
         }
       },
       "oauth_client": [
         {
-          "client_id": "18454626836-46kcm6fbmvvcokafof7fipjl76mnk43q.apps.googleusercontent.com",
+          "client_id": "18454626836-95h25crklg9ah8ojiftof28hr9q03lil.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.beyondedge.hm",
+            "package_name": "com.hm.gillcaptital",
             "certificate_hash": "b778a2bbfcb2dcd918f7cfdbf10e1b782ece6224"
           }
         },
@@ -40,98 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "18454626836-jtnoljeilfug3ni7tkc4uudjciln5qfu.apps.googleusercontent.com",
+              "client_id": "18454626836-6n8pd7hmui0i6q7m3ha86t5urbbbm5rs.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "BE.com.HM.H-M"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:18454626836:android:6fddf12b06f28585",
-        "android_client_info": {
-          "package_name": "com.beyondedge.hm.qat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "18454626836-jqt32gjmkad688biltcfrp0tpehjd1d3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.beyondedge.hm.qat",
-            "certificate_hash": "a9d872ef1ebdf65615b188bcffd1d627397cfdbb"
-          }
-        },
-        {
-          "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCrdoSo3MOpXBT9D-v6gkkXdgsi_07fo-I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "18454626836-jtnoljeilfug3ni7tkc4uudjciln5qfu.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "BE.com.HM.H-M"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:18454626836:android:ef05f3f645c501e3",
-        "android_client_info": {
-          "package_name": "com.beyondedge.hm.uat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "18454626836-q6p08ft1duhfqm50n4ea30mhqiiul5iv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.beyondedge.hm.uat",
-            "certificate_hash": "a9d872ef1ebdf65615b188bcffd1d627397cfdbb"
-          }
-        },
-        {
-          "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCrdoSo3MOpXBT9D-v6gkkXdgsi_07fo-I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "18454626836-jtnoljeilfug3ni7tkc4uudjciln5qfu.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "BE.com.HM.H-M"
+                "bundle_id": "GILLCAPITAL.com.HM"
               }
             }
           ]
