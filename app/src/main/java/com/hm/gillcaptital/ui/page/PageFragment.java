@@ -38,58 +38,6 @@ public class PageFragment extends WebFragment implements PageInterface {
         return fragment;
     }
 
-    @Override
-    public void refreshRootPage() {
-        if (mMenu == null) {
-            HMConfig config = LoadConfig.getInstance(getActivity()).load();
-            mMenu = config.getMainMenuList().get(mIndex);
-        }
-        loadPage(mMenu.getUrl(getActivity()));
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        mIndex = bundle != null ? bundle.getInt("index", MENU_HOME) : MENU_HOME;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView(view);
-    }
-
-    /**
-     * Init view
-     */
-    private void initView(View view) {
-        fragmentContainer = view.findViewById(R.id.fragmentContainer);
-
-//        HMConfig config = LoadConfig.getInstance().load();
-//        mMenu = config.getMainMenuList().get(mIndex);
-//
-//        loadPage(mMenu.getUrl());
-
-        refreshRootPage();
-    }
-
-    @Override
-    public void onPageFinished(String url) {
-        super.onPageFinished(url);
-
-        if (isDisplaying && canGoBack()) {
-            //TODO
-        }
-    }
-
     /**
      * Refresh
      */
@@ -100,8 +48,8 @@ public class PageFragment extends WebFragment implements PageInterface {
 //        }
 
 //        loadPage(mMenu.getUrl());
+        reload();
     }
-
 
     /**
      * Called when a fragment will be displayed
@@ -133,6 +81,7 @@ public class PageFragment extends WebFragment implements PageInterface {
                 loadPage(mMenu.getUrl(getActivity()));
             } else {
                 handleTemplateUpdate();
+                refresh();
             }
         }
 
@@ -158,15 +107,73 @@ public class PageFragment extends WebFragment implements PageInterface {
     @Override
     public String defaultPage() {
         return mMenu != null ? mMenu.getUrl(getActivity()) : "";
-    }
-
-    @Override
-    public boolean goBack() {
-        return super.goBack();
+    }    @Override
+    public void refreshRootPage() {
+        if (mMenu == null) {
+            HMConfig config = LoadConfig.getInstance(getActivity()).load();
+            mMenu = config.getMainMenuList().get(mIndex);
+        }
+        loadPage(mMenu.getUrl(getActivity()));
     }
 
     @Override
     public boolean canBack() {
         return canGoBack();
     }
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+        mIndex = bundle != null ? bundle.getInt("index", MENU_HOME) : MENU_HOME;
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+    }
+
+
+    /**
+     * Init view
+     */
+    private void initView(View view) {
+        fragmentContainer = view.findViewById(R.id.fragmentContainer);
+
+//        HMConfig config = LoadConfig.getInstance().load();
+//        mMenu = config.getMainMenuList().get(mIndex);
+//
+//        loadPage(mMenu.getUrl());
+
+        refreshRootPage();
+    }
+
+    @Override
+    public void onPageFinished(String url) {
+        super.onPageFinished(url);
+
+        if (isDisplaying && canGoBack()) {
+            //TODO
+        }
+    }
+
+
+    @Override
+    public boolean goBack() {
+        return super.goBack();
+    }
+
+
 }

@@ -62,49 +62,16 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     private List<String> mExternalHostnames;
 
-    private static boolean isHostnameAllowed(final List<String> listHostNames, final String url) {
-        if (listHostNames.size() == 0) {
-            return true;
-        }
-
-        final String actualHost = Uri.parse(url).getHost();
-
-        if (!TextUtils.isEmpty(actualHost)) {
-            for (String expectedHost : listHostNames) {
-                assert actualHost != null;
-                if (actualHost.equals(expectedHost) || actualHost.endsWith("." + expectedHost)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     public abstract void refreshRootPage();
 
     protected void setDisplaying(boolean displaying) {
         isDisplaying = displaying;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.web_page_layout, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        textInfo = view.findViewById(R.id.textInfo);
-        progressHorizontal = view.findViewById(R.id.progress_horizontal);
-        textInfo.setVisibility(View.GONE);
-        initView(view);
     }
 
     protected boolean goBack() {
@@ -116,14 +83,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         return false;
     }
 
-    protected boolean canGoBack() {
-        FragmentActivity activity = getActivity();
-        if (activity instanceof PageWebActivity) {
-            return true;
-        }
-        return myWebView != null && myWebView.canGoBack();
-    }
-
     protected String getOriginalURL() {
         if (myWebView != null) {
             String originalUrl = myWebView.getOriginalUrl();
@@ -133,16 +92,28 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         return "";
     }
 
-    protected void handleTemplateUpdate() {
-        Activity activity = getActivity();
-        if (activity instanceof BaseTemplateActivity) {
-            if (templateMessage == null) {
-                templateMessage = TemplateMessage.fromJson("");
-            }
-            BaseTemplateActivity baseTemplateActivity = (BaseTemplateActivity) activity;
-            baseTemplateActivity.setWebPageCanGoBack(canGoBack());
-            baseTemplateActivity.updateTemplate(templateMessage);
-        }
+    protected void reload() {
+        myWebView.reload();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        myWebView.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        textInfo = view.findViewById(R.id.textInfo);
+        progressHorizontal = view.findViewById(R.id.progress_horizontal);
+        textInfo.setVisibility(View.GONE);
+        initView(view);
     }
 
     private void initView(View view) {
@@ -207,8 +178,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
 
             @Override
-            public void onPageCommitVisible(WebView view, String url) {
-                super.onPageCommitVisible(view, url);
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
@@ -218,6 +189,11 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
+            }
+
+            @Override
+            public void onPageCommitVisible(WebView view, String url) {
+                super.onPageCommitVisible(view, url);
             }
 
             @Override
@@ -235,23 +211,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
                 super.onReceivedHttpAuthRequest(view, handler, host, realm);
             }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return super.shouldOverrideUrlLoading(view, url);
-            }
         });
         myWebView.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-//                FragmentActivity activity = getActivity();
-//
-//                if (activity != null && activity instanceof BaseActivity) {
-//                    ((BaseActivity) activity).setTitleToolbar(title);
-//                }
-            }
 
             @Override
             public void onProgressChanged(WebView view, int progress) {
@@ -263,6 +224,16 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                 if (progress >= 100) {
                     progressHorizontal.setVisibility(ProgressBar.GONE);
                 }
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+//                FragmentActivity activity = getActivity();
+//
+//                if (activity != null && activity instanceof BaseActivity) {
+//                    ((BaseActivity) activity).setTitleToolbar(title);
+//                }
             }
 
         });
@@ -295,8 +266,61 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         }
     }
 
-    public void loadPage(String url) {
-        myWebView.loadUrl(url);
+    @SuppressLint("NewApi")
+    @Override
+    public void onResume() {
+        super.onResume();
+        myWebView.onResume();
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onPause() {
+        myWebView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        myWebView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPageStarted(String url, Bitmap favicon) {
+//        testJavascript(myWebView);
+
+        Timber.d("TemplateMessage onPageStarted %s", url);
+
+    }
+
+    @Override
+    public void onPageFinished(String url) {
+        showDebugData(url);
+        Timber.d("TemplateMessage onPageFinished %s", url);
+        if (isDisplaying) {
+            handleTemplateUpdate();
+        }
+    }
+
+    protected void handleTemplateUpdate() {
+        Activity activity = getActivity();
+        if (activity instanceof BaseTemplateActivity) {
+            if (templateMessage == null) {
+                templateMessage = TemplateMessage.fromJson("");
+            }
+            BaseTemplateActivity baseTemplateActivity = (BaseTemplateActivity) activity;
+            baseTemplateActivity.setWebPageCanGoBack(canGoBack());
+            baseTemplateActivity.updateTemplate(templateMessage);
+        }
+    }
+
+    protected boolean canGoBack() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof PageWebActivity) {
+            return true;
+        }
+        return myWebView != null && myWebView.canGoBack();
     }
 
     private void showDebugData(String url) {
@@ -322,49 +346,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         }
     }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onResume() {
-        super.onResume();
-        myWebView.onResume();
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void onPause() {
-        myWebView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        myWebView.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        myWebView.onActivityResult(requestCode, resultCode, intent);
-    }
-
-    @Override
-    public void onPageStarted(String url, Bitmap favicon) {
-//        testJavascript(myWebView);
-
-        Timber.d("TemplateMessage onPageStarted %s", url);
-
-    }
-
-    @Override
-    public void onPageFinished(String url) {
-        showDebugData(url);
-        Timber.d("TemplateMessage onPageFinished %s", url);
-        if (isDisplaying) {
-            handleTemplateUpdate();
-        }
-    }
-
     @Override
     public void onPageError(int errorCode, String description, String failingUrl) {
     }
@@ -373,8 +354,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
     }
 
-    //-----
-
     @Override
     public void onExternalPageRequest(String url) {
         if (isHostnameAllowed(mExternalHostnames, url)) {
@@ -382,6 +361,31 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         } else {
             loadPage(url);
         }
+    }
+
+    private static boolean isHostnameAllowed(final List<String> listHostNames, final String url) {
+        if (listHostNames.size() == 0) {
+            return true;
+        }
+
+        final String actualHost = Uri.parse(url).getHost();
+
+        if (!TextUtils.isEmpty(actualHost)) {
+            for (String expectedHost : listHostNames) {
+                assert actualHost != null;
+                if (actualHost.equals(expectedHost) || actualHost.endsWith("." + expectedHost)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //-----
+
+    public void loadPage(String url) {
+        myWebView.loadUrl(url);
     }
 
     private void testJavascript(WebView webView) {
