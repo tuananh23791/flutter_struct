@@ -49,6 +49,94 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18454626836:android:4ff0fe5ad9108bbdee5d01",
+        "android_client_info": {
+          "package_name": "com.hm.gillcaptital.qat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18454626836-jcknm6s6fi597f7g4o4f0k86lbhv4l8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hm.gillcaptital.qat",
+            "certificate_hash": "a9d872ef1ebdf65615b188bcffd1d627397cfdbb"
+          }
+        },
+        {
+          "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrdoSo3MOpXBT9D-v6gkkXdgsi_07fo-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "18454626836-6n8pd7hmui0i6q7m3ha86t5urbbbm5rs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "GILLCAPITAL.com.HM"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18454626836:android:354178edd9a584c7ee5d01",
+        "android_client_info": {
+          "package_name": "com.hm.gillcaptital.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18454626836-c12r139tqjjloij4tfmcmnsp8uob7lp5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hm.gillcaptital.uat",
+            "certificate_hash": "a9d872ef1ebdf65615b188bcffd1d627397cfdbb"
+          }
+        },
+        {
+          "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrdoSo3MOpXBT9D-v6gkkXdgsi_07fo-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18454626836-pe1i2e1j0dsven51a0t1127ah1saqvcp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "18454626836-6n8pd7hmui0i6q7m3ha86t5urbbbm5rs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "GILLCAPITAL.com.HM"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
