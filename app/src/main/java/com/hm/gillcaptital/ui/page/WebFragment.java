@@ -388,6 +388,14 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         myWebView.loadUrl(url);
     }
 
+    public boolean isWebviewGoBack() {
+        return myWebView.canGoBack();
+    }
+
+    public void webviewGoBack() {
+        myWebView.goBack();
+    }
+
     private void testJavascript(WebView webView) {
         webView.loadUrl(
                 "javascript:( " +

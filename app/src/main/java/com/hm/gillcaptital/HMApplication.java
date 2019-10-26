@@ -1,8 +1,11 @@
 package com.hm.gillcaptital;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
@@ -56,6 +59,8 @@ public class HMApplication extends Application {
         if (isDEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        registerActivityLifecycleCallbacks(activityCallbacks);
     }
 
     public SearchDatabase getDatabase() {
@@ -77,5 +82,41 @@ public class HMApplication extends Application {
         return "";
     }
 
+    Application.ActivityLifecycleCallbacks activityCallbacks = new ActivityLifecycleCallbacks() {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityCreated");
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityStarted");
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityResumed");
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityPaused");
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityStopped");
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            Log.e(activity.getClass().getSimpleName(),"onActivitySaveInstanceState");
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+            Log.e(activity.getClass().getSimpleName(),"onActivityDestroyed");
+}
+    };
 }
 

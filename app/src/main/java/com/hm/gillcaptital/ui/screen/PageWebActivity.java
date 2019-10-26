@@ -66,4 +66,14 @@ public class PageWebActivity extends BaseActivitySingleFragment {
             ((WebFragment) currentFragment).loadPage(fullURL);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getCurrentFragment();
+        if (currentFragment instanceof WebFragment && ((WebFragment) currentFragment).isWebviewGoBack()) {
+            ((WebFragment) currentFragment).webviewGoBack();
+        } else if (!isHandledHideSearchBarInBackPressed()) {
+            super.onBackPressed();
+        }
+    }
 }
