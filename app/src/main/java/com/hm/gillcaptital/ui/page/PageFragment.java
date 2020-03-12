@@ -160,15 +160,6 @@ public class PageFragment extends WebFragment implements PageInterface {
         refreshRootPage();
     }
 
-    @Override
-    public void onPageFinished(String url) {
-        super.onPageFinished(url);
-
-        if (isDisplaying && canGoBack()) {
-            //TODO
-        }
-    }
-
 
     @Override
     public boolean goBack() {

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragmentContainer"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    android:orientation="vertical">
-
+    android:background="@color/colorBackground">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/textInfo"
         android:layout_width="match_parent"
@@ -29,11 +33,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <im.delight.android.webview.AdvancedWebView
+        <com.hm.gillcaptital.customView.CustomWebview
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layoutOverlay"
+        android:visibility="gone"
+        android:background="#8B000000"
+        android:orientation="horizontal"/>
+</RelativeLayout>

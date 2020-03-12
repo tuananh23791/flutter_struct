@@ -102,7 +102,7 @@ android {
         stable_qat {
             applicationId "com.hm.gillcaptital.qat"
             resValue "string", "app_name", "H&M QAT"
-            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, TRUE
             buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmqat/setting/TH-EN.txt\""
@@ -111,7 +111,7 @@ android {
         stable_uat {
             applicationId "com.hm.gillcaptital.uat"
             resValue "string", "app_name", "H&M UAT"
-            buildConfigField BOOLEAN, LOG, FALSE
+            buildConfigField BOOLEAN, LOG, TRUE
             buildConfigField BOOLEAN, TEMPLATE, FALSE
             buildConfigField BOOLEAN, ENABLE_CHECK_VERSION, FALSE
             buildConfigField STRING, LINK_CONFIG, "\"https://hm-uat-media.s3-ap-southeast-1.amazonaws.com/mobileapp/hmuat/setting/TH-EN.txt\""

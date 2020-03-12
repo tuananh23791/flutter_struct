@@ -10,15 +10,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,10 +35,13 @@ import com.hm.gillcaptital.BuildConfig;
 import com.hm.gillcaptital.MainActivity;
 import com.hm.gillcaptital.R;
 import com.hm.gillcaptital.base.BaseFragment;
+import com.hm.gillcaptital.base.BaseSearchServerLibActivity;
 import com.hm.gillcaptital.base.BaseTemplateActivity;
 import com.hm.gillcaptital.config.HMConfig;
 import com.hm.gillcaptital.config.LoadConfig;
 import com.hm.gillcaptital.config.TemplateMessage;
+import com.hm.gillcaptital.customView.CustomWebview;
+import com.hm.gillcaptital.interfaces.OnScrollChangedListener;
 import com.hm.gillcaptital.ui.screen.PageWebActivity;
 import com.hm.gillcaptital.utils.PrefManager;
 import com.hm.gillcaptital.utils.URLUtils;
@@ -51,14 +57,15 @@ import timber.log.Timber;
 /**
  * Created by Hoa Nguyen on Apr 22 2019.
  */
-public abstract class WebFragment extends BaseFragment implements AdvancedWebView.Listener {
+public abstract class WebFragment extends BaseFragment{
     protected boolean isDisplaying = false;
     protected TemplateMessage templateMessage;
     Boolean isShowTemplate;
-    private AdvancedWebView myWebView;
+    private CustomWebview myWebView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView textInfo;
     private ProgressBar progressHorizontal;
+    private LinearLayout layoutOverlay;
 
     private List<String> mExternalHostnames;
 
@@ -99,7 +106,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        myWebView.onActivityResult(requestCode, resultCode, intent);
+//        myWebView.onActivityResult(requestCode, resultCode, intent);
     }
 
     @Override
@@ -112,6 +119,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         super.onViewCreated(view, savedInstanceState);
         textInfo = view.findViewById(R.id.textInfo);
         progressHorizontal = view.findViewById(R.id.progress_horizontal);
+        layoutOverlay = view.findViewById(R.id.layoutOverlay);
         textInfo.setVisibility(View.GONE);
         initView(view);
     }
@@ -132,18 +140,19 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                 myWebView.reload();
             }
         });
-        myWebView.setListener(getActivity(), this);
+//        myWebView.setListener(getActivity(), this);
 //        myWebView.setGeolocationEnabled(false);
-        myWebView.setMixedContentAllowed(true);
+//        myWebView.setMixedContentAllowed(true);
 //        myWebView.setCookiesEnabled(true);
 //        myWebView.setThirdPartyCookiesEnabled(true);
 
         WebSettings settings = myWebView.getSettings();
-        settings.setAppCacheEnabled(false);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        settings.setAppCacheEnabled(false);
+//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
 
-        settingViewPort(true);
+//        settingViewPort(true);
 
         HMConfig config = LoadConfig.getInstance(getActivity()).load();
 //        ArrayList<String> innerHosts = config.getPaymentUrlOpenInApp();
@@ -161,30 +170,33 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
+        scrollListener();
 
         myWebView.setWebViewClient(new WebViewClient() {
-
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                List<String> permittedHostnames = myWebView.getPermittedHostnames();
-//                if (isHostnameAllowed(permittedHostnames, url)) {
-//                    super.onPageStarted(view, url, favicon);
-//                } else {
-//                    //open external
-//
-//                    URLUtils.openInWebBrowser(myWebView.getContext(), url);
-//                }
-//            }
 
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+//                if (isHostnameAllowed(mExternalHostnames, url)) {
+//                    URLUtils.openInWebBrowser(myWebView.getContext(), url);
+//                } else {
+//                    loadPage(url);
+//                }
+
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
 //                Toast.makeText(getActivity(), "Finished loading", Toast.LENGTH_SHORT).show();
+
+
+                showDebugData(url);
+                Timber.d("TemplateMessage onPageFinished %s", url);
+                if (isDisplaying) {
+                    handleTemplateUpdate();
+                }
 
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
@@ -245,12 +257,12 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     }
 
-    private void settingViewPort(boolean enable) {
-        WebSettings settings = myWebView.getSettings();
-
-        settings.setLoadWithOverviewMode(enable);
-        settings.setUseWideViewPort(enable);
-    }
+//    private void settingViewPort(boolean enable) {
+//        WebSettings settings = myWebView.getSettings();
+//
+//        settings.setLoadWithOverviewMode(enable);
+//        settings.setUseWideViewPort(enable);
+//    }
 
     private void addInternalHost(String fullUrl) {
         if (!fullUrl.startsWith("http")) {
@@ -260,7 +272,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
         try {
             url = new URL(fullUrl);
             String host = url.getHost();
-            myWebView.addPermittedHostname(host);
+//            myWebView.addPermittedHostname(host);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -282,25 +294,8 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
     @Override
     public void onDestroy() {
-        myWebView.onDestroy();
+//        myWebView.onDestroy();
         super.onDestroy();
-    }
-
-    @Override
-    public void onPageStarted(String url, Bitmap favicon) {
-//        testJavascript(myWebView);
-
-        Timber.d("TemplateMessage onPageStarted %s", url);
-
-    }
-
-    @Override
-    public void onPageFinished(String url) {
-        showDebugData(url);
-        Timber.d("TemplateMessage onPageFinished %s", url);
-        if (isDisplaying) {
-            handleTemplateUpdate();
-        }
     }
 
     protected void handleTemplateUpdate() {
@@ -312,6 +307,20 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             BaseTemplateActivity baseTemplateActivity = (BaseTemplateActivity) activity;
             baseTemplateActivity.setWebPageCanGoBack(canGoBack());
             baseTemplateActivity.updateTemplate(templateMessage);
+            baseTemplateActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    layoutOverlay.setVisibility(View.VISIBLE);
+                }
+            });
+
+            baseTemplateActivity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    BaseSearchServerLibActivity.isSearchFocus = hasFocus;
+                    layoutOverlay.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+                }
+            });
         }
     }
 
@@ -343,23 +352,6 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
 
                 textInfo.setText(builder.toString());
             }
-        }
-    }
-
-    @Override
-    public void onPageError(int errorCode, String description, String failingUrl) {
-    }
-
-    @Override
-    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
-    }
-
-    @Override
-    public void onExternalPageRequest(String url) {
-        if (isHostnameAllowed(mExternalHostnames, url)) {
-            URLUtils.openInWebBrowser(myWebView.getContext(), url);
-        } else {
-            loadPage(url);
         }
     }
 
@@ -481,6 +473,7 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
             templateMessage = localTemplateMessage;
             Timber.i("TemplateMessage => \n%s", WebFragment.this.templateMessage.toString());
             //TODO comment code to test
+            Log.e("TemplateMessage", message);
 
             if (isDisplaying) {
 //                Toast.makeText(mContext, WebFragment.this.templateMessage.toString(), Toast.LENGTH_SHORT).show();
@@ -520,4 +513,31 @@ public abstract class WebFragment extends BaseFragment implements AdvancedWebVie
          */
 
     }
+
+    private void scrollListener(){
+        if (myWebView == null)
+            return;
+
+        myWebView.setOnScrollChangedListener(new OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                if(BaseSearchServerLibActivity.isSearchFocus) {
+                    hideKeyboardFrom(getActivity(), myWebView);
+                    BaseSearchServerLibActivity.isSearchFocus = false;
+
+                    Activity activity = getActivity();
+                    if (activity instanceof BaseTemplateActivity) {
+                        BaseTemplateActivity baseTemplateActivity = (BaseTemplateActivity) activity;
+                        baseTemplateActivity.searchHolderOutfocus();
+                    }
+                }
+            }
+        });
+    }
+
+    private void hideKeyboardFrom(@NonNull Context context, @NonNull View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }

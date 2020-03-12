@@ -12,6 +12,8 @@ import com.hm.gillcaptital.BuildConfig;
  * Created by Hoa Nguyen on Apr 23 2019.
  */
 public class Constant {
+    public static final int REQUEST_CODE_PAGEWEB_ACTIVITY = 1001;
+
     /*Cheat CODE*/
     public static final boolean IS_FORCE_LOCAL_CONFIG = false;
     public static final boolean IS_FORCE_LOCAL_THAI_CONFIG = false;

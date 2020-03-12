@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,7 @@ public class MaterialSearchView extends CardView {
             }
         }
     };
+
     /**
      * Callback to watch the text field for empty/non-empty
      */
@@ -332,6 +334,11 @@ public class MaterialSearchView extends CardView {
         }
     }
 
+    public void setOnEditorClickListener(OnClickListener onClickListener){
+        if(onClickListener!=null)
+            b.editText.setOnClickListener(onClickListener);
+    }
+
     private void postVisible(final int visibleType) {
         post(new Runnable() {
             @Override
@@ -455,6 +462,10 @@ public class MaterialSearchView extends CardView {
     public void setDrawableTint(Drawable resDrawable, int resColor) {
         resDrawable.setColorFilter(new PorterDuffColorFilter(resColor, PorterDuff.Mode.SRC_ATOP));
         resDrawable.mutate();
+    }
+
+    public void onFocusChangeListener(OnFocusChangeListener onFocusChangeListener){
+        b.editText.setOnFocusChangeListener(onFocusChangeListener);
     }
 
     public float convertDpToPixel(float dp) {

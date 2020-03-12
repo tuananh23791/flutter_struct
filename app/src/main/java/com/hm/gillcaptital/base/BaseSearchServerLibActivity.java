@@ -51,6 +51,7 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     private static final int ACTION_PICK = 1;
     private static final int ACTION_TAKE_PICTURE = 2;
     private static final int ACTION_SCAN = 3;
+    public static boolean isSearchFocus = false;
     protected QueryTextListener mQueryTextListener;
     private SearchServerViewModel model;
     private SearchSuggestRecyclerAdapter adapterSearch;
@@ -78,6 +79,12 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         searchHolder = findViewById(R.id.searchHolder);
         //TODO enable later
         searchHolder.enableSearchPicture(false);
+        searchHolder.onFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                isSearchFocus = b;
+            }
+        });
         searchPaddingView = findViewById(R.id.viewTempPadding);
         //Comment - All now using back in activity tool_bar
         searchHolder.canBack(false);
@@ -108,6 +115,16 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
     protected void showSearch() {
         if (!searchHolder.isVisible())
             searchHolder.showSearch();
+    }
+
+    public void setOnEditorClickListener(View.OnClickListener onClickListener){
+        if(onClickListener != null)
+            searchHolder.setOnEditorClickListener(onClickListener);
+    }
+
+    public void setOnFocusListener(View.OnFocusChangeListener onFocusChangeListener){
+        if(onFocusChangeListener != null)
+            searchHolder.onFocusChangeListener(onFocusChangeListener);
     }
 
     protected void hideSearch() {
@@ -268,6 +285,10 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         return image;
     }
 
+    public void searchHolderOutfocus(){
+        searchHolder.clearFocus();
+    }
+
     private void cleanData() {
         mRequestCode = 0;
         mImageAction = ACTION_UNKNOWN;
@@ -398,5 +419,9 @@ public abstract class BaseSearchServerLibActivity extends BaseActivity implement
         void onQueryTextSubmit(String query);
 
         void onQueryTextChange(String newText);
+    }
+
+    public interface OnFocusChangeListener{
+        void onFocusChange(boolean hasFocus);
     }
 }

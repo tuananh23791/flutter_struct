@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.hm.gillcaptital.R;
 import com.hm.gillcaptital.base.BaseActivitySingleFragment;
 import com.hm.gillcaptital.base.EmptyFragment;
+import com.hm.gillcaptital.config.Constant;
 import com.hm.gillcaptital.ui.page.WebFragment;
 import com.hm.gillcaptital.utils.URLUtils;
 
@@ -27,7 +28,7 @@ public class PageWebActivity extends BaseActivitySingleFragment {
         intent.putExtra(EXTRA_URL, url);
         intent.putExtra(EXTRA_TITLE, title);
 
-        from.startActivity(intent);
+        from.startActivityForResult(intent, Constant.REQUEST_CODE_PAGEWEB_ACTIVITY);
     }
 
     @Override

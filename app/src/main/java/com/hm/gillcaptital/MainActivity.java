@@ -3,6 +3,7 @@ package com.hm.gillcaptital;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,6 +44,12 @@ public class MainActivity extends BaseTemplateActivity {
         settingBottomNavigation();
         initSearchView();
         initViewPager();
+        setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("hi","helooooo");
+            }
+        });
     }
 
     @Override
@@ -78,6 +85,7 @@ public class MainActivity extends BaseTemplateActivity {
     public void updateTemplate(TemplateMessage templateMessage) {
         super.updateTemplate(templateMessage);
 
+        Log.e("CardCount", templateMessage.toString());
         handler.postDelayed(() -> {
             String cartCount = templateMessage != null ? String.valueOf(templateMessage.getCartCount()) : "";
             AHNotification notification = new AHNotification.Builder()
@@ -194,9 +202,6 @@ public class MainActivity extends BaseTemplateActivity {
             currentFragment = adapterViewPager.getCurrentFragment();
             currentFragment.willBeDisplayed();
 
-            //TODO
-//            setSearchType(position == ViewPagerAdapter.MENU_HOME ? SEARCH_TYPE_FULL_TOOLBAR : SEARCH_TYPE_HIDE_ALL);
-
             if (position == ViewPagerAdapter.MENU_MORE) {
                 setSearchType(SEARCH_TYPE_HIDE_ALL);
             }
@@ -216,11 +221,14 @@ public class MainActivity extends BaseTemplateActivity {
         return bottomNavigation != null && bottomNavigation.getCurrentItem() == ViewPagerAdapter.MENU_CHECKOUT;
     }
 
+    public void setCurrentFragment(int pageNumber){
+        if(viewPager != null)
+            viewPager.setCurrentItem(pageNumber);
+    }
+
     public void showOrHideBottomNavigation(boolean show) {
         if (bottomNavigation != null) {
             if (show) {
-//                bottomNavigation.restoreBottomNavigation(true);
-
                 ViewCompat.animate(bottomNavigation)
                         .translationY(0)
                         .setInterpolator(new LinearOutSlowInInterpolator())
@@ -234,8 +242,6 @@ public class MainActivity extends BaseTemplateActivity {
                         .start();
 
             } else {
-//                bottomNavigation.hideBottomNavigation(true);
-
                 ViewCompat.animate(bottomNavigation)
                         .translationY(height)
                         .setInterpolator(new LinearOutSlowInInterpolator())

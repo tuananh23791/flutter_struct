@@ -1,5 +1,6 @@
 package com.hm.gillcaptital.base;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import com.hm.gillcaptital.MainActivity;
 import com.hm.gillcaptital.R;
+import com.hm.gillcaptital.config.Constant;
 import com.hm.gillcaptital.config.HMConfig;
 import com.hm.gillcaptital.config.LoadConfig;
 import com.hm.gillcaptital.config.TemplateMessage;
@@ -77,6 +79,15 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         validateSearch();
     }
 
+
+    public void setOnClickListener(View.OnClickListener onClickListener){
+        setOnEditorClickListener(onClickListener);
+    }
+
+    public void setOnFocusChangeListener(View.OnFocusChangeListener onFocusChangeListener){
+        setOnFocusListener(onFocusChangeListener);
+    }
+
     @Override
     protected void enableBackButtonToolbar(View.OnClickListener listener) {
 //        View backBt = findViewById(R.id.btn_back);
@@ -114,6 +125,12 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
 
     public void updateTemplate(TemplateMessage templateMessage) {
         if (templateMessage == null || TextUtils.isEmpty(templateMessage.getPageTemplate())) return;
+
+//        if(this.getClass().getName().equalsIgnoreCase(PageWebActivity.class.getName()) && templateMessage.isHome()){
+//            finish();
+//            setResult(RESULT_OK);
+//            return;
+//        }
         btSearch.post(new Runnable() {
             @Override
             public void run() {
@@ -376,5 +393,14 @@ public abstract class BaseTemplateActivity extends BaseSearchServerLibActivity {
         };
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constant.REQUEST_CODE_PAGEWEB_ACTIVITY){
+            if(resultCode == RESULT_OK){
+                ((MainActivity) this).setCurrentFragment(0);
+            }
+        }
+    }
 
 }
